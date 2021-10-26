@@ -57,14 +57,12 @@ class PauliStrings(DiscreteOperator):
            >>> op.hilbert.size
            2
         """
-        if not isinstance(hilbert, AbstractHilbert):
-            # if first argument is not Hilbert, then shift all arguments by one
+        if hilbert is not None and not isinstance(hilbert, AbstractHilbert):
+            # if first argument is not Hilbert or a hilbert=None, then shift all arguments by one
             hilbert, operators, weights = None, hilbert, operators
 
         if operators is None:
-            raise ValueError(
-                "None valued operators passed. (Might arised when passing None valued hilbert explicitly)"
-            )
+            raise ValueError("None valued operators passed.")
 
         if len(operators) == 0:
             raise ValueError("No Pauli operators passed.")
@@ -225,7 +223,7 @@ class PauliStrings(DiscreteOperator):
         """
         from openfermion.ops import QubitOperator
 
-        if not isinstance(hilbert, AbstractHilbert):
+        if hilbert is not None and not isinstance(hilbert, AbstractHilbert):
             # if first argument is not Hilbert, then shift all arguments by one
             hilbert, of_qubit_operator = None, hilbert
 
@@ -253,10 +251,7 @@ class PauliStrings(DiscreteOperator):
                 s[loc] = op
             operators.append("".join(s))
             weights.append(weight)
-        if hilbert is None:
-            return PauliStrings(operators, weights)
-        else:
-            return PauliStrings(hilbert, operators, weights)
+        return PauliStrings(hilbert, operators, weights)
 
     @property
     def dtype(self) -> DType:
