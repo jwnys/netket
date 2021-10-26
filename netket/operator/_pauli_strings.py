@@ -41,28 +41,39 @@ class PauliStrings(DiscreteOperator):
     ):
         """
         Constructs a new ``PauliStrings`` operator given a set of Pauli operators.
+        This class has two possible forms for initialization: ``PauliStrings(hilbert, operators, ...)`` or  ``PauliStrings(operators, ...)``.
+        When no hilbert argument is passed, the hilbert defaults to Qubit
 
         Args:
-           hilbert: A hilbert space, optional (default is Qubit)
+           hilbert: A hilbert space, optional (is no ``AbstractHilbert`` is passed, default is Qubit)
            operators (list(string)): A list of Pauli operators in string format, e.g. ['IXX', 'XZI'].
            weights: A list of amplitudes of the corresponding Pauli operator.
            cutoff (float): a cutoff to remove small matrix elements
 
         Examples:
-           Constructs a new ``PauliStrings`` operator X_0*X_1 + 3.*Z_0*Z_1.
+           Constructs a new ``PauliStrings`` operator X_0*X_1 + 3.*Z_0*Z_1 with both construction schemes.
 
            >>> import netket as nk
            >>> operators, weights = ['XX','ZZ'], [1,3]
            >>> op = nk.operator.PauliStrings(operators, weights)
+           >>> op.hilbert
+           Qubit(N=2)
            >>> op.hilbert.size
            2
+           >>> hilbert = nk.hilbert.Spin(1/2, 2)
+           >>> op = nk.operator.PauliStrings(hilbert, operators, weights)
+           >>> op.hilbert
+           Spin(s=1/2, N=2)
         """
-        if hilbert is not None and not isinstance(hilbert, AbstractHilbert):
+        if hilbert is None:
+            raise ValueError("None-valued hilbert passed.")
+
+        if not isinstance(hilbert, AbstractHilbert):
             # if first argument is not Hilbert or a hilbert=None, then shift all arguments by one
             hilbert, operators, weights = None, hilbert, operators
 
         if operators is None:
-            raise ValueError("None valued operators passed.")
+            raise ValueError("None-valued operators passed.")
 
         if len(operators) == 0:
             raise ValueError("No Pauli operators passed.")
@@ -212,9 +223,10 @@ class PauliStrings(DiscreteOperator):
     ):
         r"""
         Converts an openfermion QubitOperator into a netket PauliStrings.
+        The hilbert first argument can be dropped, see __init__ for details and default value
 
         Args:
-            hilbert (optional): hilbert of the resulting PauliStrings object (default None gives Qubit)
+            hilbert (optional): hilbert of the resulting PauliStrings object
             of_qubit_operator (required): openfermion.ops.QubitOperator object
             n_qubits (int): total number of qubits in the system, default None means inferring it from the QubitOperator. Argument is ignored when hilbert is given.
 
@@ -223,12 +235,16 @@ class PauliStrings(DiscreteOperator):
         """
         from openfermion.ops import QubitOperator
 
-        if hilbert is not None and not isinstance(hilbert, AbstractHilbert):
+        if hilbert is None:
+            raise ValueError("None-valued hilbert passed.")
+
+        if not isinstance(hilbert, AbstractHilbert):
             # if first argument is not Hilbert, then shift all arguments by one
             hilbert, of_qubit_operator = None, hilbert
 
         if not isinstance(of_qubit_operator, QubitOperator):
             raise NotImplementedError()
+
         operators = []
         weights = []
         if hilbert is not None:
@@ -251,7 +267,10 @@ class PauliStrings(DiscreteOperator):
                 s[loc] = op
             operators.append("".join(s))
             weights.append(weight)
-        return PauliStrings(hilbert, operators, weights)
+        ps_args = (operators, weights)
+        if hilbert is not None:
+            ps_args = (hilbert,) + ps_args
+        return PauliStrings(*ps_args)
 
     @property
     def dtype(self) -> DType:
