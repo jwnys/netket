@@ -144,8 +144,8 @@ class PauliStrings(DiscreteOperator):
                 return [i for i, ltr in enumerate(s) if ltr == ch]
 
             def append(key, k):
-                # convert list to tuple
-                key = tuple(set(key))  # order of X and Y does not matter
+                # convert list to tuple to hash
+                key = tuple(sorted(key))  # order of X and Y does not matter
                 if key in acting:
                     acting[key].append(k)
                 else:
