@@ -102,7 +102,7 @@ class SpinlessLatticeFermions1st(DiscreteHilbert):
         return self.local_states
 
     def _states_to_numbers(self, states, out=None):
-        return map_index(states, self.n_fermions, self.n_orbitals, out, is_sorted=True)
+        return map_index(states, self.n_fermions, self.n_orbitals, out, is_sorted=False)
 
     def _numbers_to_states(self, numbers, out=None):
         return map_state(numbers, self.n_fermions, out)
@@ -111,11 +111,43 @@ class SpinlessLatticeFermions1st(DiscreteHilbert):
     def is_finite(self) -> bool:
         return True
 
+    def to_canonical(self, states):
+        return permutation_parity(states.reshape(-1, self.n_fermions))  # xp, mels
+
     def occupation_number(self, states):
         return occ_num_fn(states, self.n_orbitals)
 
     def occupation_number_fn(self):
         return partial(occ_num_fn, n_orbitals=self.n_orbitals)
+
+
+@nb.njit
+def permutation_parity(permutations):
+    parities = np.empty((permutations.shape[0],), dtype=np.int_)
+    sorted_terms = np.empty(permutations.shape, dtype=permutations.dtype)
+    for b in range(permutations.shape[0]):
+        sort_idx = np.argsort(permutations[b, :])
+        sorted_terms[b, :] = np.array([permutations[b, i] for i in sort_idx])
+        parities[b] = _permutation_parity(sort_idx)
+    return sorted_terms, parities
+
+
+@nb.njit
+def _permutation_parity(permutation):
+    permutation = list(permutation)
+    length = len(permutation)
+    elements_seen = [False] * length
+    cycles = 0
+    for index, already_seen in enumerate(elements_seen):
+        if already_seen:
+            continue
+        cycles += 1
+        current = index
+        while not elements_seen[current]:
+            elements_seen[current] = True
+            current = permutation[current]
+    is_even = (length - cycles) % 2 == 0
+    return +1 if is_even else -1
 
 
 @partial(jax.jit, static_argnums=(1,))
