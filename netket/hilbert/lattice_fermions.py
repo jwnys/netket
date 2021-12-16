@@ -22,6 +22,9 @@ from netket.hilbert._deprecations import graph_to_N_depwarn
 import numpy as np
 
 import numba as nb
+import jax
+
+from functools import partial
 
 
 @nb.njit
@@ -107,6 +110,22 @@ class SpinlessLatticeFermions1st(DiscreteHilbert):
     @property
     def is_finite(self) -> bool:
         return True
+
+    def occupation_number(self, states):
+        return occ_num_fn(states, self.n_orbitals)
+
+    def occupation_number_fn(self):
+        return partial(occ_num_fn, n_orbitals=self.n_orbitals)
+
+
+@partial(jax.jit, static_argnums=(1,))
+def occ_num_fn(states, n_orbitals):
+    occ = np.zeros((states.shape[0], n_orbitals), dtype=states.dtype)
+
+    def change(o, st):
+        return o.at[st].set(1)
+
+    return jax.vmap(change)(occ, states.astype(int))
 
 
 @nb.njit
