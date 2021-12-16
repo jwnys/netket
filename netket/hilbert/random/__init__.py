@@ -69,7 +69,16 @@ def flip_state_batch(hilb: Fock, key, σ, idx):
 
 from netket.utils import _hide_submodules
 
-from . import custom, doubled, fock, qubit, spin, tensor_hilbert, particle
+from . import (
+    custom,
+    doubled,
+    fock,
+    qubit,
+    spin,
+    tensor_hilbert,
+    particle,
+    lattice_fermions,
+)
 from .base import flip_state, random_state
 
 _hide_submodules(__name__)
