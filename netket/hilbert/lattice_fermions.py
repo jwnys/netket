@@ -93,7 +93,7 @@ class SpinlessLatticeFermions1st(DiscreteHilbert):
 
     @property
     def _attrs(self):
-        return (self.size,)
+        return (self.size, self.n_orbitals)
 
     def states_at_index(self, i: int) -> Optional[List[float]]:
         return self.local_states

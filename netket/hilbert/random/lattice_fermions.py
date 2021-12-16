@@ -35,6 +35,7 @@ def random_state(
 
 @dispatch
 def flip_state_scalar(hilb: SpinlessLatticeFermions1st, key, state, fermion_index):
+    """TODO: need to sort things again at the end!!! But this will break the tests"""
     # for each orbital, get an index of where we can find it in the state
     old_orbital = state[fermion_index]
     adj = hilb.adj  # orbitals are just the sites
