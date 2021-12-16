@@ -49,7 +49,7 @@ def comb(N, k):
     return numerator // denominator
 
 
-class SpinlessLatticeFermionsHilbert(DiscreteHilbert):
+class SpinlessLatticeFermions(DiscreteHilbert):
     def __init__(
         self, n_fermions: int, n_sites: int = 1, graph: Optional[AbstractGraph] = None
     ):
@@ -87,7 +87,7 @@ class SpinlessLatticeFermionsHilbert(DiscreteHilbert):
         return self.n_fermions
 
     def __repr__(self):
-        return "LatticeFermionsHilbert(n_fermions={}, n_orbitals={})".format(
+        return "SpinlessLatticeFermions(n_fermions={}, n_orbitals={})".format(
             self.n_fermions, self.n_orbitals
         )
 

@@ -24,7 +24,7 @@ from .spin import Spin
 from .fock import Fock
 from .qubit import Qubit
 from .particle import Particle
-from .lattice_fermions import SpinlessLatticeFermionsHilbert
+from .lattice_fermions import SpinlessLatticeFermions
 
 from .tensor_hilbert import TensorHilbert
 

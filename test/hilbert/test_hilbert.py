@@ -25,7 +25,7 @@ from netket.hilbert import (
     Fock,
     Qubit,
     Spin,
-    SpinlessLatticeFermionsHilbert,
+    SpinlessLatticeFermions,
 )
 
 import jax
@@ -109,10 +109,8 @@ hilberts["DoubledHilbert[CustomHilbert]"] = DoubledHilbert(
 
 # hilberts["Tensor: Spin x Fock"] = Spin(s=0.5, N=4) * Fock(4, N=2)
 
-hilberts["SpinlessLatticeFermionsHilbert (indexable)"] = SpinlessLatticeFermionsHilbert(
-    3, n_sites=5
-)
-# hilberts["SpinlessLatticeFermionsHilbert (non-indexable)"] = SpinlessLatticeFermionsHilbert(40, n_sites=64)
+hilberts["SpinlessLatticeFermions (indexable)"] = SpinlessLatticeFermions(3, n_sites=5)
+# hilberts["SpinlessLatticeFermions (non-indexable)"] = SpinlessLatticeFermions(40, n_sites=64)
 
 # Continuous space
 # no pbc
