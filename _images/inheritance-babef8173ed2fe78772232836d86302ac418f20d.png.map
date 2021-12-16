@@ -1,0 +1,4 @@
+<map id="inheritance446e707c83" name="inheritance446e707c83">
+<area shape="rect" id="node1" title="2D convolution module with mask for autoregressive NN." alt="" coords="176,5,397,31"/>
+<area shape="rect" id="node2" title="Base class for all neural network modules. Layers and models should subclass this class." alt="" coords="5,5,128,31"/>
+</map>

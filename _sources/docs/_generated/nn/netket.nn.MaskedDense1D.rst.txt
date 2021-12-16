@@ -6,8 +6,15 @@
 .. autoclass:: MaskedDense1D
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.nn.MaskedDense1D
+         :parts: 2
+
+
    
       
    .. rst-class:: class-dl-groups

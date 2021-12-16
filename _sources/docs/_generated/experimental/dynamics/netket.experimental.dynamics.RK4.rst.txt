@@ -1,0 +1,6 @@
+﻿netket.experimental.dynamics.RK4
+================================
+
+.. currentmodule:: netket.experimental.dynamics
+
+.. autodata:: RK4

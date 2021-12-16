@@ -1,0 +1,6 @@
+﻿netket.experimental.dynamics.Heun
+=================================
+
+.. currentmodule:: netket.experimental.dynamics
+
+.. autodata:: Heun

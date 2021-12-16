@@ -1,0 +1,38 @@
+﻿netket.hilbert.Particle
+=======================
+
+.. currentmodule:: netket.hilbert
+
+.. autoclass:: Particle
+   :show-inheritance:
+
+   
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.hilbert.Particle
+         :parts: 2
+
+
+   
+
+   .. automethod:: Particle.__init__
+      
+   .. rst-class:: class-dl-groups
+
+   Attributes
+      .. autoattribute:: Particle.extent
+      .. autoattribute:: Particle.is_indexable
+      .. autoattribute:: Particle.n_particles
+      .. autoattribute:: Particle.pbc
+      .. autoattribute:: Particle.size
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Methods
+      .. automethod:: Particle.ptrace
+      .. automethod:: Particle.random_state
+
+   

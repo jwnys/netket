@@ -1,0 +1,41 @@
+﻿netket.operator.SumOperator
+===========================
+
+.. currentmodule:: netket.operator
+
+.. autoclass:: SumOperator
+   :show-inheritance:
+
+   
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.operator.SumOperator
+         :parts: 2
+
+
+   
+
+   .. automethod:: SumOperator.__init__
+      
+   .. rst-class:: class-dl-groups
+
+   Attributes
+      .. autoattribute:: SumOperator.H
+      .. autoattribute:: SumOperator.T
+      .. autoattribute:: SumOperator.dtype
+      .. autoattribute:: SumOperator.hilbert
+      .. autoattribute:: SumOperator.is_hermitian
+      .. autoattribute:: SumOperator.size
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Methods
+      .. automethod:: SumOperator.collect
+      .. automethod:: SumOperator.conj
+      .. automethod:: SumOperator.conjugate
+      .. automethod:: SumOperator.transpose
+
+   

@@ -1,0 +1,4 @@
+<map id="inheritancefad0b9d939" name="inheritancefad0b9d939">
+<area shape="rect" id="node1" title="A linear transformation applied over the last dimension of the input." alt="" coords="176,5,279,31"/>
+<area shape="rect" id="node2" title="Base class for all neural network modules. Layers and models should subclass this class." alt="" coords="5,5,128,31"/>
+</map>

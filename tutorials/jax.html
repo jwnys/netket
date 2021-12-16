@@ -7,6 +7,7 @@
     <title>Using JAX as a backend in NetKet - Feature Preview for v3.0 &#8212; netket v3.0 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     <link rel="stylesheet" type="text/css" href="../_static/jumbo-style.css" />
@@ -19,7 +20,7 @@
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     <script src="../_static/js/rtd_theme.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -28,9 +29,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -354,7 +355,7 @@ div.rendered_html tbody tr:hover {
 <p>To try out integration with JAX, you first need to fetch the beta version of NetKet v3 We recommend using a virtual environment (either a python environment or a conda environment), for example</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 -m venv nk_env
 <span class="nb">source</span> nk_env/bin/activate
-pip install --pre -U netket
+pip install -U netket
 </pre></div>
 </div>
 </div>
@@ -420,15 +421,17 @@ for edge in graph.edges():
 </div>
 <div class="section" id="Defining-a-JAX-module-to-be-used-as-a-wave-function">
 <h2>Defining a JAX module to be used as a wave function<a class="headerlink" href="#Defining-a-JAX-module-to-be-used-as-a-wave-function" title="Permalink to this headline">¶</a></h2>
-<p>We now want to define a suitable JAX wave function to be used as a wave function ansatz. To simplify the discusssion, we consider here a simple single-layer fully connected network with complex weights and a <span class="math notranslate nohighlight">\(tanh\)</span> activation function. These are easy to define in JAX, using for example a model built with <a class="reference external" href="https://github.com/google/jax/tree/master/jax/experimental">STAX</a>. The only requirement is that these networks take as inputs JAX arrays of shape <code class="docutils literal notranslate"><span class="pre">(batch_size,n)</span></code>, where batch_size
-is an arbitrary <code class="docutils literal notranslate"><span class="pre">batch</span> <span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">n</span></code> is the number of quantum degrees of freedom (for example, the number of spins, in the previous example). Notice that regardless of the dimensionality of the problem, the last dimension is always flattened into a single index.</p>
+<p>We now want to define a suitable JAX wave function to be used as a wave function ansatz. To simplify the discusssion, we consider here a simple single-layer fully connected network with complex weights and a <span class="math notranslate nohighlight">\(tanh\)</span> activation function. These are easy to define in JAX, using for example a model built with <code class="docutils literal notranslate"><span class="pre">`stax</span></code> &lt;<a class="reference external" href="https://jax.readthedocs.io/en/latest/jax.example_libraries.stax.html">https://jax.readthedocs.io/en/latest/jax.example_libraries.stax.html</a>&gt;`__. The only requirement is that these networks take as inputs JAX arrays of shape <code class="docutils literal notranslate"><span class="pre">(batch_size,n)</span></code>,
+where batch_size is an arbitrary <code class="docutils literal notranslate"><span class="pre">batch</span> <span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">n</span></code> is the number of quantum degrees of freedom (for example, the number of spins, in the previous example). Notice that regardless of the dimensionality of the problem, the last dimension is always flattened into a single index.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span>import jax
-from jax.experimental import stax
+from jax.example_libraries import stax
+# NOTE: for JAX version prior to 0.2.25, use the following import instead:
+# from jax.experimental import stax
 
 #We define a custom layer that performs the sum of its inputs
 def SumLayer():

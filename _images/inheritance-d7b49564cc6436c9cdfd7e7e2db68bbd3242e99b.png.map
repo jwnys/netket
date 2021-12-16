@@ -1,0 +1,5 @@
+<map id="inheritance327dfafcbf" name="inheritance327dfafcbf">
+<area shape="rect" id="node1" href="../../samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler" target="_top" title="Metropolis&#45;Hastings with Parallel Tempering sampler." alt="" coords="435,5,649,31"/>
+<area shape="rect" id="node2" href="../../samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler" target="_top" title="Metropolis&#45;Hastings sampler for an Hilbert space according to a specific transition rule." alt="" coords="185,5,387,31"/>
+<area shape="rect" id="node3" href="../../samplers/netket.sampler.Sampler.html#netket.sampler.Sampler" target="_top" title="Abstract base class for all samplers." alt="" coords="5,5,137,31"/>
+</map>

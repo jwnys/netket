@@ -6,8 +6,15 @@
 .. autoclass:: Lattice
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.graph.Lattice
+         :parts: 2
+
+
    
 
    .. automethod:: Lattice.__init__

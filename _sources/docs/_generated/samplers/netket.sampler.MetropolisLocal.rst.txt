@@ -6,7 +6,6 @@
 .. autoclass:: MetropolisLocal
    :show-inheritance:
 
-
    
       
    

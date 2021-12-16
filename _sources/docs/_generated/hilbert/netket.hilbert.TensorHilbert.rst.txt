@@ -1,0 +1,44 @@
+﻿netket.hilbert.TensorHilbert
+============================
+
+.. currentmodule:: netket.hilbert
+
+.. autoclass:: TensorHilbert
+   :show-inheritance:
+
+   
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.hilbert.TensorHilbert
+         :parts: 2
+
+
+   
+
+   .. automethod:: TensorHilbert.__init__
+      
+   .. rst-class:: class-dl-groups
+
+   Attributes
+      .. autoattribute:: TensorHilbert.is_finite
+      .. autoattribute:: TensorHilbert.is_indexable
+      .. autoattribute:: TensorHilbert.n_states
+      .. autoattribute:: TensorHilbert.shape
+      .. autoattribute:: TensorHilbert.size
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Methods
+      .. automethod:: TensorHilbert.all_states
+      .. automethod:: TensorHilbert.numbers_to_states
+      .. automethod:: TensorHilbert.ptrace
+      .. automethod:: TensorHilbert.random_state
+      .. automethod:: TensorHilbert.size_at_index
+      .. automethod:: TensorHilbert.states
+      .. automethod:: TensorHilbert.states_at_index
+      .. automethod:: TensorHilbert.states_to_numbers
+
+   

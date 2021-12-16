@@ -6,8 +6,15 @@
 .. autoclass:: Conv
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.nn.Conv
+         :parts: 2
+
+
    
       
    .. rst-class:: class-dl-groups

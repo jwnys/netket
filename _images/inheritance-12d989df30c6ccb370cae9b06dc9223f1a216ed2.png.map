@@ -1,0 +1,4 @@
+<map id="inheritanceaeee455fa6" name="inheritanceaeee455fa6">
+<area shape="rect" id="node1" href="#netket.sampler.rules.CustomRuleNumpy" target="_top" title="CustomRuleNumpy(operator: Any, weight_list: Any = None)" alt="" coords="229,5,413,31"/>
+<area shape="rect" id="node2" href="netket.sampler.MetropolisRule.html#netket.sampler.MetropolisRule" target="_top" title="Base class for Transition rules of Metropolis, such as Local, Exchange, Hamiltonian" alt="" coords="5,5,181,31"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="inheritance8660387e82" name="inheritance8660387e82">
+<area shape="rect" id="node1" title="Embedding Module." alt="" coords="176,5,283,31"/>
+<area shape="rect" id="node2" title="Base class for all neural network modules. Layers and models should subclass this class." alt="" coords="5,5,128,31"/>
+</map>

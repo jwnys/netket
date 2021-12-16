@@ -1,0 +1,47 @@
+﻿netket.experimental.driver.TDVP
+===============================
+
+.. currentmodule:: netket.experimental.driver
+
+.. autoclass:: TDVP
+   :show-inheritance:
+
+   
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.experimental.driver.TDVP
+         :parts: 2
+
+
+   
+
+   .. automethod:: TDVP.__init__
+      
+   .. rst-class:: class-dl-groups
+
+   Attributes
+      .. autoattribute:: TDVP.dt
+      .. autoattribute:: TDVP.generator
+      .. autoattribute:: TDVP.integrator
+      .. autoattribute:: TDVP.optimizer
+      .. autoattribute:: TDVP.state
+      .. autoattribute:: TDVP.step_count
+      .. autoattribute:: TDVP.step_value
+      .. autoattribute:: TDVP.t
+      .. autoattribute:: TDVP.t0
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Methods
+      .. automethod:: TDVP.advance
+      .. automethod:: TDVP.estimate
+      .. automethod:: TDVP.info
+      .. automethod:: TDVP.iter
+      .. automethod:: TDVP.reset
+      .. automethod:: TDVP.run
+      .. automethod:: TDVP.update_parameters
+
+   

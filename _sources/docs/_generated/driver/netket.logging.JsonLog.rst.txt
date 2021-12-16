@@ -6,8 +6,15 @@
 .. autoclass:: JsonLog
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.logging.JsonLog
+         :parts: 2
+
+
    
 
    .. automethod:: JsonLog.__init__

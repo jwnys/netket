@@ -6,8 +6,15 @@
 .. autoclass:: StateLog
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.logging.StateLog
+         :parts: 2
+
+
    
 
    .. automethod:: StateLog.__init__

@@ -1,0 +1,7 @@
+<map id="inheritance0a1e90a55c" name="inheritance0a1e90a55c">
+<area shape="rect" id="node1" href="netket.operator.AbstractOperator.html#netket.operator.AbstractOperator" target="_top" title="Abstract class for quantum Operators. This class prototypes the methods" alt="" coords="4,4,139,22"/>
+<area shape="rect" id="node2" href="netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator" target="_top" title="This class is the base class for operators defined on a" alt="" coords="173,4,308,22"/>
+<area shape="rect" id="node4" href="netket.operator.LocalOperator.html#netket.operator.LocalOperator" target="_top" title="A custom local operator. This is a sum of an arbitrary number of operators" alt="" coords="342,4,462,22"/>
+<area shape="rect" id="node3" href="netket.operator.GraphOperator.html#netket.operator.GraphOperator" target="_top" title="A graph&#45;based quantum operator. In its simplest terms, this is the sum of" alt="" coords="496,4,621,22"/>
+<area shape="rect" id="node5" href="#netket.operator.Heisenberg" target="_top" title="The Heisenberg hamiltonian on a lattice." alt="" coords="655,4,764,22"/>
+</map>

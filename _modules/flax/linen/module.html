@@ -7,6 +7,7 @@
     <title>flax.linen.module &#8212; netket v3.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/jumbo-style.css" />
@@ -26,9 +27,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -118,6 +119,7 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">import</span> <span class="nn">types</span>
+<span class="kn">import</span> <span class="nn">typing</span>
 <span class="kn">import</span> <span class="nn">weakref</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span>
@@ -125,18 +127,23 @@
 
 <span class="kn">import</span> <span class="nn">jax</span>
 <span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">tree_util</span>
+<span class="kn">from</span> <span class="nn">jax._src.numpy.lax_numpy</span> <span class="kn">import</span> <span class="n">isin</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">import</span> <span class="nn">flax</span>
+<span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">config</span>
 <span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">errors</span>
+<span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">traceback_util</span>
 <span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">traverse_util</span>
 <span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">serialization</span>
 <span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">core</span>
 <span class="kn">from</span> <span class="nn">flax.core</span> <span class="kn">import</span> <span class="n">Scope</span>
 <span class="kn">from</span> <span class="nn">flax.core.scope</span> <span class="kn">import</span> <span class="n">CollectionFilter</span><span class="p">,</span> <span class="n">DenyList</span><span class="p">,</span> <span class="n">Variable</span><span class="p">,</span> <span class="n">VariableDict</span><span class="p">,</span> <span class="n">FrozenVariableDict</span><span class="p">,</span> <span class="n">union_filters</span>
 <span class="kn">from</span> <span class="nn">flax.core.frozen_dict</span> <span class="kn">import</span> <span class="n">FrozenDict</span><span class="p">,</span> <span class="n">freeze</span>
+<span class="kn">from</span> <span class="nn">flax.struct</span> <span class="kn">import</span> <span class="n">__dataclass_transform__</span>
 
 <span class="c1"># from .dotgetter import DotGetter</span>
+<span class="n">traceback_util</span><span class="o">.</span><span class="n">register_exclusion</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
 
 <span class="n">PRNGKey</span> <span class="o">=</span> <span class="n">Any</span>  <span class="c1"># pylint: disable=invalid-name</span>
 <span class="n">RNGSequences</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PRNGKey</span><span class="p">]</span>
@@ -222,7 +229,7 @@
 
 <span class="c1"># Enable automatic named_call wrapping for labelling profile traces.</span>
 <span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="n">_use_named_call</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;FLAX_PROFILE&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span>
+<span class="n">_use_named_call</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">flax_profile</span>
 
 <span class="k">def</span> <span class="nf">enable_named_call</span><span class="p">():</span>
   <span class="sd">&quot;&quot;&quot;Enables named call wrapping for labelling profile traces.&quot;&quot;&quot;</span>
@@ -233,6 +240,18 @@
   <span class="sd">&quot;&quot;&quot;Disables named call wrapping.&quot;&quot;&quot;</span>
   <span class="k">global</span> <span class="n">_use_named_call</span>
   <span class="n">_use_named_call</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="nd">@contextmanager</span>
+<span class="k">def</span> <span class="nf">override_named_call</span><span class="p">(</span><span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Returns a context manager that enables/disables named call wrapping.&quot;&quot;&quot;</span>
+  <span class="k">global</span> <span class="n">_use_named_call</span>
+  <span class="n">use_named_call_prev</span> <span class="o">=</span> <span class="n">_use_named_call</span>
+  <span class="n">_use_named_call</span> <span class="o">=</span> <span class="n">enable</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">yield</span>
+  <span class="k">finally</span><span class="p">:</span>
+    <span class="n">_use_named_call</span> <span class="o">=</span> <span class="n">use_named_call_prev</span>
 
 
 <span class="c1"># Utilities for pytrees of Modules defined inside setup()</span>
@@ -267,7 +286,7 @@
 
 <span class="k">def</span> <span class="nf">_all_names_on_object</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
   <span class="sd">&quot;&quot;&quot;Gets all names of attributes on `obj` and its classes throughout MRO.</span>
-<span class="sd">  </span>
+
 <span class="sd">  Args:</span>
 <span class="sd">    obj: The object to get names for.</span>
 <span class="sd">  Returns:</span>
@@ -282,7 +301,14 @@
 <span class="k">def</span> <span class="nf">_freeze_attr</span><span class="p">(</span><span class="n">val</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
   <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">FrozenDict</span><span class="p">)):</span>
     <span class="k">return</span> <span class="n">FrozenDict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">_freeze_attr</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">val</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
-  <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+  <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+    <span class="c1"># Special case namedtuples and special JAX tuple structures otherwise they</span>
+    <span class="c1"># would be downgraded to normal tuples.</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="s1">&#39;_fields&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;PartitionSpec&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">val</span><span class="p">)(</span><span class="o">*</span><span class="p">[</span><span class="n">_freeze_attr</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">val</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_freeze_attr</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">val</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_freeze_attr</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">val</span><span class="p">)</span>
   <span class="k">else</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">val</span>
@@ -292,7 +318,7 @@
 <span class="c1"># -----------------------------------------------------------------------------</span>
 <span class="k">def</span> <span class="nf">compact</span><span class="p">(</span><span class="n">fun</span><span class="p">:</span> <span class="n">_CallableT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_CallableT</span><span class="p">:</span>
   <span class="sd">&quot;&quot;&quot;Marks the given module method allowing inlined submodules.</span>
-<span class="sd">  </span>
+
 <span class="sd">  Methods wrapped in @compact can define submodules directly within the method.</span>
 
 <span class="sd">  For instance::</span>
@@ -301,7 +327,7 @@
 <span class="sd">    __call__(self, x, features):</span>
 <span class="sd">      x = nn.Dense(features)(x)</span>
 <span class="sd">      ...</span>
-<span class="sd">  </span>
+
 <span class="sd">  At most one method in each Module may be wrapped with @compact.</span>
 
 <span class="sd">  Args:</span>
@@ -313,9 +339,45 @@
   <span class="k">return</span> <span class="n">fun</span>
 
 
+<span class="k">def</span> <span class="nf">nowrap</span><span class="p">(</span><span class="n">fun</span><span class="p">:</span> <span class="n">_CallableT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_CallableT</span><span class="p">:</span>
+  <span class="sd">&quot;&quot;&quot;Marks the given module method as a helper method that needn&#39;t be wrapped.</span>
+
+<span class="sd">  Methods wrapped in @nowrap are private helper methods that needn&#39;t be wrapped</span>
+<span class="sd">  with the state handler or a separate named_call transform.</span>
+
+<span class="sd">  This is needed in several concrete instances:</span>
+<span class="sd">   - if you have a helper method that returns Modules or Variables to prevent</span>
+<span class="sd">     it from being functionalized by named_call. (Functionalized methods</span>
+<span class="sd">     can&#39;t return Modules/Variables.)</span>
+<span class="sd">   - if you&#39;re subclassing a method like Module.param and don&#39;t want this</span>
+<span class="sd">     overriden core function decorated with the state management wrapper.</span>
+<span class="sd">   - If you want a method to be callable from an unbound Module (e.g.: a</span>
+<span class="sd">     function of construction of arguments that doesn&#39;t depend on params/RNGs)</span>
+
+<span class="sd">  For instance::</span>
+
+<span class="sd">    @nowrap</span>
+<span class="sd">    def _make_dense(self, num_features):</span>
+<span class="sd">      return nn.Dense(num_features)</span>
+
+<span class="sd">    @compact</span>
+<span class="sd">    def __call__(self, x):</span>
+<span class="sd">      # now safe to use constructor helper even if using named_call</span>
+<span class="sd">      dense = self._dense(self.num_features)</span>
+<span class="sd">      return dense(x)</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    fun: The Module method to mark as nowrap.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    The given function `fun` marked as nowrap.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">fun</span><span class="o">.</span><span class="n">nowrap</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="k">return</span> <span class="n">fun</span>
+
+
 <span class="k">def</span> <span class="nf">_get_local_method_names</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">exclude</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
   <span class="sd">&quot;&quot;&quot;Gets method names of a class, excluding class and static methods.</span>
-<span class="sd">  </span>
+
 <span class="sd">  Args:</span>
 <span class="sd">    cls: The class to get method names for.</span>
 <span class="sd">    excludes: Names to exclude from output.</span>
@@ -333,7 +395,7 @@
 
 <span class="k">def</span> <span class="nf">wrap_method_once</span><span class="p">(</span><span class="n">fun</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
   <span class="sd">&quot;&quot;&quot;Manages Module state for a given user-defined method.</span>
-<span class="sd">  </span>
+
 <span class="sd">  Args:</span>
 <span class="sd">    fun: User-defined Module method to manage state for.</span>
 <span class="sd">  Returns:</span>
@@ -352,39 +414,9 @@
     <span class="c1"># otherwise call the wrapped function as is.</span>
     <span class="k">if</span> <span class="n">args</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Module</span><span class="p">):</span>
       <span class="bp">self</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_wrapped_method</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="k">return</span> <span class="n">fun</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">is_compact_method</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="s1">&#39;compact&#39;</span><span class="p">)</span>
-    <span class="n">is_setup_method</span> <span class="o">=</span> <span class="n">fun</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;setup&#39;</span>
-    <span class="c1"># We lazily call setup() only when needed.</span>
-    <span class="k">if</span> <span class="n">is_setup_method</span><span class="p">:</span>
-      <span class="n">is_recurrent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">in_setup</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">in_setup</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="k">else</span><span class="p">:</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">_try_setup</span><span class="p">()</span>
-
-    <span class="k">if</span> <span class="n">is_compact_method</span><span class="p">:</span>
-      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">CallCompactUnboundModuleError</span><span class="p">()</span>
-      <span class="n">is_recurrent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">in_compact_method</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">in_compact_method</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">_context</span><span class="o">.</span><span class="n">module_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-      <span class="n">y</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-      <span class="k">if</span> <span class="n">_context</span><span class="o">.</span><span class="n">capture_stack</span><span class="p">:</span>
-        <span class="n">filter_fn</span> <span class="o">=</span> <span class="n">_context</span><span class="o">.</span><span class="n">capture_stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">filter_fn</span> <span class="ow">and</span> <span class="n">filter_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="o">.</span><span class="vm">__name__</span><span class="p">):</span>
-          <span class="bp">self</span><span class="o">.</span><span class="n">sow</span><span class="p">(</span><span class="s1">&#39;intermediates&#39;</span><span class="p">,</span> <span class="n">fun</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-      <span class="k">return</span> <span class="n">y</span>
-    <span class="k">finally</span><span class="p">:</span>
-      <span class="n">_context</span><span class="o">.</span><span class="n">module_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-      <span class="k">if</span> <span class="n">is_compact_method</span><span class="p">:</span>
-        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;scope&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">rewound</span><span class="p">())</span>
-      <span class="c1"># setup or compact calls can be recurrent for example due to super calls</span>
-      <span class="c1"># resetting the state would cause is compact/setup method</span>
-      <span class="c1"># to be set to False prematurely.</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">is_compact_method</span> <span class="ow">or</span> <span class="n">is_setup_method</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_recurrent</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
   <span class="n">wrapped_module_method</span><span class="o">.</span><span class="n">method_handler_wrapped</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="k">return</span> <span class="n">wrapped_module_method</span>
 
@@ -393,14 +425,20 @@
   <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">hash_fn</span><span class="p">)</span>
   <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Can</span><span class="se">\&#39;</span><span class="s1">t call __hash__ on modules that hold variables.&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">hash_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+      <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Can</span><span class="se">\&#39;</span><span class="s1">t call __hash__ on modules that hold variables.&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">hash_value</span> <span class="o">=</span> <span class="n">hash_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Failed to hash Flax Module.  &#39;</span>
+                      <span class="s1">&#39;The module probably contains unhashable attributes.  &#39;</span>
+                      <span class="sa">f</span><span class="s1">&#39;Module=</span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">exc</span>
+    <span class="k">return</span> <span class="n">hash_value</span>
   <span class="k">return</span> <span class="n">wrapped</span>
 
 
 <span class="k">def</span> <span class="nf">_get_unbound_fn</span><span class="p">(</span><span class="n">method_or_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
   <span class="sd">&quot;&quot;&quot;Returns an unbound function from a method that is possibly bound.</span>
-<span class="sd">  </span>
+
 <span class="sd">  This means that if the passed function belongs of an instance of a class, then</span>
 <span class="sd">  the returned function does no longer depend on the instance, which is passed</span>
 <span class="sd">  as the first argument to the function.</span>
@@ -439,7 +477,7 @@
 
   <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Resets transient state.</span>
-<span class="sd">    </span>
+
 <span class="sd">    This function is called after each module method, so only attributes that</span>
 <span class="sd">    are method-dependent are reset.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -486,7 +524,17 @@
 <span class="c1"># -----------------------------------------------------------------------------</span>
 
 
-<div class="viewcode-block" id="Module"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Module.html#netket.nn.Module">[docs]</a><span class="k">class</span> <span class="nc">Module</span><span class="p">:</span>
+<span class="c1"># This metaclass + decorator is used by static analysis tools recognize that</span>
+<span class="c1"># Module behaves as a dataclass (attributes are constructor args).</span>
+<span class="k">if</span> <span class="n">typing</span><span class="o">.</span><span class="n">TYPE_CHECKING</span><span class="p">:</span>
+  <span class="nd">@__dataclass_transform__</span><span class="p">()</span>
+  <span class="k">class</span> <span class="nc">ModuleMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="k">pass</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">ModuleMeta</span> <span class="o">=</span> <span class="nb">type</span>
+
+
+<div class="viewcode-block" id="Module"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Module.html#netket.nn.Module">[docs]</a><span class="k">class</span> <span class="nc">Module</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ModuleMeta</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Base class for all neural network modules. Layers and models should subclass this class.</span>
 
 <span class="sd">  All Flax Modules are Python 3.7</span>
@@ -514,18 +562,24 @@
 <span class="sd">      def __call__(self, x):</span>
 <span class="sd">        return self.dense2(nn.relu(self.dense1(x)))</span>
 
-<span class="sd">  Optionally, for more concise module implementations where submodules </span>
+<span class="sd">  Optionally, for more concise module implementations where submodules</span>
 <span class="sd">  definitions are co-located with their usage, you can use the</span>
 <span class="sd">  :meth:`compact` wrapper.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
 
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="c1"># this stub makes sure pytype accepts constructor arguments.</span>
-    <span class="k">pass</span>
+  <span class="k">if</span> <span class="n">typing</span><span class="o">.</span><span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+      <span class="c1"># this stub makes sure pytype accepts constructor arguments.</span>
+      <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+      <span class="c1"># this stub allows pytype to accept Modules as Callables.</span>
+      <span class="k">pass</span>
 
   <span class="nd">@classmethod</span>
-  <span class="k">def</span> <span class="nf">__init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">__init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Automatically initializes all subclasses as custom dataclasses.&quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init_subclass__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="c1"># All Flax Modules are dataclasses.  We force this convention since</span>
     <span class="c1"># it encourages the stateless behavior needed to clone module instances for</span>
     <span class="c1"># functional transformation.  Instead of using a python metaclass, we</span>
@@ -545,7 +599,12 @@
     <span class="sd">&quot;&quot;&quot;Handles final optional dataclass attributes: `parent` and `name`.&quot;&quot;&quot;</span>
     <span class="c1"># Use cls.__dict__ to get annotations of cls itself (no parent class).</span>
     <span class="n">annotations</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;__annotations__&#39;</span><span class="p">,</span> <span class="p">{}))</span>
-    <span class="k">if</span> <span class="s1">&#39;parent&#39;</span> <span class="ow">in</span> <span class="n">annotations</span> <span class="ow">or</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">annotations</span><span class="p">:</span>
+    <span class="n">parent_annotation</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Module&quot;</span><span class="p">],</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Scope&quot;</span><span class="p">],</span>
+                              <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;_Sentinel&quot;</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;parent&#39;</span> <span class="ow">in</span> <span class="n">annotations</span>
+        <span class="ow">and</span> <span class="n">annotations</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">parent_annotation</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">ReservedModuleAttributeError</span><span class="p">(</span><span class="n">annotations</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">annotations</span> <span class="ow">and</span> <span class="n">annotations</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
       <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">ReservedModuleAttributeError</span><span class="p">(</span><span class="n">annotations</span><span class="p">)</span>
     <span class="c1"># Add `parent` and `name` default fields at end.</span>
     <span class="c1"># We temporarily modify base class __dataclass_fields__ to force desired</span>
@@ -562,10 +621,20 @@
       <span class="k">if</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">pdf</span><span class="p">:</span>
         <span class="n">clz</span><span class="o">.</span><span class="n">__dataclass_fields__</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>  <span class="c1"># pytype: disable=attribute-error</span>
 
-    <span class="n">annotations</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Module&quot;</span><span class="p">],</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Scope&quot;</span><span class="p">],</span>
-                                  <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;_Sentinel&quot;</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">annotations</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent_annotation</span>
     <span class="bp">cls</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">_unspecified_parent</span><span class="p">)</span>
     <span class="n">annotations</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span>
+
+    <span class="c1"># any non-init field will only be set in setup</span>
+    <span class="c1"># During __hash__ and __eq__ the field is not set yet</span>
+    <span class="c1"># so it should not be used in compare, hash or repr.</span>
+    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">annotations</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+      <span class="n">field_meta</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field_meta</span><span class="p">,</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">Field</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">field_meta</span><span class="o">.</span><span class="n">init</span><span class="p">:</span>
+        <span class="n">field_meta</span><span class="o">.</span><span class="n">compare</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">field_meta</span><span class="o">.</span><span class="n">hash</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">field_meta</span><span class="o">.</span><span class="n">repr</span> <span class="o">=</span> <span class="kc">False</span>
+
     <span class="bp">cls</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># default value of name is None.</span>
     <span class="bp">cls</span><span class="o">.</span><span class="vm">__annotations__</span> <span class="o">=</span> <span class="n">annotations</span>
     <span class="c1"># Now apply dataclass transform (which operates in-place).</span>
@@ -595,17 +664,60 @@
                    <span class="s1">&#39;__post_init__&#39;</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">_get_local_method_names</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="n">exclusions</span><span class="p">):</span>
       <span class="n">method</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;nowrap&#39;</span><span class="p">):</span>
+        <span class="k">continue</span>
       <span class="n">wrapped_method</span> <span class="o">=</span> <span class="n">wrap_method_once</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>
-      <span class="k">if</span> <span class="n">_use_named_call</span> <span class="ow">and</span> <span class="n">key</span> <span class="o">!=</span> <span class="s1">&#39;setup&#39;</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s1">&#39;setup&#39;</span><span class="p">:</span>
         <span class="c1"># We import named_call at runtime to avoid a circular import issue.</span>
         <span class="kn">from</span> <span class="nn">flax.linen.transforms</span> <span class="kn">import</span> <span class="n">named_call</span>  <span class="c1"># pylint: disable=g-import-not-at-top</span>
-        <span class="n">wrapped_method</span> <span class="o">=</span> <span class="n">named_call</span><span class="p">(</span><span class="n">wrapped_method</span><span class="p">)</span>
+        <span class="n">wrapped_method</span> <span class="o">=</span> <span class="n">named_call</span><span class="p">(</span><span class="n">wrapped_method</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
       <span class="nb">setattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">wrapped_method</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">cls</span>
 
+  <span class="k">def</span> <span class="nf">_call_wrapped_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;&quot;Calls a wrapped method.</span>
+
+<span class="sd">    This function is responsible for setting up the thread local state</span>
+<span class="sd">    correctly before calling the method and cleaning up afterwards.</span>
+<span class="sd">    This includes storing intermediates, setup of the compact scope,</span>
+<span class="sd">    and making sure setup is called before any other method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">is_compact_method</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="s1">&#39;compact&#39;</span><span class="p">)</span>
+    <span class="n">fun_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="s1">&#39;unnamed_function&#39;</span><span class="p">)</span>
+    <span class="n">is_setup_method</span> <span class="o">=</span> <span class="n">fun_name</span> <span class="o">==</span> <span class="s1">&#39;setup&#39;</span>
+    <span class="c1"># We lazily call setup() only when needed.</span>
+    <span class="k">if</span> <span class="n">is_setup_method</span><span class="p">:</span>
+      <span class="n">is_recurrent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">in_setup</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">in_setup</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_try_setup</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">is_compact_method</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">CallCompactUnboundModuleError</span><span class="p">()</span>
+      <span class="n">is_recurrent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">in_compact_method</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">in_compact_method</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_context</span><span class="o">.</span><span class="n">module_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">_context</span><span class="o">.</span><span class="n">capture_stack</span><span class="p">:</span>
+        <span class="n">filter_fn</span> <span class="o">=</span> <span class="n">_context</span><span class="o">.</span><span class="n">capture_stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">filter_fn</span> <span class="ow">and</span> <span class="n">filter_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun_name</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">sow</span><span class="p">(</span><span class="s1">&#39;intermediates&#39;</span><span class="p">,</span> <span class="n">fun_name</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">y</span>
+    <span class="k">finally</span><span class="p">:</span>
+      <span class="n">_context</span><span class="o">.</span><span class="n">module_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+      <span class="k">if</span> <span class="n">is_compact_method</span><span class="p">:</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;scope&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">rewound</span><span class="p">())</span>
+      <span class="c1"># setup or compact calls can be recurrent for example due to super calls</span>
+      <span class="c1"># resetting the state would cause is compact/setup method</span>
+      <span class="c1"># to be set to False prematurely.</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">is_compact_method</span> <span class="ow">or</span> <span class="n">is_setup_method</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_recurrent</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
   <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Sets an attribute on this Module.</span>
-<span class="sd">    </span>
+
 <span class="sd">    We overload setattr solely to support pythonic naming via assignment of</span>
 <span class="sd">    submodules in the special :meth:`setup` function::</span>
 
@@ -797,9 +909,9 @@
             <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Scope</span><span class="p">,</span> <span class="s1">&#39;Module&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="o">**</span><span class="n">updates</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Module&#39;</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Creates a clone of this Module, with optionally updated arguments.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Args:</span>
-<span class="sd">      parent: The parent of the clone. The clone will have no parent if no </span>
+<span class="sd">      parent: The parent of the clone. The clone will have no parent if no</span>
 <span class="sd">        explicit parent is specified.</span>
 <span class="sd">      **updates: Attribute updates.</span>
 <span class="sd">    Returns:</span>
@@ -889,7 +1001,7 @@
 
 <span class="sd">    See :mod:`flax.core.variables` for more explanation on variables and</span>
 <span class="sd">    collections.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Args:</span>
 <span class="sd">      col: The variable collection name.</span>
 <span class="sd">      name: The name of the variable.</span>
@@ -908,7 +1020,7 @@
 
 <div class="viewcode-block" id="Module.make_rng"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.make_rng">[docs]</a>  <span class="k">def</span> <span class="nf">make_rng</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PRNGKey</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns a new RNG key from a given RNG sequence for this Module.</span>
-<span class="sd">    </span>
+
 <span class="sd">    The new RNG key is split from the previous one. Thus, every call to</span>
 <span class="sd">    `make_rng` returns a new RNG key, while still guaranteeing full</span>
 <span class="sd">    reproducibility.</span>
@@ -924,7 +1036,8 @@
       <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t use RNGs on unbound modules&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">make_rng</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Module.bind"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.bind">[docs]</a>  <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="Module.bind"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.bind">[docs]</a>  <span class="nd">@traceback_util</span><span class="o">.</span><span class="n">api_boundary</span>
+  <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
            <span class="n">variables</span><span class="p">:</span> <span class="n">VariableDict</span><span class="p">,</span>
            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
            <span class="n">rngs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RNGSequences</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -944,15 +1057,24 @@
 
 <span class="sd">    Example::</span>
 
+<span class="sd">      import jax</span>
+<span class="sd">      import jax.numpy as jnp</span>
+<span class="sd">      import flax.linen as nn</span>
+
 <span class="sd">      class AutoEncoder(nn.Module):</span>
 <span class="sd">        def setup(self):</span>
 <span class="sd">          self.encoder = nn.Dense(3)</span>
 <span class="sd">          self.decoder = nn.Dense(5)</span>
-<span class="sd">      </span>
+
+<span class="sd">        def __call__(self, x):</span>
+<span class="sd">          return self.decoder(self.encoder(x))</span>
+
+<span class="sd">      x = jnp.ones((16, 9))</span>
 <span class="sd">      ae = AutoEncoder()</span>
+<span class="sd">      variables = ae.init(jax.random.PRNGKey(0), x)</span>
 <span class="sd">      model = ae.bind(variables)</span>
-<span class="sd">      z = model.encode(x)</span>
-<span class="sd">      x_reconstructed = model.decode(z)</span>
+<span class="sd">      z = model.encoder(x)</span>
+<span class="sd">      x_reconstructed = model.decoder(z)</span>
 
 
 <span class="sd">    Args:</span>
@@ -970,7 +1092,8 @@
     <span class="n">scope</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">variables</span><span class="p">,</span> <span class="n">rngs</span><span class="o">=</span><span class="n">rngs</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Module.apply"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.apply">[docs]</a>  <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="Module.apply"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.apply">[docs]</a>  <span class="nd">@traceback_util</span><span class="o">.</span><span class="n">api_boundary</span>
+  <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
             <span class="n">variables</span><span class="p">:</span> <span class="n">VariableDict</span><span class="p">,</span>
             <span class="o">*</span><span class="n">args</span><span class="p">,</span>
             <span class="n">rngs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RNGSequences</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -988,7 +1111,7 @@
 
 <span class="sd">      model = Transformer()</span>
 <span class="sd">      encoded = model.apply({&#39;params&#39;: params}, x, method=Transformer.encode)</span>
-<span class="sd">  </span>
+
 <span class="sd">    If a function instance is provided, the unbound function is used. For</span>
 <span class="sd">    instance, the example below is equivalent to the one above::</span>
 
@@ -1036,7 +1159,8 @@
         <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">,</span> <span class="n">capture_intermediates</span><span class="o">=</span><span class="n">capture_intermediates</span>
     <span class="p">)(</span><span class="n">variables</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">rngs</span><span class="o">=</span><span class="n">rngs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Module.init_with_output"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.init_with_output">[docs]</a>  <span class="k">def</span> <span class="nf">init_with_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="Module.init_with_output"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.init_with_output">[docs]</a>  <span class="nd">@traceback_util</span><span class="o">.</span><span class="n">api_boundary</span>
+  <span class="k">def</span> <span class="nf">init_with_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                        <span class="n">rngs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">PRNGKey</span><span class="p">,</span> <span class="n">RNGSequences</span><span class="p">],</span>
                        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
                        <span class="n">method</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1058,15 +1182,16 @@
 <span class="sd">      collections.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rngs</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-      <span class="k">if</span> <span class="n">rngs</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,):</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">core</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">_is_valid_rng</span><span class="p">(</span><span class="n">rngs</span><span class="p">):</span>
         <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">InvalidRngError</span><span class="p">(</span>
-            <span class="s1">&#39;RNGs should be of shape (2,) in Module &#39;</span>
+            <span class="s1">&#39;RNGs should be of shape (2,) or KeyArray in Module &#39;</span>
             <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">, but rngs are: </span><span class="si">{</span><span class="n">rngs</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
       <span class="n">rngs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="n">rngs</span><span class="p">}</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
         <span class="p">{},</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">rngs</span><span class="o">=</span><span class="n">rngs</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Module.init"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.init">[docs]</a>  <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="Module.init"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.init">[docs]</a>  <span class="nd">@traceback_util</span><span class="o">.</span><span class="n">api_boundary</span>
+  <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
            <span class="n">rngs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">PRNGKey</span><span class="p">,</span> <span class="n">RNGSequences</span><span class="p">],</span>
            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
            <span class="n">method</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1135,21 +1260,29 @@
 
 <span class="sd">    Example::</span>
 
+<span class="sd">      import jax</span>
+<span class="sd">      import jax.numpy as jnp</span>
+<span class="sd">      import flax.linen as nn</span>
+
 <span class="sd">      class Foo(nn.Module):</span>
 <span class="sd">        @nn.compact</span>
 <span class="sd">        def __call__(self, x):</span>
 <span class="sd">          h = nn.Dense(4)(x)</span>
 <span class="sd">          self.sow(&#39;intermediates&#39;, &#39;h&#39;, h)</span>
 <span class="sd">          return nn.Dense(2)(h)</span>
-<span class="sd">      y, state = Foo.apply(params, x, mutable=[&#39;intermediates&#39;])</span>
+
+<span class="sd">      x = jnp.ones((16, 9))</span>
+<span class="sd">      model = Foo()</span>
+<span class="sd">      variables = model.init(jax.random.PRNGKey(0), x)</span>
+<span class="sd">      y, state = model.apply(variables, x, mutable=[&#39;intermediates&#39;])</span>
 <span class="sd">      print(state[&#39;intermediates&#39;])  # {&#39;h&#39;: (...,)}</span>
-<span class="sd">    </span>
+
 <span class="sd">    By default the values are stored in a tuple and each stored value</span>
 <span class="sd">    is appended at the end. This way all intermediates can be tracked when</span>
 <span class="sd">    the same module is called multiple times. Alternatively, a custom</span>
 <span class="sd">    init/reduce function can be passed::</span>
 
-<span class="sd">      class Foo(nn.Module):</span>
+<span class="sd">      class Foo2(nn.Module):</span>
 <span class="sd">        @nn.compact</span>
 <span class="sd">        def __call__(self, x):</span>
 <span class="sd">          init_fn = lambda: 0</span>
@@ -1159,16 +1292,19 @@
 <span class="sd">          self.sow(&#39;intermediates&#39;, &#39;h&#39;, x * 2,</span>
 <span class="sd">                   init_fn=init_fn, reduce_fn=reduce_fn)</span>
 <span class="sd">          return x</span>
-<span class="sd">      y, state = Foo.apply(params, 1, mutable=[&#39;intermediates&#39;])</span>
-<span class="sd">      print(state[&#39;intermediates&#39;])  # ==&gt; {&#39;h&#39;: 3}</span>
+
+<span class="sd">      model = Foo2()</span>
+<span class="sd">      variables = model.init(jax.random.PRNGKey(0), x)</span>
+<span class="sd">      y, state = model.apply(variables, jnp.ones((1, 1)), mutable=[&#39;intermediates&#39;])</span>
+<span class="sd">      print(state[&#39;intermediates&#39;])  # ==&gt; {&#39;h&#39;: [[3.]]}</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      col: The name of the variable collection.</span>
 <span class="sd">      name: The name of the variable.</span>
 <span class="sd">      value: The value of the variable.</span>
 <span class="sd">      reduce_fn: The function used to combine the existing value with</span>
-<span class="sd">        the new value the default is to append the value to a tuple.</span>
-<span class="sd">      init_fn: For the first value stored reduce_fn will be passed</span>
+<span class="sd">        the new value. The default is to append the value to a tuple.</span>
+<span class="sd">      init_fn: For the first value stored, `reduce_fn` will be passed</span>
 <span class="sd">        the result of `init_fn` together with the value to be stored.</span>
 <span class="sd">        The default is an empty tuple.</span>
 
@@ -1225,7 +1361,7 @@
   <span class="k">else</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">a</span>
 
-
+<span class="nd">@traceback_util</span><span class="o">.</span><span class="n">api_boundary</span>
 <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">module</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span>
           <span class="n">mutable</span><span class="p">:</span> <span class="n">CollectionFilter</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
           <span class="n">capture_intermediates</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Module</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
@@ -1244,7 +1380,7 @@
 <span class="sd">      y = foo.decode(z)</span>
 <span class="sd">      # ...</span>
 <span class="sd">      return y</span>
-<span class="sd">    </span>
+
 <span class="sd">    foo = Foo()</span>
 <span class="sd">    f_jitted = jax.jit(nn.apply(f, foo))</span>
 <span class="sd">    f_jitted(variables, x)</span>
@@ -1284,6 +1420,7 @@
   <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">scope_fn</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">)</span>
 
 
+<span class="nd">@traceback_util</span><span class="o">.</span><span class="n">api_boundary</span>
 <span class="k">def</span> <span class="nf">init_with_output</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">module</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span>
                      <span class="n">mutable</span><span class="p">:</span> <span class="n">CollectionFilter</span> <span class="o">=</span> <span class="n">DenyList</span><span class="p">(</span><span class="s2">&quot;intermediates&quot;</span><span class="p">),</span>
                      <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">FrozenVariableDict</span><span class="p">]]:</span>
@@ -1302,7 +1439,7 @@
 <span class="sd">      y = foo.decode(z)</span>
 <span class="sd">      # ...</span>
 <span class="sd">      return y</span>
-<span class="sd">    </span>
+
 <span class="sd">    foo = Foo()</span>
 <span class="sd">    f_jitted = jax.jit(nn.init_with_output(f, foo))</span>
 <span class="sd">    y, variables = f_jitted(rng, x)</span>
@@ -1328,6 +1465,7 @@
   <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">scope_fn</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">)</span>
 
 
+<span class="nd">@traceback_util</span><span class="o">.</span><span class="n">api_boundary</span>
 <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">module</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span>
          <span class="n">mutable</span><span class="p">:</span> <span class="n">CollectionFilter</span> <span class="o">=</span> <span class="n">DenyList</span><span class="p">(</span><span class="s2">&quot;intermediates&quot;</span><span class="p">),</span>
          <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">FrozenVariableDict</span><span class="p">]:</span>
@@ -1346,7 +1484,7 @@
 <span class="sd">      y = foo.decode(z)</span>
 <span class="sd">      # ...</span>
 <span class="sd">      return y</span>
-<span class="sd">    </span>
+
 <span class="sd">    foo = Foo()</span>
 <span class="sd">    f_jitted = jax.jit(nn.init(f, foo))</span>
 <span class="sd">    variables = f_jitted(rng, x)</span>

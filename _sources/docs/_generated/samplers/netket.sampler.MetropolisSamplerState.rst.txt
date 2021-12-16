@@ -6,8 +6,15 @@
 .. autoclass:: MetropolisSamplerState
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.sampler.MetropolisSamplerState
+         :parts: 2
+
+
    
       
    .. rst-class:: class-dl-groups
@@ -16,9 +23,7 @@
       .. autoattribute:: MetropolisSamplerState.acceptance
       .. autoattribute:: MetropolisSamplerState.acceptance_ratio
       .. autoattribute:: MetropolisSamplerState.n_accepted
-      .. autoattribute:: MetropolisSamplerState.n_accepted_proc
       .. autoattribute:: MetropolisSamplerState.n_steps
-      .. autoattribute:: MetropolisSamplerState.n_steps_proc
    
       
    .. rst-class:: class-dl-groups

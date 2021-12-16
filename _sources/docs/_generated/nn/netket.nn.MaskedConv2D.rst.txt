@@ -6,8 +6,15 @@
 .. autoclass:: MaskedConv2D
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.nn.MaskedConv2D
+         :parts: 2
+
+
    
       
    .. rst-class:: class-dl-groups

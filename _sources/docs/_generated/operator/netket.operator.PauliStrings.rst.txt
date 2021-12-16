@@ -6,8 +6,15 @@
 .. autoclass:: PauliStrings
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.operator.PauliStrings
+         :parts: 2
+
+
    
 
    .. automethod:: PauliStrings.__init__
@@ -32,12 +39,15 @@
       .. automethod:: PauliStrings.collect
       .. automethod:: PauliStrings.conj
       .. automethod:: PauliStrings.conjugate
+      .. automethod:: PauliStrings.from_openfermion
       .. automethod:: PauliStrings.get_conn
       .. automethod:: PauliStrings.get_conn_flattened
       .. automethod:: PauliStrings.get_conn_padded
+      .. automethod:: PauliStrings.identity
       .. automethod:: PauliStrings.n_conn
       .. automethod:: PauliStrings.to_dense
       .. automethod:: PauliStrings.to_linear_operator
+      .. automethod:: PauliStrings.to_qobj
       .. automethod:: PauliStrings.to_sparse
       .. automethod:: PauliStrings.transpose
 

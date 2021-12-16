@@ -1,0 +1,31 @@
+﻿netket.models.FastARNNConv1D
+============================
+
+.. currentmodule:: netket.models
+
+.. autoclass:: FastARNNConv1D
+   :show-inheritance:
+
+
+   
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Attributes
+      .. autoattribute:: FastARNNConv1D.kernel_dilation
+      .. autoattribute:: FastARNNConv1D.machine_pow
+      .. autoattribute:: FastARNNConv1D.precision
+      .. autoattribute:: FastARNNConv1D.use_bias
+      .. autoattribute:: FastARNNConv1D.variables
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Methods
+      .. automethod:: FastARNNConv1D.activation
+      .. automethod:: FastARNNConv1D.bias_init
+      .. automethod:: FastARNNConv1D.conditionals
+      .. automethod:: FastARNNConv1D.kernel_init
+
+   

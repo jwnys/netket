@@ -1,0 +1,6 @@
+﻿netket.experimental.dynamics.RK45
+=================================
+
+.. currentmodule:: netket.experimental.dynamics
+
+.. autodata:: RK45

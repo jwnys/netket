@@ -6,8 +6,15 @@
 .. autoclass:: VMC
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.driver.VMC
+         :parts: 2
+
+
    
 
    .. automethod:: VMC.__init__

@@ -6,8 +6,15 @@
 .. autoclass:: CustomHilbert
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.hilbert.CustomHilbert
+         :parts: 2
+
+
    
 
    .. automethod:: CustomHilbert.__init__

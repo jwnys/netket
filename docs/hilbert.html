@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Hilbert module &#8212; netket v3.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jumbo-style.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/rtd_theme.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script src="../_static/js/rtd_theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Operator module" href="operator.html" />
+    <link rel="prev" title="The Lindblad Master Equation" href="superop.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/logonav.png"></span>
+          NetKet</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../getting_started.html">Get Started</a></li>
+                <li><a href="getting_started.html">Documentation</a></li>
+                <li><a href="../tutorials.html">Tutorials</a></li>
+                <li><a href="../citing.html">Citing NetKet</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="https://github.com/netket/netket"><i class="fab fa-github" aria-hidden="true"></i></a></li>
+                <li><a href="https://twitter.com/NetKetOrg"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><div class="sidenav-header">
+  <div class="h4"> 
+    Netket 3.0 Documentation
+  </div>
+
+  <!---
+  	<div role="search">
+  <form id="rtd-search-form" class="wy-form"  action="../search.html" method="get">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+  ---->
+</div>
+
+<p class="caption"><span class="caption-text">Reference Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#installation-and-requirements">Installation and requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getting_started.html#mpi">MPI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#jax-flax-extensions">Jax/Flax extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#legacy-api-support-api-before-2021">Legacy API support (API before 2021)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#commented-example">Commented Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#netket-3-3-in-development">NetKet 3.3 (In development)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#new-features">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#breaking-changes">Breaking Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#internal-changes">Internal Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#bug-fixes">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#netket-3-2-26-november-2021">NetKet 3.2 (26 November 2021)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id1">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id2">Breaking Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id3">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#netket-3-1-20-october-2021">NetKet 3.1 (20 October 2021)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id4">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id5">Breaking Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id6">Internal Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id7">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#netket-3-0-23-august-2021">NetKet 3.0 (23 august 2021)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id8">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id9">Breaking Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id10">Internal Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id11">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#netket-3-0b4-17-august-2021">NetKet 3.0b4 (17 august 2021)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id12">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id13">Breaking Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id14">Internal Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id15">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#netket-3-0b3-published-on-9-july-2021">NetKet 3.0b3 (published on 9 july 2021)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id16">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id17">Breaking Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id18">Internal Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id19">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#netket-3-0b2-published-on-31-may-2021">NetKet 3.0b2 (published on 31 May 2021)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id20">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id21">Breaking Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id22">Bug Fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#netket-3-0b1-published-beta-release">NetKet 3.0b1 (published beta release)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#api-changes">API Changes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="superop.html">The Lindblad Master Equation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="superop.html#the-density-matrix-and-the-liouvillian">The Density Matrix and the Liouvillian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="superop.html#computing-observables">Computing Observables</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Hilbert module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-abstracthilbert-interface">The <code class="docutils literal notranslate"><span class="pre">AbstractHilbert</span></code> interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#composing-hilbert-spaces">Composing Hilbert spaces</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#the-discretehilbert-interface">The <code class="docutils literal notranslate"><span class="pre">DiscreteHilbert</span></code> interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#indexable-spaces">Indexable spaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#constrained-hilbert-spaces">Constrained Hilbert spaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#defining-custom-constraints">Defining Custom constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-hilbert-spaces-with-jax-jitted-functions">Using Hilbert spaces with <span class="xref std std-ref">jax.jit</span>ted functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="operator.html">The Operator module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="operator.html#the-discreteoperator-interface">The DiscreteOperator interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="varstate.html">The Variational State Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="varstate.html#constructing-a-variational-state">Constructing a Variational State</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="varstate.html#defining-models-flax">Defining models: Flax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="varstate.html#mcstate">MCState</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="varstate.html#using-a-monte-carlo-variational-state">Using a Monte Carlo Variational State</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="varstate.html#expectation-values">Expectation values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="varstate.html#sampling">Sampling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="varstate.html#collecting-the-state-vector">Collecting the state-vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="varstate.html#manipulating-the-parameters">Manipulating the parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="varstate.html#saving-and-loading-a-variational-state">Saving and Loading a Variational State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="varstate.html#using-exactstate-for-testing">Using ExactState for testing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sr.html">Quantum Geometric Tensor and Stochastic Reconfiguration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sr.html#stochastic-reconfiguration">Stochastic Reconfiguration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sr.html#using-stochastic-reconfiguration">Using stochastic reconfiguration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="drivers.html">The Drivers API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drivers.html#constructing-a-driver">Constructing a driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drivers.html#running-the-optimisation">Running the optimisation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sharp-bits.html">🔪 The Sharp Bits 🔪</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sharp-bits.html#parallelization">Parallelization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sharp-bits.html#running-on-cpu-when-gpus-are-present">Running on CPU when GPUs are present</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sharp-bits.html#using-gpus">Using GPUs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sharp-bits.html#nans-in-training-and-loss-of-precision">NaNs in training and loss of precision</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Extending NetKet</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="custom_models.html">Defining Custom Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_models.html#commonalities">Commonalities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="custom_models.html#defining-models-init-and-apply-functions">Defining models: init and apply functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="custom_models.html#using-flax-linen">Using Flax Linen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_models.html#using-jax-stax">Using Jax/Stax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_models.html#using-haiku">Using Haiku</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custom_expect.html">Overriding defaults in NetKet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_expect.html#netket-architecture-multiple-dispatch">NetKet Architecture: Multiple Dispatch</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custom_preconditioners.html">Defining Custom Preconditioners</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_preconditioners.html#the-preconditioner-interface">The preconditioner interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="custom_preconditioners.html#the-linearpreconditioner-interface">The LinearPreconditioner interface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="custom_preconditioners.html#bare-interface">Bare interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="custom_preconditioners.html#linearoperator-interface">LinearOperator interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="custom_preconditioners.html#the-preconditioner-function-api">The preconditioner function API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custom_operator.html">Defining Custom Operators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_operator.html#defining-a-custom-zero-operator">Defining a custom <em>zero</em> operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_operator.html#defining-an-operator-from-scratch">Defining an operator from scratch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_operator.html#defining-an-operator-the-easy-way">Defining an operator the easy way</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_operator.html#comparison-of-the-two-approaches">Comparison of the two approaches</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to NetKet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#ways-to-contribute">Ways to contribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#contributing-code-using-pull-requests">Contributing code using pull requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#netket-pull-request-checklist">NetKet pull request checklist</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#single-change-commits-and-pull-requests">Single-change commits and pull requests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#python-coding-style">Python coding style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#docstrings-and-type-hints">Docstrings and Type Hints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#visibility-of-public-api">Visibility of public API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#full-github-test-suite">Full GitHub test suite</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="writing-tests.html">Writing Tests</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="writing-tests.html#test-structure-and-common-files">Test structure and common files.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-tests.html#tests-and-mpi">Tests and MPI</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api-stability.html">API Stability</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-stability.html#public-api-definition">Public API Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-stability.html#netket-nn-module">Netket.nn module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-stability.html#storing-the-environment">Storing the environment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Public API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#graph">Graph</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_generated/graph/netket.graph.AbstractGraph.html">netket.graph.AbstractGraph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/graph/netket.graph.Graph.html">netket.graph.Graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/graph/netket.graph.Lattice.html">netket.graph.Lattice</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/graph/netket.graph.Edgeless.html">netket.graph.Edgeless</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/graph/netket.graph.Hypercube.html">netket.graph.Hypercube</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/graph/netket.graph.lattice.LatticeSite.html">netket.graph.lattice.LatticeSite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/graph/netket.graph.Chain.html">netket.graph.Chain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/graph/netket.graph.Grid.html">netket.graph.Grid</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#hilbert">Hilbert</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_generated/hilbert/netket.hilbert.AbstractHilbert.html">netket.hilbert.AbstractHilbert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/hilbert/netket.hilbert.ContinuousHilbert.html">netket.hilbert.ContinuousHilbert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html">netket.hilbert.DiscreteHilbert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/hilbert/netket.hilbert.HomogeneousHilbert.html">netket.hilbert.HomogeneousHilbert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/hilbert/netket.hilbert.CustomHilbert.html">netket.hilbert.CustomHilbert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/hilbert/netket.hilbert.TensorHilbert.html">netket.hilbert.TensorHilbert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/hilbert/netket.hilbert.DoubledHilbert.html">netket.hilbert.DoubledHilbert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/hilbert/netket.hilbert.Spin.html">netket.hilbert.Spin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/hilbert/netket.hilbert.Qubit.html">netket.hilbert.Qubit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/hilbert/netket.hilbert.Fock.html">netket.hilbert.Fock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/hilbert/netket.hilbert.Particle.html">netket.hilbert.Particle</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#operators">Operators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_generated/operator/netket.operator.AbstractOperator.html">netket.operator.AbstractOperator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/operator/netket.operator.DiscreteOperator.html">netket.operator.DiscreteOperator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/operator/netket.operator.BoseHubbard.html">netket.operator.BoseHubbard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/operator/netket.operator.GraphOperator.html">netket.operator.GraphOperator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/operator/netket.operator.LocalOperator.html">netket.operator.LocalOperator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/operator/netket.operator.Ising.html">netket.operator.Ising</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/operator/netket.operator.Heisenberg.html">netket.operator.Heisenberg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/operator/netket.operator.PauliStrings.html">netket.operator.PauliStrings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/operator/netket.operator.LocalLiouvillian.html">netket.operator.LocalLiouvillian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#pre-defined-operators">Pre-defined operators</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/operator/netket.operator.boson.create.html">netket.operator.boson.create</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/operator/netket.operator.boson.destroy.html">netket.operator.boson.destroy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/operator/netket.operator.boson.number.html">netket.operator.boson.number</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/operator/netket.operator.boson.proj.html">netket.operator.boson.proj</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/operator/netket.operator.spin.sigmax.html">netket.operator.spin.sigmax</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/operator/netket.operator.spin.sigmay.html">netket.operator.spin.sigmay</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/operator/netket.operator.spin.sigmaz.html">netket.operator.spin.sigmaz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/operator/netket.operator.spin.sigmap.html">netket.operator.spin.sigmap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/operator/netket.operator.spin.sigmam.html">netket.operator.spin.sigmam</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#continuous-space-operators">Continuous space operators</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/operator/netket.operator.ContinuousOperator.html">netket.operator.ContinuousOperator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/operator/netket.operator.KineticEnergy.html">netket.operator.KineticEnergy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/operator/netket.operator.PotentialEnergy.html">netket.operator.PotentialEnergy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/operator/netket.operator.SumOperator.html">netket.operator.SumOperator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#exact-solvers">Exact solvers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_generated/exact/netket.exact.full_ed.html">netket.exact.full_ed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/exact/netket.exact.lanczos_ed.html">netket.exact.lanczos_ed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/exact/netket.exact.steady_state.html">netket.exact.steady_state</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#sampler">Sampler</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#generic-api">Generic API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.sampler_state.html">netket.sampler.sampler_state</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.reset.html">netket.sampler.reset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.sample_next.html">netket.sampler.sample_next</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.sample.html">netket.sampler.sample</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.samples.html">netket.sampler.samples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#list-of-samplers">List of Samplers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.Sampler.html">netket.sampler.Sampler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.ExactSampler.html">netket.sampler.ExactSampler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.MetropolisSampler.html">netket.sampler.MetropolisSampler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.MetropolisSamplerNumpy.html">netket.sampler.MetropolisSamplerNumpy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html">netket.experimental.sampler.MetropolisPtSampler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.MetropolisLocal.html">netket.sampler.MetropolisLocal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.MetropolisExchange.html">netket.sampler.MetropolisExchange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.MetropolisHamiltonian.html">netket.sampler.MetropolisHamiltonian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.experimental.sampler.MetropolisLocalPt.html">netket.experimental.sampler.MetropolisLocalPt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.experimental.sampler.MetropolisExchangePt.html">netket.experimental.sampler.MetropolisExchangePt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.ARDirectSampler.html">netket.sampler.ARDirectSampler</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#transition-rules">Transition Rules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.MetropolisRule.html">netket.sampler.MetropolisRule</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.rules.LocalRule.html">netket.sampler.rules.LocalRule</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.rules.ExchangeRule.html">netket.sampler.rules.ExchangeRule</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.rules.HamiltonianRule.html">netket.sampler.rules.HamiltonianRule</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.rules.HamiltonianRuleNumpy.html">netket.sampler.rules.HamiltonianRuleNumpy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.rules.CustomRuleNumpy.html">netket.sampler.rules.CustomRuleNumpy</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#internal-state">Internal State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.SamplerState.html">netket.sampler.SamplerState</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/samplers/netket.sampler.MetropolisSamplerState.html">netket.sampler.MetropolisSamplerState</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#pre-built-models">Pre-built models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.RBM.html">netket.models.RBM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.RBMModPhase.html">netket.models.RBMModPhase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.RBMMultiVal.html">netket.models.RBMMultiVal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.RBMSymm.html">netket.models.RBMSymm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.Jastrow.html">netket.models.Jastrow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.MPSPeriodic.html">netket.models.MPSPeriodic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.NDM.html">netket.models.NDM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.GCNN.html">netket.models.GCNN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.AbstractARNN.html">netket.models.AbstractARNN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.ARNNDense.html">netket.models.ARNNDense</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.ARNNConv1D.html">netket.models.ARNNConv1D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.ARNNConv2D.html">netket.models.ARNNConv2D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.FastARNNConv1D.html">netket.models.FastARNNConv1D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/models/netket.models.FastARNNConv2D.html">netket.models.FastARNNConv2D</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#model-tools">Model tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_generated/nn/netket.nn.Module.html">netket.nn.Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#linear-modules">Linear Modules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.Dense.html">netket.nn.Dense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.DenseGeneral.html">netket.nn.DenseGeneral</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.DenseSymm.html">netket.nn.DenseSymm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.DenseEquivariant.html">netket.nn.DenseEquivariant</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.Conv.html">netket.nn.Conv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.Embed.html">netket.nn.Embed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.MaskedDense1D.html">netket.nn.MaskedDense1D</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.MaskedConv1D.html">netket.nn.MaskedConv1D</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.MaskedConv2D.html">netket.nn.MaskedConv2D</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#activation-functions">Activation functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.celu.html">netket.nn.celu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.elu.html">netket.nn.elu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.gelu.html">netket.nn.gelu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.glu.html">netket.nn.glu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.log_sigmoid.html">netket.nn.log_sigmoid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.log_softmax.html">netket.nn.log_softmax</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.relu.html">netket.nn.relu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.sigmoid.html">netket.nn.sigmoid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.soft_sign.html">netket.nn.soft_sign</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.softmax.html">netket.nn.softmax</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.softplus.html">netket.nn.softplus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.swish.html">netket.nn.swish</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.log_cosh.html">netket.nn.log_cosh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.reim_relu.html">netket.nn.reim_relu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/nn/netket.nn.reim_selu.html">netket.nn.reim_selu</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#variational-state-interface">Variational State Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_generated/variational/netket.vqs.VariationalState.html">netket.vqs.VariationalState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/variational/netket.vqs.ExactState.html">netket.vqs.ExactState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/variational/netket.vqs.MCState.html">netket.vqs.MCState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/variational/netket.vqs.MCMixedState.html">netket.vqs.MCMixedState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/variational/netket.vqs.get_local_kernel.html">netket.vqs.get_local_kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/variational/netket.vqs.get_local_kernel_arguments.html">netket.vqs.get_local_kernel_arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#optimizer-module">Optimizer Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#optimizers">Optimizers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.Adam.html">netket.optimizer.Adam</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.AdaGrad.html">netket.optimizer.AdaGrad</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.Sgd.html">netket.optimizer.Sgd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.Momentum.html">netket.optimizer.Momentum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.RmsProp.html">netket.optimizer.RmsProp</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#preconditioners">Preconditioners</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.SR.html">netket.optimizer.SR</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#quantum-geometric-tensor">Quantum Geometric Tensor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.qgt.QGTAuto.html">netket.optimizer.qgt.QGTAuto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.qgt.QGTOnTheFly.html">netket.optimizer.qgt.QGTOnTheFly</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.qgt.QGTJacobianPyTree.html">netket.optimizer.qgt.QGTJacobianPyTree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.qgt.QGTJacobianDense.html">netket.optimizer.qgt.QGTJacobianDense</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#dense-solvers">Dense solvers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.solver.svd.html">netket.optimizer.solver.svd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.solver.cholesky.html">netket.optimizer.solver.cholesky</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.solver.LU.html">netket.optimizer.solver.LU</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/optim/netket.optimizer.solver.solve.html">netket.optimizer.solver.solve</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#optimization-drivers">Optimization drivers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_generated/driver/netket.driver.AbstractVariationalDriver.html">netket.driver.AbstractVariationalDriver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/driver/netket.driver.VMC.html">netket.driver.VMC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/driver/netket.driver.SteadyState.html">netket.driver.SteadyState</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#logging-output">Logging output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_generated/driver/netket.logging.RuntimeLog.html">netket.logging.RuntimeLog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/driver/netket.logging.JsonLog.html">netket.logging.JsonLog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/driver/netket.logging.StateLog.html">netket.logging.StateLog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/driver/netket.logging.TensorBoardLog.html">netket.logging.TensorBoardLog</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#utils">Utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_generated/utils/netket.utils.HashableArray.html">netket.utils.HashableArray</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#callbacks">Callbacks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_generated/callbacks/netket.callbacks.EarlyStopping.html">netket.callbacks.EarlyStopping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/callbacks/netket.callbacks.Timeout.html">netket.callbacks.Timeout</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api-experimental.html">Experimental API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-experimental.html#samplers">Samplers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html">netket.experimental.sampler.MetropolisPtSampler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/experimental/samplers/netket.experimental.sampler.MetropolisLocalPt.html">netket.experimental.sampler.MetropolisLocalPt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/experimental/samplers/netket.experimental.sampler.MetropolisExchangePt.html">netket.experimental.sampler.MetropolisExchangePt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html">netket.experimental.sampler.MetropolisSamplerPmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-experimental.html#variational-state-interface">Variational State Interface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/experimental/variational/netket.experimental.vqs.variables_from_file.html">netket.experimental.vqs.variables_from_file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_generated/experimental/variational/netket.experimental.vqs.variables_from_tar.html">netket.experimental.vqs.variables_from_tar</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api-experimental.html#time-evolution-driver">Time Evolution Driver</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_generated/experimental/dynamics/netket.experimental.driver.TDVP.html">netket.experimental.driver.TDVP</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api-experimental.html#ode-integrators">ODE Integrators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_generated/experimental/dynamics/netket.experimental.dynamics.Euler.html">netket.experimental.dynamics.Euler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/experimental/dynamics/netket.experimental.dynamics.Heun.html">netket.experimental.dynamics.Heun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/experimental/dynamics/netket.experimental.dynamics.Midpoint.html">netket.experimental.dynamics.Midpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/experimental/dynamics/netket.experimental.dynamics.RK12.html">netket.experimental.dynamics.RK12</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/experimental/dynamics/netket.experimental.dynamics.RK23.html">netket.experimental.dynamics.RK23</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/experimental/dynamics/netket.experimental.dynamics.RK4.html">netket.experimental.dynamics.RK4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_generated/experimental/dynamics/netket.experimental.dynamics.RK45.html">netket.experimental.dynamics.RK45</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<!--- |replace("", "<span class=\"toctree-expand\Z"></span>")  --->
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <div class="section" id="the-hilbert-module">
+<span id="hilbert"></span><h1>The Hilbert module<a class="headerlink" href="#the-hilbert-module" title="Permalink to this headline">¶</a></h1>
+<p>The <span class="xref myst">Hilbert</span> module defines the abstract Hilbert space API and some concrete implementations, such as <a class="reference internal" href="_generated/hilbert/netket.hilbert.Spin.html#netket-hilbert-spin"><span class="std std-ref">netket.hilbert.Spin</span></a>, <a class="reference internal" href="_generated/hilbert/netket.hilbert.Fock.html#netket-hilbert-fock"><span class="std std-ref">netket.hilbert.Fock</span></a>.
+An <code class="docutils literal notranslate"><span class="pre">Hilbert</span></code> object represents a Hilbert space together with a particular choice of computational basis.
+They are needed to construct most other objects in NetKet, but they can also be useful to experiment and validate variational ansätze.</p>
+<p>Hilbert space objects are all sub-classes of the abstract class <a class="reference internal" href="_generated/hilbert/netket.hilbert.AbstractHilbert.html#netket-hilbert-abstracthilbert"><span class="std std-ref">netket.hilbert.AbstractHilbert</span></a>, which defines the general API respected by all implementations.
+You can see a birds-eye view of the inheritance diagram among the various kinds of Hilbert spaces included with NetKet below (you can click on the nodes in the graph to go to their API documentation page).
+Classes whose edge is dashed are abstract classes, while the others are concrete and can be instantiated.</p>
+<div class="graphviz"><img src="../_images/inheritance-b88b4f6594e4326f6827786377243c6c4df547ba.png" alt="Inheritance diagram of netket.hilbert" usemap="#inheritancea41024210a" class="inheritance graphviz" /></div>
+<map id="inheritancea41024210a" name="inheritancea41024210a">
+<area shape="rect" id="node1" href="_generated/hilbert/netket.hilbert.AbstractHilbert.html#netket.hilbert.AbstractHilbert" target="_top" title="Abstract class for NetKet hilbert objects." alt="" coords="5,80,125,105"/>
+<area shape="rect" id="node2" href="_generated/hilbert/netket.hilbert.ContinuousHilbert.html#netket.hilbert.ContinuousHilbert" target="_top" title="Abstract class for the Hilbert space of particles" alt="" coords="173,43,312,68"/>
+<area shape="rect" id="node5" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert" target="_top" title="Abstract class for an hilbert space defined on a lattice." alt="" coords="183,104,303,129"/>
+<area shape="rect" id="node8" href="_generated/hilbert/netket.hilbert.Particle.html#netket.hilbert.Particle" target="_top" title="Hilbert space derived from AbstractParticle for" alt="" coords="404,29,476,55"/>
+<area shape="rect" id="node3" href="_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert" target="_top" title="A custom hilbert space with discrete local quantum numbers." alt="" coords="568,5,684,31"/>
+<area shape="rect" id="node4" href="_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert" target="_top" title="The Abstract base class for homogeneous hilbert spaces." alt="" coords="360,79,520,104"/>
+<area shape="rect" id="node7" href="_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock" target="_top" title="Hilbert space obtained as tensor product of local fock basis." alt="" coords="590,55,662,80"/>
+<area shape="rect" id="node9" href="_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit" target="_top" title="Hilbert space obtained as tensor product of local qubit states." alt="" coords="590,104,662,129"/>
+<area shape="rect" id="node10" href="_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin" target="_top" title="Hilbert space obtained as tensor product of local spin states." alt="" coords="590,153,662,179"/>
+<area shape="rect" id="node11" href="_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert" target="_top" title="Tensor product of several Discrete sub&#45;spaces, representing the space" alt="" coords="386,177,494,203"/>
+</map><p><a class="reference internal" href="_generated/hilbert/netket.hilbert.AbstractHilbert.html#netket-hilbert-abstracthilbert"><span class="std std-ref">netket.hilbert.AbstractHilbert</span></a> makes very few assumptions on the structure of the resulting space and you will generally very rarely interact with it directly.
+Derived from <code class="docutils literal notranslate"><span class="pre">AbstractHilbert</span></code> are two less generic, but still abstract, types: <a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket-hilbert-discretehilbert"><span class="std std-ref">netket.hilbert.DiscreteHilbert</span></a>, representing Hilbert spaces where the local degrees of freedom are countable, and <a class="reference internal" href="_generated/hilbert/netket.hilbert.ContinuousHilbert.html#netket-hilbert-continuoushilbert"><span class="std std-ref">netket.hilbert.ContinuousHilbert</span></a>, representing the Hilbert spaces with continuous bases, such as particles in a box.</p>
+<p>So far, the majority of NetKet development has focused <code class="docutils literal notranslate"><span class="pre">DiscreteHilbert</span></code> spaces which therefore have a much more developed API, while <code class="docutils literal notranslate"><span class="pre">ContinuousHilbert</span></code> is still experimental and does not yet support many operations.</p>
+<p>The most important class of discrete Hilbert spaces are subclasses of <a class="reference internal" href="_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket-hilbert-homogeneoushilbert"><span class="std std-ref">netket.hilbert.HomogeneousHilbert</span></a>, which is a tensor product of a finite number of local Hilbert spaces of the same kind, each with the same number of local degrees of freedom.
+<code class="docutils literal notranslate"><span class="pre">HomogeneousHilbert</span></code> has the concrete subclasses <a class="reference internal" href="_generated/hilbert/netket.hilbert.Fock.html#netket-hilbert-fock"><span class="std std-ref">netket.hilbert.Fock</span></a>, <a class="reference internal" href="_generated/hilbert/netket.hilbert.Spin.html#netket-hilbert-spin"><span class="std std-ref">netket.hilbert.Spin</span></a>, and <a class="reference internal" href="_generated/hilbert/netket.hilbert.Qubit.html#netket-hilbert-qubit"><span class="std std-ref">netket.hilbert.Qubit</span></a>.</p>
+<p><a class="reference internal" href="_generated/hilbert/netket.hilbert.TensorHilbert.html#netket-hilbert-tensorhilbert"><span class="std std-ref">netket.hilbert.TensorHilbert</span></a> represents tensor products of different homogeneous hilbert spaces, therefore it is not homogeneous. You can use it to represent composite systems such as spin-boson setups.</p>
+<p><a class="reference internal" href="_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket-hilbert-doubledhilbert"><span class="std std-ref">netket.hilbert.DoubledHilbert</span></a> represents a space doubled through <a class="reference external" href="https://en.wikipedia.org/wiki/Choi%E2%80%93Jamio%C5%82kowski_isomorphism">Choi’s Isomorphism</a>.
+This is the space of density matrices and is used to work with dissipative/open systems.</p>
+<div class="section" id="the-abstracthilbert-interface">
+<h2>The <code class="docutils literal notranslate"><span class="pre">AbstractHilbert</span></code> interface<a class="headerlink" href="#the-abstracthilbert-interface" title="Permalink to this headline">¶</a></h2>
+<p>As we mentioned before, an Hilbert object represents at the same time a choice of Hilbert space and computational basis.
+The reason why we need to specify a computational basis is that with Variational methods we often have to perform summations (or sample) the hilbert space. For example, we often write the wavefunction as</p>
+<div class="math notranslate nohighlight">
+\[
+|\psi\rangle = \sum_{\bf{\sigma}\in\mathcal{H}} \psi(\sigma) |\bf{\sigma}\rangle
+\]</div>
+<p>The choice of computational basis affects the values that those <span class="math notranslate nohighlight">\(\bf{\sigma} = |\sigma_0, \sigma_1, \sigma_2, \dots, \sigma_N\rangle \)</span> will take
+To give an example: when working with Qubits we often take as the basis the <span class="math notranslate nohighlight">\(\hat{Z}\)</span> basis, where <span class="math notranslate nohighlight">\(\sigma_i=\{0,1\}\)</span>, but we could have also chosen the <span class="math notranslate nohighlight">\(\hat{Y}\)</span> or <span class="math notranslate nohighlight">\(\hat{X}\)</span> basis, where operators would have different basis elements.</p>
+<p>Currently, all the operators shipping with NetKet hardcode the choice of <span class="math notranslate nohighlight">\(\hat{Z}\)</span> (or number-basis in Fock space) as the computational basis, but eventually we might relax this constraint.</p>
+<div class="section" id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+<p>All Hilbert spaces expose one attribute: <a class="reference internal" href="_generated/hilbert/netket.hilbert.AbstractHilbert.html#netket.hilbert.AbstractHilbert.size" title="netket.hilbert.AbstractHilbert.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a>
+This is an integer that exposes how many degrees of freedom has the basis of the Hilbert space.
+For discrete spaces, this corresponds exactly to the number of sites (which is, e.g., the number of spins in a <code class="docutils literal notranslate"><span class="pre">Spin</span></code> Hilbert space).
+Therefore, elements of the basis of an <span class="math notranslate nohighlight">\(N\)</span> spin-<span class="math notranslate nohighlight">\(1/2\)</span> system are vectors in <span class="math notranslate nohighlight">\(\{-1,+1\}^N\)</span>, an <span class="math notranslate nohighlight">\(N-\)</span> dimensional space.</p>
+<p>As NetKet is a package focused on Monte Carlo calculations, we also need a way to generate random configurations distributed uniformly from the basis of an Hilbert space.
+This can be achieved through the method <a class="reference internal" href="#netket.hilbert.AbstractHilbert.random_state" title="netket.hilbert.AbstractHilbert.random_state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">random_state()</span></code></a>.</p>
+<dl class="py method">
+<dt id="netket.hilbert.AbstractHilbert.random_state">
+<code class="sig-prename descclassname"><span class="pre">AbstractHilbert.</span></code><code class="sig-name descname"><span class="pre">random_state</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">key=None</span></em>, <em class="sig-param"><span class="pre">size=None</span></em>, <em class="sig-param"><span class="pre">dtype=&lt;class</span> <span class="pre">'numpy.float32'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/netket/hilbert/abstract_hilbert.html#AbstractHilbert.random_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#netket.hilbert.AbstractHilbert.random_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates either a single or a batch of uniformly distributed random states.
+Runs as <code class="code docutils literal notranslate"><span class="pre">random_state(self,</span> <span class="pre">key,</span> <span class="pre">size=None,</span> <span class="pre">dtype=np.float32)</span></code> by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – rng state from a jax-style functional generator.</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – If provided, returns a batch of configurations of the form
+<code class="code docutils literal notranslate"><span class="pre">(size,</span> <span class="pre">N)</span></code> if size is an integer or <code class="code docutils literal notranslate"><span class="pre">(*size,</span> <span class="pre">N)</span></code> if it is
+a tuple and where <span class="math notranslate nohighlight">\(N\)</span> is the Hilbert space size.
+By default, a single random configuration with shape
+<code class="code docutils literal notranslate"><span class="pre">(#,)</span></code> is returned.</p></li>
+<li><p><strong>dtype</strong> – DType of the resulting vector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A state or batch of states sampled from the uniform distribution on the
+hilbert space.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">netket</span><span class="o">,</span> <span class="nn">jax</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span> <span class="o">=</span> <span class="n">netket</span><span class="o">.</span><span class="n">hilbert</span><span class="o">.</span><span class="n">Qubit</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">hi</span><span class="o">.</span><span class="n">random_state</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">k1</span><span class="p">))</span>
+<span class="go">[1. 0.]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">hi</span><span class="o">.</span><span class="n">random_state</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">k2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="go">[[0. 0.]</span>
+<span class="go"> [0. 1.]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p><code class="docutils literal notranslate"><span class="pre">random_state</span></code> behaves similarly to <span class="xref std std-ref">jax.random.uniform</span>: the first argument is a Jax PRNGKey, the second is the shape or number of resulting elements and the third is the dtype of the output (which defaults to <code class="docutils literal notranslate"><span class="pre">jnp.float32</span></code>, or single precision.
+The resulting basis elements will be distributed uniformly.</p>
+<div class="admonition-jax-prng admonition">
+<p class="admonition-title">Jax PRNG</p>
+<p>If you are not familiar with Jax random number generators: Jax PRNGKey is the state of the Pseudo-random number generator, that determines what will be the next random numbers generated. To learn more about it, refer to <a class="reference external" href="https://jax.readthedocs.io/en/latest/jax.random.html">this documentation</a>).</p>
+</div>
+</div>
+<div class="section" id="composing-hilbert-spaces">
+<h3>Composing Hilbert spaces<a class="headerlink" href="#composing-hilbert-spaces" title="Permalink to this headline">¶</a></h3>
+<p>Hilbert spaces can be composed together.
+The syntax to do that is Python’s multiplication operator, <code class="docutils literal notranslate"><span class="pre">*</span></code>, which will be interpreted as a Kronecker product, or tensor product, of those Hilbert spaces, in the specified order.</p>
+<p>It is also possible to take Kronecker powers of an Hilbert space with the exponent operator <code class="docutils literal notranslate"><span class="pre">**</span></code> using an integer exponent. This will be interpreted as repeating the Kronecker product N times.</p>
+<p>At times, when trying to compose Hilbert spaces, you might hit a <code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code>.
+This means that the composition of those two spaces has not yet been implemented by anyone.
+Please do open an issue or a feature request on the GitHub repository if you encounter this error.</p>
+</div>
+</div>
+<div class="section" id="the-discretehilbert-interface">
+<h2>The <code class="docutils literal notranslate"><span class="pre">DiscreteHilbert</span></code> interface<a class="headerlink" href="#the-discretehilbert-interface" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket-hilbert-discretehilbert"><span class="std std-ref">netket.hilbert.DiscreteHilbert</span></a> is also an abstract class from which any hilbert space with countable (or discrete) local degrees of freedom must inherit.
+Examples of such spaces are spins or bosons on a lattice.</p>
+<p>You can always probe their <a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.shape" title="netket.hilbert.DiscreteHilbert.shape"><code class="xref py py-attr docutils literal notranslate"><span class="pre">shape</span></code></a>, which returns a tuple
+with the size of the hilbert space on every site/degree of freedom.
+For example, for 4 spins-<span class="math notranslate nohighlight">\(1/2\)</span> coupled to a bosonic mode with a cutoff of 5 bosons, the shape will be
+<code class="docutils literal notranslate"><span class="pre">[2,2,2,2,6]</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">netket.hilbert</span> <span class="kn">import</span> <span class="n">Spin</span><span class="p">,</span> <span class="n">Fock</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span> <span class="o">=</span> <span class="n">Spin</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">Fock</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">array([2, 2, 2, 2, 6])</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">shape</span></code> is also linked to the local Hilbert basis, which lists all possible values that a basis elements can take on this particular lattice site/subsystem.
+For example, on the first four sites of the example above, the basis elements are only 2: <code class="docutils literal notranslate"><span class="pre">[-1,</span> <span class="pre">1]</span></code>, while on the last site they are 6: <code class="docutils literal notranslate"><span class="pre">[0,1,2,3,4,5]</span></code>.</p>
+<p>This information can be extracted with the <a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.states_at_index" title="netket.hilbert.DiscreteHilbert.states_at_index"><code class="xref py py-meth docutils literal notranslate"><span class="pre">states_at_index()</span></code></a> method, as shown below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">states_at_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">[-1.0, 1.0]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">states_at_index</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[-1.0, 1.0]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">states_at_index</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">[0, 1, 2, 3, 4, 5]</span>
+</pre></div>
+</div>
+<p>It should be now evident why NetKet distinguishes locally discrete/countable spaces from arbitrary (e.g: continuous) spaces: if we can index the local basis, we can perform many optimisations and write efficient kernels to compute matrix elements of operators, but also Monte-Carlo samplers will propose transitions in a very different way than in continuous spaces.</p>
+<p>You can also obtain the total size of the hilbert space by invoking <a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.n_states" title="netket.hilbert.DiscreteHilbert.n_states"><code class="xref py py-attr docutils literal notranslate"><span class="pre">n_states</span></code></a>, which in general is equivalent to calling <code class="docutils literal notranslate"><span class="pre">np.prod(hi.shape)</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">n_states</span>
+<span class="go">96</span>
+</pre></div>
+</div>
+<p>Do bear in mind that this attribute only works if the hilbert space is indexable (<a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.is_indexable" title="netket.hilbert.DiscreteHilbert.is_indexable"><code class="xref py py-attr docutils literal notranslate"><span class="pre">is_indexable</span></code></a>), which is True when it has a size smaller than <span class="math notranslate nohighlight">\( 2^{64} \)</span>.</p>
+<p>NetKet also supports discrete-but-infinite hilbert spaces, such as Fock spaces with no cutoff.
+Those hilbert spaces are of course not indexable (<a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.is_indexable" title="netket.hilbert.DiscreteHilbert.is_indexable"><code class="xref py py-attr docutils literal notranslate"><span class="pre">is_indexable</span></code></a> will return <code class="docutils literal notranslate"><span class="pre">False</span></code>) and they are further signaled by the attribute (<a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.is_finite" title="netket.hilbert.DiscreteHilbert.is_finite"><code class="xref py py-attr docutils literal notranslate"><span class="pre">is_finite</span></code></a>, which will be set to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p>The only non-finite (discrete) hilbert space implemented in NetKet is the Fock space, and it can be constructed by not specifying the cutoff, as shown below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Fock</span><span class="p">()</span> <span class="c1"># 1 mode with no cutoff</span>
+<span class="go">Fock(n_max=INT_MAX, N=1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Fock</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># 3 modes with no cutoff</span>
+<span class="go">Fock(n_max=INT_MAX, N=3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Fock</span><span class="p">()</span><span class="o">**</span><span class="mi">3</span>  <span class="c1"># 3 modes with no cutoff, alternative syntax</span>
+<span class="go">Fock(n_max=INT_MAX, N=3)</span>
+</pre></div>
+</div>
+<p>Do bear in mind that due to computational limitations, <em>infinite</em> Hilbert spaces are not technically infinite, but simply have their cutoff set to <span class="math notranslate nohighlight">\( 2^{63} \)</span>, the largest signed integer.</p>
+<div class="section" id="indexable-spaces">
+<h3>Indexable spaces<a class="headerlink" href="#indexable-spaces" title="Permalink to this headline">¶</a></h3>
+<p>If a space is indexable it is possible to perform several handy operations on it, especially useful when you are checking the correctness of your calculations.
+In practice all those operations rely on converting elements of the basis such as <code class="docutils literal notranslate"><span class="pre">[0,1,1,0]</span></code> to an integer index labelling all basis elements.</p>
+<p>For the following examples, we will be using the <a class="reference internal" href="_generated/hilbert/netket.hilbert.Qubit.html#netket-hilbert-qubit"><span class="std std-ref">netket.hilbert.Qubit</span></a> hilbert space, whose local basis is <code class="docutils literal notranslate"><span class="pre">[0,1]</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">netket</span> <span class="k">as</span> <span class="nn">nk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span> <span class="o">=</span> <span class="n">nk</span><span class="o">.</span><span class="n">hilbert</span><span class="o">.</span><span class="n">Qubit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">Qubit(N=3)</span>
+</pre></div>
+</div>
+<p>Converting indices to basis elements can be performed through the <a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.numbers_to_states" title="netket.hilbert.DiscreteHilbert.numbers_to_states"><code class="xref py py-meth docutils literal notranslate"><span class="pre">numbers_to_states()</span></code></a> method.
+When converting indices to a basis-element, NetKet relies on a sort of big-endian (or Most-Significant-Bit first) N-ary-encoding: for qubits, index <span class="math notranslate nohighlight">\(0\)</span> will correspond to <span class="math notranslate nohighlight">\(|0,0,0\rangle\)</span>, index <span class="math notranslate nohighlight">\(1\)</span> to <span class="math notranslate nohighlight">\(|0,0,1\rangle\)</span>, index <span class="math notranslate nohighlight">\(2\)</span> to <span class="math notranslate nohighlight">\(|0,1,0\rangle\)</span> and so on.
+For hilbert spaces with larger local dimensions, all the local states are iterated continuously.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">numbers_to_states</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">array([0., 0., 0.])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">numbers_to_states</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">array([0., 0., 1.])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">numbers_to_states</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">array([0., 1., 0.])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">numbers_to_states</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">array([0., 1., 1.])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">numbers_to_states</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="go">array([1., 1., 1.])</span>
+</pre></div>
+</div>
+<p>It is also possible to perform the opposite transformation and go from a basis element to an integer index using the <a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.states_to_numbers" title="netket.hilbert.DiscreteHilbert.states_to_numbers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">states_to_numbers()</span></code></a> method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">states_to_numbers</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">states_to_numbers</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">states_to_numbers</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+<p>Do notice that all those methods work with arrays too and will convert an array of <span class="math notranslate nohighlight">\(M\)</span> indices to a batch of states, that is, a matrix of size <span class="math notranslate nohighlight">\(M \times N\)</span>.</p>
+<p>Lastly, it is also possible to obtain the batch of all basis states with the <a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.all_states" title="netket.hilbert.DiscreteHilbert.all_states"><code class="xref py py-meth docutils literal notranslate"><span class="pre">all_states()</span></code></a> method.</p>
+</div>
+<div class="section" id="constrained-hilbert-spaces">
+<h3>Constrained Hilbert spaces<a class="headerlink" href="#constrained-hilbert-spaces" title="Permalink to this headline">¶</a></h3>
+<p>The Hilbert spaces provided by NetKet are compatible with some simple constraints.
+The constraints that can be imposed are quite ~constrained~ limited themselves: they can only act on the set of basis elements, for example by excluding those that do not satisfy a certain condition.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Warning: Common error
+When you define a constrained Hilbert space and you use it with a Markov-Chain sampler, the constraints guarantees that the initial state of the chain, generated through the <a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.random_state" title="netket.hilbert.DiscreteHilbert.random_state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">random_state()</span></code></a> method, respects the constraint.</p>
+<p>However, <em>it is not guaranteed that a transition rule will respect the constraint.</em>
+In fact, built-in samplers are not aware of the constraints directly, even though some of can still be used effectively with constraints.</p>
+<p>A typical error is to use <a class="reference internal" href="_generated/samplers/netket.sampler.MetropolisLocal.html#netket.sampler.MetropolisLocal" title="netket.sampler.MetropolisLocal"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetropolisLocal</span></code></a> with a constrained Hilbert space, such as a Fock space with a fixed number of particles.
+A simple workaround is to use <a class="reference internal" href="_generated/samplers/netket.sampler.MetropolisExchange.html#netket.sampler.MetropolisExchange" title="netket.sampler.MetropolisExchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetropolisExchange</span></code></a>: as it exchanges the value on two different sites, it guarantees that the total number
+of particles is conserved, and therefore respects the constraint if it is correctly imposed at the initialization of the chain.</p>
+<p>In short: when working with constrained Hilbert spaces you have to take extra care when chosing your sampler. And if you have exotic constraints you will most likely need to define your own transition kernel. But don’t worry: it is very easy! (however nobody has yet written documentation for it. In the meantime, have a look at <a class="reference external" href="https://github.com/netket/netket/discussions/755#discussioncomment-858719">this discussion</a>)</p>
+</div>
+<p>The constraints supported on the built-in hilbert spaces are:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin" title="netket.hilbert.Spin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Spin</span></code></a> supports an optional keyword argument <code class="docutils literal notranslate"><span class="pre">total_sz</span></code> which can be used to impose a fixed total magnetization.
+The total magnetization of a basis element is defined as <span class="math notranslate nohighlight">\(\sum_i \sigma_i\)</span>. Be aware that this constraint is efficiently
+imposed when calling <code class="docutils literal notranslate"><span class="pre">random_state</span></code> only for spins-<span class="math notranslate nohighlight">\( S=1/2 \)</span>, while for larger values of <span class="math notranslate nohighlight">\( S \)</span> it is not efficient. This
+should not be a problem as long as you use this method just to initialise your markov chains.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span> <span class="o">=</span> <span class="n">nk</span><span class="o">.</span><span class="n">hilbert</span><span class="o">.</span><span class="n">Spin</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">total_sz</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">all_states</span><span class="p">()</span>
+<span class="go">array([[-1., -1.,  1.,  1.],</span>
+<span class="go">       [-1.,  1., -1.,  1.],</span>
+<span class="go">       [-1.,  1.,  1., -1.],</span>
+<span class="go">       [ 1., -1., -1.,  1.],</span>
+<span class="go">       [ 1., -1.,  1., -1.],</span>
+<span class="go">       [ 1.,  1., -1., -1.]])</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference internal" href="_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock" title="netket.hilbert.Fock"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fock</span></code></a> supports an optional keyword argument <code class="docutils literal notranslate"><span class="pre">n_particles</span></code> which can be used to impose a fixed total number of particles.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span> <span class="o">=</span> <span class="n">nk</span><span class="o">.</span><span class="n">hilbert</span><span class="o">.</span><span class="n">Fock</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_particles</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">all_states</span><span class="p">()</span>
+<span class="go">array([[0., 2.],</span>
+<span class="go">       [1., 1.],</span>
+<span class="go">       [2., 0.]])</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>It is also possible to define a custom (Homogeneous) hilbert space with a custom constraint. To see how to do that, check the section…</p></li>
+</ul>
+</div>
+<div class="section" id="defining-custom-constraints">
+<h3>Defining Custom constraints<a class="headerlink" href="#defining-custom-constraints" title="Permalink to this headline">¶</a></h3>
+<p>NetKet provides a custom class <code class="docutils literal notranslate"><span class="pre">CustomHilbert</span></code>, that makes it relatively simple to define your own constaint on homogeneous Hilbert spaces.
+In this example we show how to use it to build a space that behaves like <span class="xref std std-ref">Fock</span>, while enforcing even parity.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numba</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@numba</span><span class="o">.</span><span class="n">njit</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">accept_even</span><span class="p">(</span><span class="n">states</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>	<span class="k">return</span> <span class="n">states</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_max</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">N_sites</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span> <span class="o">=</span> <span class="n">netket</span><span class="o">.</span><span class="n">hilbert</span><span class="o">.</span><span class="n">CustomHilbert</span><span class="p">(</span><span class="n">local_states</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">n_max</span><span class="p">),</span> <span class="n">N</span><span class="o">=</span><span class="n">N_sites</span><span class="p">,</span> <span class="n">constraint_fn</span><span class="o">=</span><span class="n">accept_even</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">all_states</span><span class="p">()</span>
+<span class="go">array([[0., 0., 0., 0., 0.],</span>
+<span class="go">       [0., 0., 0., 0., 2.],</span>
+<span class="go">       [0., 0., 0., 1., 1.],</span>
+<span class="go">       [0., 0., 0., 2., 0.],</span>
+<span class="go">       ...</span>
+</pre></div>
+</div>
+<p>The constraint function sums the basis number (a number in <code class="docutils literal notranslate"><span class="pre">range(n_max)</span></code>) and then checks if it is even.
+Pleaes notice how we used <code class="docutils literal notranslate"><span class="pre">&#64;numba.njit</span></code> to speed up the constraint.</p>
+<p>If you then want to sample this space, you’ll encounter the following error:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">jax</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hi</span><span class="o">.</span><span class="n">random_state</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+  File <span class="nb">&quot;.../netket/hilbert/abstract_hilbert.py&quot;</span>, line <span class="m">84</span>, in <span class="n">random_state</span>
+    <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">random_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+  File <span class="nb">&quot;plum/function.py&quot;</span>, line <span class="m">537</span>, in <span class="n">plum.function.Function.__call__</span>
+  File <span class="nb">&quot;.../netket/hilbert/random/custom.py&quot;</span>, line <span class="m">25</span>, in <span class="n">random_state</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+<span class="gr">NotImplementedError</span>
+</pre></div>
+</div>
+<p>This is because you did not specify how to sample the space. To do so, check the documentation on defining custom Hilbert spaces.</p>
+</div>
+</div>
+<div class="section" id="using-hilbert-spaces-with-jax-jitted-functions">
+<h2>Using Hilbert spaces with <span class="xref std std-ref">jax.jit</span>ted functions<a class="headerlink" href="#using-hilbert-spaces-with-jax-jitted-functions" title="Permalink to this headline">¶</a></h2>
+<p>Hilbert spaces are immutable, hashable objects.
+Their hash is computed by hashing their inner fields, determined by the internal <code class="xref py py-meth docutils literal notranslate"><span class="pre">_attrs()</span></code> method.
+You can freely use <code class="docutils literal notranslate"><span class="pre">AbstractHilbert</span></code> objects inside of <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code>ted functions as long as you specify that they are <code class="docutils literal notranslate"><span class="pre">static</span></code>.</p>
+<p>All attributes and methods of Hilbert spaces can be freely used inside of a <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code> block except for
+<a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.states_to_numbers" title="netket.hilbert.DiscreteHilbert.states_to_numbers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">states_to_numbers()</span></code></a> and <a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.numbers_to_states" title="netket.hilbert.DiscreteHilbert.numbers_to_states"><code class="xref py py-meth docutils literal notranslate"><span class="pre">numbers_to_states()</span></code></a>, because
+they are written using <span class="xref std std-ref">numpy</span> instead of jax.</p>
+<p>In particular the <a class="reference internal" href="_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.random_state" title="netket.hilbert.DiscreteHilbert.random_state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">random_state()</span></code></a> method can be used inside of jitted blocks, as it is written in jax, as long as you pass a valid jax
+<span class="xref std std-ref">jax.random.PRNGKey</span> object as the first argument.</p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019-2021, The Netket authors - All rights reserved.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+    </p>
+  </div>
+</footer>
+
+<script type="text/javascript">
+    jQuery(function () {
+        SphinxRtdTheme.Navigation.enable(true);
+      })
+</script>
+
+<!-- Temporary footer
+<div class="footer-wip">
+  <div class="footer-wip-content">
+    This documentation refers to an unreleased version of Netket.
+  </div>
+</div>
+-->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118013987-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-118013987-1');
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "url": "https://www.netket.org",
+  "name": "NetKet",
+  "founder": "Giuseppe Carleo",
+  "foundingDate": "2018-04-24",
+  "foundingLocation" : "New York",
+  "logo": "https://www.netket.org/img/logo_small.jpg",
+  "sameAs": [
+    "https://twitter.com/NetKetOrg",
+    "https://github.com/NetKet/netket"
+  ],
+  "description" : "Netket is an open-source project delivering cutting-edge
+  methods for the study of many-body quantum systems with artificial neural
+  networks and machine learning techniques."
+}
+</script>
+
+  </body>
+</html>

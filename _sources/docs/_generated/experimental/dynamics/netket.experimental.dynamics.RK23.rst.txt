@@ -1,0 +1,6 @@
+﻿netket.experimental.dynamics.RK23
+=================================
+
+.. currentmodule:: netket.experimental.dynamics
+
+.. autodata:: RK23

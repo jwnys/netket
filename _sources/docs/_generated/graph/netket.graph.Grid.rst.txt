@@ -6,7 +6,6 @@
 .. autoclass:: Grid
    :show-inheritance:
 
-
    
       
    

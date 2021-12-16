@@ -13,6 +13,7 @@
    .. rst-class:: class-dl-groups
 
    Attributes
+      .. autoattribute:: ARNNDense.machine_pow
       .. autoattribute:: ARNNDense.precision
       .. autoattribute:: ARNNDense.use_bias
       .. autoattribute:: ARNNDense.variables

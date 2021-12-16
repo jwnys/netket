@@ -7,6 +7,7 @@
     <title>netket.operator._local_liouvillian &#8212; netket v3.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/jumbo-style.css" />
@@ -26,9 +27,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -119,12 +120,12 @@
 
 <span class="kn">from</span> <span class="nn">scipy.sparse.linalg</span> <span class="kn">import</span> <span class="n">LinearOperator</span>
 
-<span class="kn">from</span> <span class="nn">._abstract_operator</span> <span class="kn">import</span> <span class="n">AbstractOperator</span>
+<span class="kn">from</span> <span class="nn">._discrete_operator</span> <span class="kn">import</span> <span class="n">DiscreteOperator</span>
 <span class="kn">from</span> <span class="nn">._local_operator</span> <span class="kn">import</span> <span class="n">LocalOperator</span>
 <span class="kn">from</span> <span class="nn">._abstract_super_operator</span> <span class="kn">import</span> <span class="n">AbstractSuperOperator</span>
 
 
-<div class="viewcode-block" id="LocalLiouvillian"><a class="viewcode-back" href="../../../docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian">[docs]</a><span class="k">class</span> <span class="nc">LocalLiouvillian</span><span class="p">(</span><span class="n">AbstractSuperOperator</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">LocalLiouvillian</span><span class="p">(</span><span class="n">AbstractSuperOperator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    LocalLiouvillian super-operator, acting on the DoubledHilbert (tensor product) space</span>
 <span class="sd">    ℋ⊗ℋ.</span>
@@ -161,8 +162,8 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">ham</span><span class="p">:</span> <span class="n">AbstractOperator</span><span class="p">,</span>
-        <span class="n">jump_ops</span><span class="p">:</span> <span class="n">PyList</span><span class="p">[</span><span class="n">AbstractOperator</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="n">ham</span><span class="p">:</span> <span class="n">DiscreteOperator</span><span class="p">,</span>
+        <span class="n">jump_ops</span><span class="p">:</span> <span class="n">PyList</span><span class="p">[</span><span class="n">DiscreteOperator</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
         <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ham</span><span class="o">.</span><span class="n">hilbert</span><span class="p">)</span>
@@ -538,7 +539,19 @@
 
         <span class="n">L</span> <span class="o">=</span> <span class="n">LinearOperator</span><span class="p">((</span><span class="n">op_size</span><span class="p">,</span> <span class="n">op_size</span><span class="p">),</span> <span class="n">matvec</span><span class="o">=</span><span class="n">matvec</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">iHnh</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">L</span></div></div>
+        <span class="k">return</span> <span class="n">L</span></div>
+
+<div class="viewcode-block" id="LocalLiouvillian.to_qobj"><a class="viewcode-back" href="../../../docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.to_qobj">[docs]</a>    <span class="k">def</span> <span class="nf">to_qobj</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;qutip.liouvillian&quot;</span><span class="p">:</span>  <span class="c1"># noqa: F821</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Convert the operator to a qutip&#39;s liouvillian Qobj.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A `qutip.liouvillian` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">qutip</span> <span class="kn">import</span> <span class="n">liouvillian</span>
+
+        <span class="k">return</span> <span class="n">liouvillian</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hamiltonian</span><span class="o">.</span><span class="n">to_qobj</span><span class="p">(),</span> <span class="p">[</span><span class="n">op</span><span class="o">.</span><span class="n">to_qobj</span><span class="p">()</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">jump_operators</span><span class="p">]</span>
+        <span class="p">)</span></div>
 </pre></div>
 
     </div>

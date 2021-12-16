@@ -1,0 +1,14 @@
+﻿netket.experimental.sampler.MetropolisExchangePt
+================================================
+
+.. currentmodule:: netket.experimental.sampler
+
+.. autoclass:: MetropolisExchangePt
+   :show-inheritance:
+
+   
+      
+   
+      
+
+   

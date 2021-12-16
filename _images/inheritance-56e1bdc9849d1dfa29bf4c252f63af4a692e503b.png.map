@@ -1,0 +1,6 @@
+<map id="inheritancef31f57a009" name="inheritancef31f57a009">
+<area shape="rect" id="node1" href="netket.hilbert.AbstractHilbert.html#netket.hilbert.AbstractHilbert" target="_top" title="Abstract class for NetKet hilbert objects." alt="" coords="5,5,154,27"/>
+<area shape="rect" id="node4" href="netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert" target="_top" title="Abstract class for an hilbert space defined on a lattice." alt="" coords="197,5,346,27"/>
+<area shape="rect" id="node2" href="#netket.hilbert.CustomHilbert" target="_top" title="A custom hilbert space with discrete local quantum numbers." alt="" coords="618,5,763,27"/>
+<area shape="rect" id="node3" href="netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert" target="_top" title="The Abstract base class for homogeneous hilbert spaces." alt="" coords="389,5,575,27"/>
+</map>

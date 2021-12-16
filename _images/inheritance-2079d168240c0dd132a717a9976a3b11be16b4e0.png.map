@@ -1,0 +1,4 @@
+<map id="inheritance17aa8197cb" name="inheritance17aa8197cb">
+<area shape="rect" id="node1" href="#netket.sampler.ARDirectSampler" target="_top" title="Direct sampler for autoregressive neural networks." alt="" coords="185,5,375,31"/>
+<area shape="rect" id="node2" href="netket.sampler.Sampler.html#netket.sampler.Sampler" target="_top" title="Abstract base class for all samplers." alt="" coords="5,5,137,31"/>
+</map>

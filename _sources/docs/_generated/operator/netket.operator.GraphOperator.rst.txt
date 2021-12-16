@@ -6,8 +6,15 @@
 .. autoclass:: GraphOperator
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.operator.GraphOperator
+         :parts: 2
+
+
    
 
    .. automethod:: GraphOperator.__init__
@@ -18,6 +25,7 @@
       .. autoattribute:: GraphOperator.H
       .. autoattribute:: GraphOperator.T
       .. autoattribute:: GraphOperator.acting_on
+      .. autoattribute:: GraphOperator.acting_on_subspace
       .. autoattribute:: GraphOperator.constant
       .. autoattribute:: GraphOperator.dtype
       .. autoattribute:: GraphOperator.graph
@@ -46,6 +54,7 @@
       .. automethod:: GraphOperator.n_conn
       .. automethod:: GraphOperator.to_dense
       .. automethod:: GraphOperator.to_linear_operator
+      .. automethod:: GraphOperator.to_qobj
       .. automethod:: GraphOperator.to_sparse
       .. automethod:: GraphOperator.transpose
 

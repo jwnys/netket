@@ -6,8 +6,15 @@
 .. autoclass:: AbstractHilbert
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.hilbert.AbstractHilbert
+         :parts: 2
+
+
    
       
    .. rst-class:: class-dl-groups

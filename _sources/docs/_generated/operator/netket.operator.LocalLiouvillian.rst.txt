@@ -6,8 +6,15 @@
 .. autoclass:: LocalLiouvillian
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.operator.LocalLiouvillian
+         :parts: 2
+
+
    
       
    .. rst-class:: class-dl-groups
@@ -42,6 +49,7 @@
       .. automethod:: LocalLiouvillian.n_conn
       .. automethod:: LocalLiouvillian.to_dense
       .. automethod:: LocalLiouvillian.to_linear_operator
+      .. automethod:: LocalLiouvillian.to_qobj
       .. automethod:: LocalLiouvillian.to_sparse
       .. automethod:: LocalLiouvillian.transpose
 

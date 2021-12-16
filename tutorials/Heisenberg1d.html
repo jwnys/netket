@@ -7,6 +7,7 @@
     <title>Learning the ground-state of a spin model with different Neural Networks available in NetKet &#8212; netket v3.0 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     <link rel="stylesheet" type="text/css" href="../_static/jumbo-style.css" />
@@ -19,7 +20,7 @@
     <script src="../_static/doctools.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     <script src="../_static/js/rtd_theme.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -28,9 +29,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -442,7 +443,7 @@ print(&#39;The exact ground-state energy is E0=&#39;,exact_gs_energy)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The exact ground-state energy is E0= -39.147522607062804
+The exact ground-state energy is E0= -39.14752260706275
 </pre></div></div>
 </div>
 </div>
@@ -498,7 +499,7 @@ op = nk.optimizer.Sgd(learning_rate=0.1)
 sr = nk.optimizer.SR(diag_shift=0.1)
 
 # The variational state
-vs = nk.variational.MCState(sa, ma, n_samples=1000)
+vs = nk.vqs.MCState(sa, ma, n_samples=1000)
 
 # The ground-state optimization loop
 gs = nk.VMC(
@@ -522,7 +523,8 @@ print(&#39;The Jastrow calculation took&#39;,end-start,&#39;seconds&#39;)
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 300/300 [00:15&lt;00:00, 19.50it/s, Energy=-39.139-0.000j ± 0.018 [σ²=0.315, R̂=0.9989]]
+WARNING:absl:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+100%|██████████| 300/300 [00:21&lt;00:00, 14.21it/s, Energy=-39.178-0.000j ± 0.016 [σ²=0.271, R̂=1.0052]]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -532,7 +534,7 @@ print(&#39;The Jastrow calculation took&#39;,end-start,&#39;seconds&#39;)
 <div class="highlight"><pre>
 ### Jastrow calculation
 Has 506 parameters
-The Jastrow calculation took 21.097535133361816 seconds
+The Jastrow calculation took 26.639398336410522 seconds
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -616,7 +618,7 @@ op = nk.optimizer.Sgd(learning_rate=0.05)
 sr = nk.optimizer.SR(diag_shift=0.1)
 
 # The variational state
-vs = nk.variational.MCState(sa, ma, n_samples=1000)
+vs = nk.vqs.MCState(sa, ma, n_samples=1000)
 
 # The ground-state optimization loop
 gs = nk.VMC(
@@ -640,7 +642,7 @@ print(&#39;The RBM calculation took&#39;,end-start,&#39;seconds&#39;)
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 600/600 [00:19&lt;00:00, 30.09it/s, Energy=-39.115 ± 0.015 [σ²=0.225, R̂=1.0043]]
+100%|█████████████████| 600/600 [00:41&lt;00:00, 14.49it/s, Energy=-39.118 ± 0.014 [σ²=0.200, R̂=0.9978]]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -650,7 +652,7 @@ print(&#39;The RBM calculation took&#39;,end-start,&#39;seconds&#39;)
 <div class="highlight"><pre>
 ### RBM calculation
 Has 528 parameters
-The RBM calculation took 24.721863985061646 seconds
+The RBM calculation took 46.16197657585144 seconds
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -662,7 +664,7 @@ The RBM calculation took 24.721863985061646 seconds
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -700,72 +702,105 @@ check out the influence of the learning rate.</p>
 <div class="section" id="4.-RBM-again,-this-time-with-lattice-symmetries">
 <h2>4. RBM again, this time with lattice symmetries<a class="headerlink" href="#4.-RBM-again,-this-time-with-lattice-symmetries" title="Permalink to this headline">¶</a></h2>
 <p>Let’s define a similar RBM machine, which takes into account that the model has translational symmetries. All sites are equivalent and thus many of the wave-functions coefficients are related by symmetry. We use the same exact hyperparameters as in the previous RBM calculation (<span class="math notranslate nohighlight">\(\alpha=1\)</span>, same learning rate, and number of samples and iterations in the Variational Monte Carlo) and run now a symmetric RBM.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span>## Symmetric RBM Spin Machine
-#ma = nk.machine.RbmSpinSymm(alpha=1, hilbert=hi)
-#ma.init_random_parameters(seed=1234, sigma=0.01)
-#
-## Metropolis Exchange Sampling
-## Notice that this sampler exchanges two neighboring sites
-## thus preservers the total magnetization
-#sa = nk.sampler.MetropolisExchange(machine=ma, graph=g)
-#
-## Optimizer
-#op = nk.optimizer.Sgd(learning_rate=0.05)
-#
-## Stochastic reconfiguration
-#gs = nk.variational.Vmc(
-#    hamiltonian=ha,
-#    sampler=sa,
-#    optimizer=op,
-#    n_samples=1000,
-#    diag_shift=0.1,
-#    use_iterative=True,
-#    method=&#39;Sr&#39;)
-#
-#start = time.time()
-#gs.run(output_prefix=&#39;RBMSymmetric&#39;, n_iter=300)
-#end = time.time()
-#
-#print(&#39;### Symmetric RBM calculation&#39;)
-#print(&#39;Has&#39;,ma.n_par,&#39;parameters&#39;)
-#print(&#39;The Symmetric RBM calculation took&#39;,end-start,&#39;seconds&#39;)
+ma = nk.models.RBMSymm(symmetries=g.translation_group(), alpha=1)
+
+# Metropolis Exchange Sampling
+# Notice that this sampler exchanges two neighboring sites
+# thus preservers the total magnetization
+sa = nk.sampler.MetropolisExchange(hi, graph=g)
+
+# Optimizer
+op = nk.optimizer.Sgd(learning_rate=0.05)
+
+# Stochastic Reconfiguration
+sr = nk.optimizer.SR(diag_shift=0.1)
+
+# The variational state
+vs = nk.vqs.MCState(sa, ma, n_samples=1000)
+
+# The ground-state optimization loop
+gs = nk.VMC(
+    hamiltonian=ha,
+    optimizer=op,
+    preconditioner=sr,
+    variational_state=vs)
+
+start = time.time()
+gs.run(out=&#39;RBMSymmetric&#39;, n_iter=300)
+end = time.time()
+
+print(&#39;### Symmetric RBM calculation&#39;)
+print(&#39;Has&#39;,vs.n_parameters,&#39;parameters&#39;)
+print(&#39;The Symmetric RBM calculation took&#39;,end-start,&#39;seconds&#39;)
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|█████████████████| 300/300 [00:17&lt;00:00, 16.70it/s, Energy=-39.125 ± 0.011 [σ²=0.116, R̂=1.0049]]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+### Symmetric RBM calculation
+Has 24 parameters
+The Symmetric RBM calculation took 22.50969409942627 seconds
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
 <p>The simulation was much faster, wasn’t it? There were of course much less parameters to optimize. Now let’s extract the results and plot them using a zoomed scale, and together with the previous results with the RBM.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span>## import the data from log file
-#data=json.load(open(&quot;RBMSymmetric.log&quot;))
-#
-## Extract the relevant information
-#energy_symRBM=[]
-#iters_symRBM=[]
-#for iteration in data[&quot;Output&quot;]:
-#    energy_symRBM.append(iteration[&quot;Energy&quot;][&quot;Mean&quot;])
-#    iters_symRBM.append(iteration[&quot;Iteration&quot;])
-#
-#fig, ax1 = plt.subplots()
-#ax1.plot(iters_Jastrow, energy_Jastrow, color=&#39;C8&#39;, label=&#39;Energy (Jastrow)&#39;)
-#ax1.plot(iters, energy_RBM, color=&#39;red&#39;, label=&#39;Energy (RBM)&#39;)
-#ax1.plot(iters_symRBM, energy_symRBM, color=&#39;blue&#39;, label=&#39;Energy (Symmetric RBM)&#39;)
-#
-#ax1.set_ylabel(&#39;Energy&#39;)
-#ax1.set_xlabel(&#39;Iteration&#39;)
-#plt.axis([0,iters_symRBM[-1],exact_gs_energy-0.06,exact_gs_energy+0.12])
-#plt.axhline(y=exact_gs_energy, xmin=0,
-#                xmax=iters[-1], linewidth=2, color=&#39;k&#39;, label=&#39;Exact&#39;)
-#ax1.legend()
-#plt.show()
+data=json.load(open(&quot;RBMSymmetric.log&quot;))
+
+# Extract the relevant information
+iters_symRBM = data[&quot;Energy&quot;][&quot;iters&quot;]
+energy_symRBM = data[&quot;Energy&quot;][&quot;Mean&quot;]
+
+fig, ax1 = plt.subplots()
+ax1.plot(iters_Jastrow, energy_Jastrow, color=&#39;C8&#39;, label=&#39;Energy (Jastrow)&#39;)
+ax1.plot(iters_RBM, energy_RBM, color=&#39;red&#39;, label=&#39;Energy (RBM)&#39;)
+ax1.plot(iters_symRBM, energy_symRBM, color=&#39;blue&#39;, label=&#39;Energy (Symmetric RBM)&#39;)
+
+ax1.set_ylabel(&#39;Energy&#39;)
+ax1.set_xlabel(&#39;Iteration&#39;)
+if exact_gs_energy:
+    plt.axis([0,iters_symRBM[-1],exact_gs_energy-0.06,exact_gs_energy+0.12])
+    plt.axhline(y=exact_gs_energy, xmin=0,
+                    xmax=iters_RBM[-1], linewidth=2, color=&#39;k&#39;, label=&#39;Exact&#39;)
+ax1.legend()
+plt.show()
 </pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_Heisenberg1d_25_0.png" src="../_images/tutorials_Heisenberg1d_25_0.png" />
 </div>
 </div>
 <p>Not only the simulation was faster in terms of CPU time, but we are now reaching the ground-state in a much lower number of iterations! Imposing symmetries greatly helps, and NetKet allows to do this. Note that there is also a symmetric version of the Jastrow ansatz that we tested <a class="reference external" href="#2.-Starting-simple:-the-Jastrow-ansatz">earlier</a> in NetKet, which is called <code class="docutils literal notranslate"><span class="pre">JastrowSymm</span></code>. As an exercice, check it out. What you will find is that while it converges slightly faster in terms of iterations with
@@ -792,7 +827,7 @@ ffnn = Model()
 sa = nk.sampler.MetropolisExchange(hi, graph=g)
 
 # The variational state
-vs = nk.variational.MCState(sa, ffnn, n_samples=1000)
+vs = nk.vqs.MCState(sa, ffnn, n_samples=1000)
 
 opt = nk.optimizer.Sgd(learning_rate=0.05)
 
@@ -822,7 +857,7 @@ print(&#39;The Feed Forward calculation took&#39;,end-start,&#39;seconds&#39;)
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 300/300 [00:52&lt;00:00,  5.66it/s, Energy=-39.143-0.021j ± 0.023 [σ²=0.545, R̂=1.0024]]
+100%|██████████| 300/300 [01:48&lt;00:00,  2.78it/s, Energy=-39.109-0.013j ± 0.018 [σ²=0.322, R̂=1.0027]]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -832,7 +867,7 @@ print(&#39;The Feed Forward calculation took&#39;,end-start,&#39;seconds&#39;)
 <div class="highlight"><pre>
 ### Feed Forward calculation
 Has 1012 parameters
-The Feed Forward calculation took 58.5942440032959 seconds
+The Feed Forward calculation took 113.18418622016907 seconds
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -844,7 +879,7 @@ The Feed Forward calculation took 58.5942440032959 seconds
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -858,7 +893,7 @@ energy_FF = data[&quot;Energy&quot;][&quot;Mean&quot;][&quot;real&quot;]
 fig, ax1 = plt.subplots()
 ax1.plot(iters_Jastrow, energy_Jastrow, color=&#39;C8&#39;,linestyle=&quot;None&quot;, marker=&#39;d&#39;,label=&#39;Energy (Jastrow)&#39;)
 ax1.plot(iters_RBM, energy_RBM, color=&#39;red&#39;, marker=&#39;o&#39;,linestyle=&quot;None&quot;,label=&#39;Energy (RBM)&#39;)
-#ax1.plot(iters_symRBM, energy_symRBM, color=&#39;blue&#39;,linestyle=&quot;None&quot;,marker=&#39;o&#39;,label=&#39;Energy (Symmetric RBM)&#39;)
+ax1.plot(iters_symRBM, energy_symRBM, color=&#39;blue&#39;,linestyle=&quot;None&quot;,marker=&#39;o&#39;,label=&#39;Energy (Symmetric RBM)&#39;)
 ax1.plot(iters_FF, energy_FF, color=&#39;orange&#39;, marker=&#39;s&#39;,linestyle=&quot;None&quot;,label=&#39;Energy (Feed Forward, take 1)&#39;)
 ax1.legend(bbox_to_anchor=(1.05, 0.3))
 ax1.set_ylabel(&#39;Energy&#39;)
@@ -895,7 +930,7 @@ plt.show()
 ffnn2 = Model2()
 
 # The variational state
-vs = nk.variational.MCState(sa, ffnn, n_samples=1000)
+vs = nk.vqs.MCState(sa, ffnn, n_samples=1000)
 
 opt = nk.optimizer.Sgd(learning_rate=0.05)
 
@@ -926,7 +961,7 @@ print(&#39;The Feed Forward (more layers) calculation took&#39;,end-start,&#39;s
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 600/600 [01:35&lt;00:00,  6.27it/s, Energy=-39.102+0.011j ± 0.016 [σ²=0.273, R̂=1.0017]]
+100%|██████████| 600/600 [03:35&lt;00:00,  2.78it/s, Energy=-39.130-0.009j ± 0.015 [σ²=0.226, R̂=0.9973]]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -936,7 +971,7 @@ print(&#39;The Feed Forward (more layers) calculation took&#39;,end-start,&#39;s
 <div class="highlight"><pre>
 ### Feed Forward (more layers) calculation
 Has 1012 parameters
-The Feed Forward (more layers) calculation took 95.85180711746216 seconds
+The Feed Forward (more layers) calculation took 216.8182888031006 seconds
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -948,7 +983,7 @@ The Feed Forward (more layers) calculation took 95.85180711746216 seconds
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -961,7 +996,7 @@ energy_FF_morelayers = data[&quot;Energy&quot;][&quot;Mean&quot;][&quot;real&quo
 
 fig, ax1 = plt.subplots()
 #ax1.plot(iters_Jastrow, energy_Jastrow, color=&#39;C8&#39;,linestyle=&quot;None&quot;, marker=&#39;d&#39;,label=&#39;Energy (Jastrow)&#39;)
-#ax1.plot(iters, energy_RBM, color=&#39;red&#39;, label=&#39;Energy (RBM)&#39;)
+#ax1.plot(iters_RBM, energy_RBM, color=&#39;red&#39;, label=&#39;Energy (RBM)&#39;)
 #ax1.plot(iters_symRBM, energy_symRBM, color=&#39;blue&#39;,linestyle=&quot;None&quot;,marker=&#39;o&#39;,label=&#39;Energy (Symmetric RBM)&#39;)
 ax1.plot(iters_FF, energy_FF, color=&#39;orange&#39;, marker=&#39;s&#39;,alpha=0.5,linestyle=&quot;None&quot;,label=&#39;Energy (Feed Forward, take 1)&#39;)
 ax1.plot(iters_FF_morelayers, energy_FF_morelayers, color=&#39;green&#39;,marker=&#39;s&#39;,linestyle=&quot;None&quot;, alpha=1,label=&#39;Energy (Feed Forward, more layers)&#39;)

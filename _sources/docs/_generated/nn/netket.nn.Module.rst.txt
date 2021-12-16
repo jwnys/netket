@@ -6,9 +6,18 @@
 .. autoclass:: Module
    :show-inheritance:
 
+   
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.nn.Module
+         :parts: 2
+
 
    
-   
+
+   .. automethod:: Module.__init__
       
    .. rst-class:: class-dl-groups
 

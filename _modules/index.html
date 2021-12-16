@@ -7,6 +7,7 @@
     <title>Overview: module code &#8212; netket v3.0 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     <link rel="stylesheet" type="text/css" href="../_static/jumbo-style.css" />
@@ -26,9 +27,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -99,28 +100,33 @@
 <ul><li><a href="flax/linen/linear.html">flax.linen.linear</a></li>
 <li><a href="flax/linen/module.html">flax.linen.module</a></li>
 <li><a href="jax/_src/nn/functions.html">jax._src.nn.functions</a></li>
-<li><a href="netket/callbacks/earlystopping.html">netket.callbacks.earlystopping</a></li>
 <li><a href="netket/callbacks/timeout.html">netket.callbacks.timeout</a></li>
 <li><a href="netket/driver/abstract_variational_driver.html">netket.driver.abstract_variational_driver</a></li>
 <li><a href="netket/driver/steady_state.html">netket.driver.steady_state</a></li>
 <li><a href="netket/driver/vmc.html">netket.driver.vmc</a></li>
 <li><a href="netket/exact.html">netket.exact</a></li>
+<li><a href="netket/experimental/driver/tdvp.html">netket.experimental.driver.tdvp</a></li>
 <li><a href="netket/graph/abstract_graph.html">netket.graph.abstract_graph</a></li>
-<li><a href="netket/graph/common_lattices.html">netket.graph.common_lattices</a></li>
 <li><a href="netket/graph/graph.html">netket.graph.graph</a></li>
 <li><a href="netket/graph/lattice.html">netket.graph.lattice</a></li>
 <li><a href="netket/hilbert/abstract_hilbert.html">netket.hilbert.abstract_hilbert</a></li>
+<li><a href="netket/hilbert/continuous_hilbert.html">netket.hilbert.continuous_hilbert</a></li>
 <li><a href="netket/hilbert/custom_hilbert.html">netket.hilbert.custom_hilbert</a></li>
+<li><a href="netket/hilbert/discrete_hilbert.html">netket.hilbert.discrete_hilbert</a></li>
 <li><a href="netket/hilbert/doubled_hilbert.html">netket.hilbert.doubled_hilbert</a></li>
 <li><a href="netket/hilbert/fock.html">netket.hilbert.fock</a></li>
+<li><a href="netket/hilbert/homogeneous.html">netket.hilbert.homogeneous</a></li>
+<li><a href="netket/hilbert/particle.html">netket.hilbert.particle</a></li>
 <li><a href="netket/hilbert/qubit.html">netket.hilbert.qubit</a></li>
 <li><a href="netket/hilbert/spin.html">netket.hilbert.spin</a></li>
+<li><a href="netket/hilbert/tensor_hilbert.html">netket.hilbert.tensor_hilbert</a></li>
 <li><a href="netket/logging/json_log.html">netket.logging.json_log</a></li>
 <li><a href="netket/logging/runtime_log.html">netket.logging.runtime_log</a></li>
 <li><a href="netket/logging/state_log.html">netket.logging.state_log</a></li>
 <li><a href="netket/logging/tensorboard.html">netket.logging.tensorboard</a></li>
 <li><a href="netket/models/autoreg.html">netket.models.autoreg</a></li>
 <li><a href="netket/models/equivariant.html">netket.models.equivariant</a></li>
+<li><a href="netket/models/fast_autoreg.html">netket.models.fast_autoreg</a></li>
 <li><a href="netket/models/jastrow.html">netket.models.jastrow</a></li>
 <li><a href="netket/models/mps.html">netket.models.mps</a></li>
 <li><a href="netket/models/ndm.html">netket.models.ndm</a></li>
@@ -130,35 +136,29 @@
 <li><a href="netket/nn/masked_linear.html">netket.nn.masked_linear</a></li>
 <li><a href="netket/nn/symmetric_linear.html">netket.nn.symmetric_linear</a></li>
 <li><a href="netket/operator/_abstract_operator.html">netket.operator._abstract_operator</a></li>
+<li><a href="netket/operator/_continuous_operator.html">netket.operator._continuous_operator</a></li>
+<li><a href="netket/operator/_discrete_operator.html">netket.operator._discrete_operator</a></li>
 <li><a href="netket/operator/_graph_operator.html">netket.operator._graph_operator</a></li>
 <li><a href="netket/operator/_hamiltonian.html">netket.operator._hamiltonian</a></li>
+<li><a href="netket/operator/_kinetic.html">netket.operator._kinetic</a></li>
 <li><a href="netket/operator/_local_liouvillian.html">netket.operator._local_liouvillian</a></li>
 <li><a href="netket/operator/_local_operator.html">netket.operator._local_operator</a></li>
 <li><a href="netket/operator/_pauli_strings.html">netket.operator._pauli_strings</a></li>
+<li><a href="netket/operator/_potential.html">netket.operator._potential</a></li>
+<li><a href="netket/operator/_sumoperators.html">netket.operator._sumoperators</a></li>
 <li><a href="netket/operator/boson.html">netket.operator.boson</a></li>
 <li><a href="netket/operator/spin.html">netket.operator.spin</a></li>
 <li><a href="netket/optimizer.html">netket.optimizer</a></li>
-<ul><li><a href="netket/optimizer/qgt/default.html">netket.optimizer.qgt.default</a></li>
-<li><a href="netket/optimizer/qgt/qgt_jacobian_dense.html">netket.optimizer.qgt.qgt_jacobian_dense</a></li>
-<li><a href="netket/optimizer/qgt/qgt_jacobian_pytree.html">netket.optimizer.qgt.qgt_jacobian_pytree</a></li>
-<li><a href="netket/optimizer/qgt/qgt_onthefly.html">netket.optimizer.qgt.qgt_onthefly</a></li>
-<li><a href="netket/optimizer/solver/solvers.html">netket.optimizer.solver.solvers</a></li>
-<li><a href="netket/optimizer/sr/api.html">netket.optimizer.sr.api</a></li>
-</ul><li><a href="netket/sampler/autoreg.html">netket.sampler.autoreg</a></li>
 <li><a href="netket/sampler/base.html">netket.sampler.base</a></li>
-<li><a href="netket/sampler/exact.html">netket.sampler.exact</a></li>
 <li><a href="netket/sampler/metropolis.html">netket.sampler.metropolis</a></li>
-<li><a href="netket/sampler/metropolis_numpy.html">netket.sampler.metropolis_numpy</a></li>
-<li><a href="netket/sampler/metropolis_pt.html">netket.sampler.metropolis_pt</a></li>
 <li><a href="netket/sampler/rules/custom_numpy.html">netket.sampler.rules.custom_numpy</a></li>
-<li><a href="netket/sampler/rules/exchange.html">netket.sampler.rules.exchange</a></li>
 <li><a href="netket/sampler/rules/hamiltonian.html">netket.sampler.rules.hamiltonian</a></li>
 <li><a href="netket/sampler/rules/hamiltonian_numpy.html">netket.sampler.rules.hamiltonian_numpy</a></li>
 <li><a href="netket/sampler/rules/local.html">netket.sampler.rules.local</a></li>
-<li><a href="netket/utils/array.html">netket.utils.array</a></li>
 <li><a href="netket/vqs/base.html">netket.vqs.base</a></li>
-<li><a href="netket/vqs/mc_mixed_state.html">netket.vqs.mc_mixed_state</a></li>
-<li><a href="netket/vqs/mc_state.html">netket.vqs.mc_state</a></li>
+<li><a href="netket/vqs/exact/state.html">netket.vqs.exact.state</a></li>
+<li><a href="netket/vqs/mc/mc_mixed_state/state.html">netket.vqs.mc.mc_mixed_state.state</a></li>
+<li><a href="netket/vqs/mc/mc_state/state.html">netket.vqs.mc.mc_state.state</a></li>
 </ul>
 
     </div>

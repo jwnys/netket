@@ -1,0 +1,6 @@
+﻿netket.vqs.get\_local\_kernel
+=============================
+
+.. currentmodule:: netket.vqs
+
+.. autoattribute:: get_local_kernel

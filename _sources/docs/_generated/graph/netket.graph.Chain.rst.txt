@@ -6,7 +6,6 @@
 .. autoclass:: Chain
    :show-inheritance:
 
-
    
       
    

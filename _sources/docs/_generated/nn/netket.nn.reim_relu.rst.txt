@@ -1,0 +1,6 @@
+﻿netket.nn.reim\_relu
+====================
+
+.. currentmodule:: netket.nn
+
+.. autofunction:: reim_relu

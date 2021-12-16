@@ -6,8 +6,15 @@
 .. autoclass:: BoseHubbard
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.operator.BoseHubbard
+         :parts: 2
+
+
    
 
    .. automethod:: BoseHubbard.__init__
@@ -45,6 +52,7 @@
       .. automethod:: BoseHubbard.to_dense
       .. automethod:: BoseHubbard.to_linear_operator
       .. automethod:: BoseHubbard.to_local_operator
+      .. automethod:: BoseHubbard.to_qobj
       .. automethod:: BoseHubbard.to_sparse
       .. automethod:: BoseHubbard.transpose
 

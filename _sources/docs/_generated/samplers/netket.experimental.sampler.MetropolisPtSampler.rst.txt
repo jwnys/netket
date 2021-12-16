@@ -1,0 +1,47 @@
+﻿netket.experimental.sampler.MetropolisPtSampler
+===============================================
+
+.. currentmodule:: netket.experimental.sampler
+
+.. autoclass:: MetropolisPtSampler
+   :show-inheritance:
+
+   
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.experimental.sampler.MetropolisPtSampler
+         :parts: 2
+
+
+   
+
+   .. automethod:: MetropolisPtSampler.__init__
+      
+   .. rst-class:: class-dl-groups
+
+   Attributes
+      .. autoattribute:: MetropolisPtSampler.is_exact
+      .. autoattribute:: MetropolisPtSampler.machine_pow
+      .. autoattribute:: MetropolisPtSampler.n_batches
+      .. autoattribute:: MetropolisPtSampler.n_chains
+      .. autoattribute:: MetropolisPtSampler.n_chains_per_rank
+      .. autoattribute:: MetropolisPtSampler.n_replicas
+      .. autoattribute:: MetropolisPtSampler.n_sweeps
+      .. autoattribute:: MetropolisPtSampler.reset_chains
+      .. autoattribute:: MetropolisPtSampler.rule
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Methods
+      .. automethod:: MetropolisPtSampler.init_state
+      .. automethod:: MetropolisPtSampler.log_pdf
+      .. automethod:: MetropolisPtSampler.replace
+      .. automethod:: MetropolisPtSampler.reset
+      .. automethod:: MetropolisPtSampler.sample
+      .. automethod:: MetropolisPtSampler.sample_next
+      .. automethod:: MetropolisPtSampler.samples
+
+   

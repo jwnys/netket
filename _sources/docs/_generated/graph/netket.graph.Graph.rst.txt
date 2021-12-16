@@ -6,8 +6,15 @@
 .. autoclass:: Graph
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.graph.Graph
+         :parts: 2
+
+
    
 
    .. automethod:: Graph.__init__

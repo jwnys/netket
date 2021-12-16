@@ -6,8 +6,15 @@
 .. autoclass:: AbstractVariationalDriver
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.driver.AbstractVariationalDriver
+         :parts: 2
+
+
    
       
    .. rst-class:: class-dl-groups

@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ground-State Variational Search with NetKet &#8212; netket v3.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jumbo-style.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/rtd_theme.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script src="../_static/js/rtd_theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/logonav.png"></span>
+          NetKet</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../getting_started.html">Get Started</a></li>
+                <li><a href="../docs/getting_started.html">Documentation</a></li>
+                <li><a href="../tutorials.html">Tutorials</a></li>
+                <li><a href="../citing.html">Citing NetKet</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="https://github.com/netket/netket"><i class="fab fa-github" aria-hidden="true"></i></a></li>
+                <li><a href="https://twitter.com/NetKetOrg"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Ground-State-Variational-Search-with-NetKet">
+<h1>Ground-State Variational Search with NetKet<a class="headerlink" href="#Ground-State-Variational-Search-with-NetKet" title="Permalink to this headline">¶</a></h1>
+<p>23 august 2021</p>
+<p>In this Tutorial we will introduce the open-source package <a class="reference external" href="https://www.netket.org/">NetKet</a>, and show some of its functionalities. We will guide you through a relatively simple quantum problem, that however will be a good guide also to address more complex situations.</p>
+<p>Specifically, we will study the transverse-field Ising model in one dimension:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{H}=\Gamma\sum_{i}\sigma_{i}^{(x)}+V\sum_{i}\sigma_{i}^{(z)}\sigma_{i+1}^{(z)}.\]</div>
+<p>In the following we assume periodic boundary conditions and we will count lattice sites starting from $ 0 $, such that $ i=0,1:nbsphinx-math:<cite>dots `L-1 $ and :math:`i=L=0</cite>.</p>
+<div class="section" id="0.-Installing-Netket">
+<h2>0. Installing Netket<a class="headerlink" href="#0.-Installing-Netket" title="Permalink to this headline">¶</a></h2>
+<p>Installing NetKet is relatively straightforward. For this Tutorial, if you are running it locally on your machine, we recommend that you create a clean virtual environment and install NetKet within:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m venv netket
+<span class="nb">source</span> netket/bin/activate
+pip install --upgrade netket
+</pre></div>
+</div>
+<p><strong>If you are on Google Colab</strong>, run the following cell to install the required packages.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>!pip install --upgrade netket
+</pre></div>
+</div>
+</div>
+<p>You can check that the installation was succesfull doing</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>import netket as nk
+</pre></div>
+</div>
+</div>
+<p>You should also check that your version of netket is at least 3.0</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>print(f&quot;NetKet version: {nk.__version__}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+NetKet version: 3.0b4.post1
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="1.-Defining-The-Hamiltonian">
+<h2>1. Defining The Hamiltonian<a class="headerlink" href="#1.-Defining-The-Hamiltonian" title="Permalink to this headline">¶</a></h2>
+<p>The first step in our journey consists in defining the Hamiltonian we are interested in. For this purpose, we first need to define the kind of degrees of freedom we are dealing with (i.e. if we have spins, bosons, fermions etc). This is done specifying the Hilbert space of the problem. For example, let us concentrate on a problem with 20 spins.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>N = 20
+
+hi = nk.hilbert.Spin(s=1 / 2, N=N)
+</pre></div>
+</div>
+</div>
+<p>We now need to specify the Hamiltonian. For this purpose, we will use NetKet’s <code class="docutils literal notranslate"><span class="pre">LocalOperator</span></code> (see details <a class="reference external" href="https://www.netket.org/docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator">here</a>) which is the sum of arbitrary k-local operators.</p>
+<p>In this specifc case, we have a 1-local operator, $ <span class="math">\sigma`^{(x)}_i $ and a 2-local operator, $ :nbsphinx-math:</span>sigma`^{(z)}_i :nbsphinx-math:<a href="#id1"><span class="problematic" id="id2">`</span></a>sigma`^{(z)}_j $. We then start importing the pauli operators.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>from netket.operator.spin import sigmax,sigmaz
+</pre></div>
+</div>
+</div>
+<p>We now take $ :nbsphinx-math:<a href="#id3"><span class="problematic" id="id4">`</span></a>Gamma`=-1 $ and start defining the 1-local parts of the Hamiltonian</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>Gamma = -1
+H = sum([Gamma*sigmax(hi,i) for i in range(N)])
+</pre></div>
+</div>
+</div>
+<p>Here we have used a list comprehension to (mildly) show off our ability to write one-liners, however you could have just added the terms one by one in an explicit loop instead (though you’d end up with a whopping 3 lines of code).</p>
+<p>We now also add the interaction terms, using the fact that NetKet automatically recognizes products of local operators as tensor products.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>V=-1
+H += sum([V*sigmaz(hi,i)*sigmaz(hi,(i+1)%N) for i in range(N)])
+</pre></div>
+</div>
+</div>
+<p>In general, when manipulating NetKet objects, you should always assume that you can safely operate on them like you would in mathematical equations, therefore you can sum and multiply them with ease.</p>
+</div>
+<div class="section" id="2.-Exact-Diagonalization">
+<h2>2. Exact Diagonalization<a class="headerlink" href="#2.-Exact-Diagonalization" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have defined the Hamiltonian, we can already start playing with it. For example, since the number of spins is large but still manageable for exact diagonalization, we can give it a try.</p>
+<p>In NetKet this is easily done converting our Hamiltonian operator into a sparse matrix of size $ 2^N :nbsphinx-math:<a href="#id5"><span class="problematic" id="id6">`</span></a>times <a href="#id7"><span class="problematic" id="id8">`</span></a>2^ N $.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>sp_h=H.to_sparse()
+sp_h.shape
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(1048576, 1048576)
+</pre></div></div>
+</div>
+<p>Since this is just a regular scipy sparse matrix, we can just use any sparse diagonalization routine in there to find the eigenstates. For example, this will find the two lowest eigenstates</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>from scipy.sparse.linalg import eigsh
+
+eig_vals, eig_vecs = eigsh(sp_h, k=2, which=&quot;SA&quot;)
+
+print(&quot;eigenvalues with scipy sparse:&quot;, eig_vals)
+
+E_gs = eig_vals[0]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+eigenvalues with scipy sparse: [-25.49098969 -25.41240947]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="3.-Mean-Field-Ansatz">
+<h2>3. Mean-Field Ansatz<a class="headerlink" href="#3.-Mean-Field-Ansatz" title="Permalink to this headline">¶</a></h2>
+<p>We now would like to find a variational approximation of the ground state of this Hamiltonian. As a first step, we can try to use a very simple mean field ansatz:</p>
+<div class="math notranslate nohighlight">
+\[\langle \sigma^{z}_1,\dots \sigma^{z}_N| \Psi_{\mathrm{mf}} \rangle = \Pi_{i=1}^{N} \Phi(\sigma^{z}_i),\]</div>
+<p>where the variational parameters are the single-spin wave functions, which we can further take to be normalized:</p>
+<div class="math notranslate nohighlight">
+\[|\Phi(\uparrow)|^2 + |\Phi(\downarrow)|^2 =1,\]</div>
+<p>and we can further write $ <span class="math">\Phi`(:nbsphinx-math:</span>sigma`^z) = <span class="math">\sqrt{P(\sigma^z)}`e^{i :nbsphinx-math:</span>phi`(<span class="math">\sigma`^z)}$. In order to simplify the presentation, we take here and in the following examples the phase $ :nbsphinx-math:</span>phi`=0 $. In this specific model this is without loss of generality, since it is known that the ground state is real and positive.</p>
+<p>For the normalized single-spin probability we will take a sigmoid form:</p>
+<div class="math notranslate nohighlight">
+\[P(\sigma_z; \lambda) = 1/(1+\exp(-\lambda \sigma_z)),\]</div>
+<p>thus depending on the real-valued variational parameter <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+<p>In NetKet one has to define a variational function approximating the <strong>logarithm</strong> of the wave-function amplitudes (or density-matrix values). We call this variational function <em>the Model</em> (yes, caps on the M).</p>
+<div class="math notranslate nohighlight">
+\[\langle \sigma^{z}_1,\dots \sigma^{z}_N| \Psi_{\mathrm{mf}} \rangle = \exp\left[\mathrm{Model}(\sigma^{z}_1,\dots \sigma^{z}_N ; \theta ) \right],\]</div>
+<p>where <span class="math notranslate nohighlight">\(\theta\)</span> is a set of parameters.</p>
+<p>In this case, the parameter of the model will be just one: <span class="math notranslate nohighlight">\(\gamma\)</span>.</p>
+<p>The Model can be defined using one of the several <em>functional</em> jax frameworks such as Jax/Stax, Flax or Haiku. NetKet includes several pre-built models and layers built with <a class="reference external" href="https://github.com/google/flax">Flax</a>, so we will be using it for the rest of the notebook.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span># numerical operations in the model should always use jax.numpy
+# instead of numpy because jax supports computing derivatives.
+# If you want to better understand the difference between the two, check
+# https://flax.readthedocs.io/en/latest/notebooks/jax_for_the_impatient.html
+import jax.numpy as jnp
+
+# Flax is a framework to define models using jax
+import flax
+# we refer to `flax.linen` as `nn`. It&#39;s a repository of
+# layers, initializers and nonlinear functions.
+import flax.linen as nn
+
+# A Flax model must be a class subclassing `nn.Module`
+class MF(nn.Module):
+
+    # The most compact way to define the model is this.
+    # The __call__(self, x) function should take as
+    # input a batch of states x.shape = (n_samples, L)
+    # and should return a vector of n_samples log-amplitudes
+    @nn.compact
+    def __call__(self, x):
+
+        # A tensor of variational parameters is defined by calling
+        # the method `self.param` where the arguments will be:
+        # - arbitrary name used to refer to this set of parameters
+        # - an initializer used to provide the initial values.
+        # - The shape of the tensor
+        # - The dtype of the tensor.
+        lam = self.param(
+            &quot;lambda&quot;, nn.initializers.normal(), (1,), float
+        )
+
+        # compute the probabilities
+        p = nn.log_sigmoid(lam*x)
+
+        # sum the output
+        return 0.5 * jnp.sum(p, axis=-1)
+</pre></div>
+</div>
+</div>
+<p>The model itself is only a set of instructions on how to initialise the parameters and how to compute the result.</p>
+<p>To actually create a variational state with its parameters, the easiest way is to construct a Monte-Carlo-sampled Variational State. To do this, we first need to define a sampler.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">netket.sampler</span></code> several samplers are defined, each with its own peculiarities. In the following example, we will be using a simple sampler that flips the spins in the configurations one by one.</p>
+<p>You can read more about how the sampler works by checking the documentation with <code class="docutils literal notranslate"><span class="pre">?nk.sampler.MetropolisLocal</span></code></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span># Create an instance of the model.
+# Notice that this does not create the parameters.
+mf_model=MF()
+
+# Create the local sampler on the hilbert space
+sampler = nk.sampler.MetropolisLocal(hi)
+
+# Construct the variational state using the model and the sampler above.
+# n_samples specifies how many samples should be used to compute expectation
+# values.
+vstate = nk.vqs.MCState(sampler, mf_model, n_samples=500)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING:absl:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+</pre></div></div>
+</div>
+You can play around with the variational state: for example, you can compute expectation values yourself or inspect it's parameters<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span># you can inspect the parameters which contain the single
+# variational parameter `lambda`
+print(vstate.parameters)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+FrozenDict({
+    lambda: DeviceArray([0.00730014], dtype=float64),
+})
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span># Expectation value: notice that it also provides an error estimate.
+print(vstate.expect(H))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+-19.88 ± 0.20 [σ²=20.60, R̂=1.0043]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="4.-Variational-Monte-Carlo">
+<h2>4. Variational Monte Carlo<a class="headerlink" href="#4.-Variational-Monte-Carlo" title="Permalink to this headline">¶</a></h2>
+<p>We will now try to optimise $ :nbsphinx-math:<a href="#id9"><span class="problematic" id="id10">`</span></a>lambda <a href="#id11"><span class="problematic" id="id12">`</span></a>$ in order to best approximate the ground state of the hamiltonian.</p>
+<p>To do so, first I need to pick an iterative optimiser. We choose stochastic gradient descent with a learning rate of <span class="math notranslate nohighlight">\(0.05\)</span>. Then, we must provide all the elements to the variational monte carlo driver, which takes case of setting up and running the whole optimisation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>optimizer = nk.optimizer.Sgd(learning_rate=0.05)
+
+# build the optimisation driver
+gs = nk.driver.VMC(H, optimizer, variational_state=vstate)
+
+# run the driver for 300 iterations. This will display a progress bar
+# by default.
+gs.run(n_iter=300)
+
+mf_energy=vstate.expect(H)
+error=abs((mf_energy.mean-eig_vals[0])/eig_vals[0])
+print(&quot;Optimized energy and relative error: &quot;,mf_energy,error)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+No output specified (out=[apath|nk.logging.JsonLogger(...)]).Running the optimization but not saving the output.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|███████████████████████████████████████████████████████████████████████████████████████████████| 300/300 [00:07&lt;00:00, 40.90it/s, Energy=-24.940 ± 0.045 [σ²=1.040, R̂=1.0065]]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Optimized energy and relative error:  -24.948 ± 0.044 [σ²=0.996, R̂=0.9979] 0.021311465905007886
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span># we can also inspect the parameter:
+print(&quot;Final optimized parameter: &quot;,vstate.parameters[&quot;lambda&quot;])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Final optimized parameter:  [2.63471166]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="5.-Jastrow-Ansatz">
+<h2>5. Jastrow Ansatz<a class="headerlink" href="#5.-Jastrow-Ansatz" title="Permalink to this headline">¶</a></h2>
+<p>We have seen that the mean field ansatz yields about 2% error on the ground-state energy. Let’s now try to do better, using a more correlated ansatz.</p>
+<p>We will now take a short-range Jastrow ansatz, entangling nearest and next-to nearest neighbors, of the form</p>
+<div class="math notranslate nohighlight">
+\[\langle \sigma^{z}_1,\dots \sigma^{z}_N| \Psi_{\mathrm{jas}} \rangle = \exp \left( \sum_i J_1 \sigma^{z}_i\sigma^{z}_{i+1} + J_2 \sigma^{z}_i\sigma^{z}_{i+2} \right),\]</div>
+<p>where the parameters <span class="math notranslate nohighlight">\(J_1\)</span> and <span class="math notranslate nohighlight">\(J_2\)</span> are to be learned.</p>
+<p>Again we can write the model using flax.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>class JasShort(nn.Module):
+    @nn.compact
+    def __call__(self, x):
+
+        # Define the two variational parameters J1 and J2
+        j1 = self.param(
+            &quot;j1&quot;, nn.initializers.normal(), (1,), float
+        )
+        j2 =self.param(
+            &quot;j2&quot;, nn.initializers.normal(), (1,), float
+        )
+
+        # compute the nearest-neighbor correlations
+        corr1=x*jnp.roll(x,-1,axis=-1)
+        corr2=x*jnp.roll(x,-2,axis=-1)
+
+        # sum the output
+        return jnp.sum(j1*corr1+j2*corr2,axis=-1)
+
+model=JasShort()
+
+vstate = nk.vqs.MCState(sampler, model, n_samples=1000)
+</pre></div>
+</div>
+</div>
+<p>We then optimize it, however this time we also introduce a stochastic reconfiguration (natural gradient) preconditioner. Also, we now log the intermediate results of the optimization, so that we can visualize them at a later stage.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>optimizer = nk.optimizer.Sgd(learning_rate=0.05)
+
+gs = nk.driver.VMC(H, optimizer, variational_state=vstate, preconditioner=nk.optimizer.SR(diag_shift=0.1))
+
+# Loggers that work together with optimisation drivers are defined in nk.logging.
+# RuntimeLog keeps the metrics in memory, JsonLog stores them to a json file which can be read
+# as a dict, TensorBoardLog can be used to log to TensorBoard.
+log=nk.logging.RuntimeLog()
+
+# One or more logger objects must be passed to the keyword argument `out`.
+gs.run(n_iter=300, out=log)
+
+print(f&quot;Final optimized parameters: j1={vstate.parameters[&#39;j1&#39;]}, j2={vstate.parameters[&#39;j2&#39;]}&quot;)
+
+jas_energy=vstate.expect(H)
+error=abs((jas_energy.mean-eig_vals[0])/eig_vals[0])
+print(f&quot;Optimized energy : {jas_energy}&quot;)
+print(f&quot;relative error   : {error}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|███████████████████████████████████████████████████████████████████████████████████████████████| 300/300 [00:07&lt;00:00, 41.35it/s, Energy=-25.304 ± 0.020 [σ²=0.411, R̂=1.0135]]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Final optimized parameters: j1=[0.23291901], j2=[0.08249868]
+Optimized energy : -25.332 ± 0.020 [σ²=0.414, R̂=1.0046]
+relative error   : 0.006217843960984178
+</pre></div></div>
+</div>
+<p>You can now see that this ansatz is almost one order of magnitude more accurate than the mean field!</p>
+<p>In order to visualize what happened during the optimization, we can use the data that has been stored by the logger. There are several available loggers in NetKet, here we have just used a simple one that stores the intermediate results as values in a dictionary.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>data_jastrow = log.data
+print(data_jastrow)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;Energy&#39;: History(
+   keys  = [&#39;Mean&#39;, &#39;Variance&#39;, &#39;Sigma&#39;, &#39;R_hat&#39;, &#39;TauCorr&#39;],
+   iters = [0, 1, ... 298, 299] (300 steps),
+)}
+</pre></div></div>
+</div>
+<p>These report several intermediate quantities, that can be easily plotted. For example we can plot the value of the energy (with its error bar) at each optimization step.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>from matplotlib import pyplot as plt
+
+plt.errorbar(data_jastrow[&quot;Energy&quot;].iters, data_jastrow[&quot;Energy&quot;].Mean, yerr=data_jastrow[&quot;Energy&quot;].Sigma)
+plt.xlabel(&#39;Iterations&#39;)
+plt.ylabel(&#39;Energy&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0, 0.5, &#39;Energy&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_netket3_38_1.png" src="../_images/tutorials_netket3_38_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="6.-Neural-Network-Quantum-State">
+<h2>6. Neural-Network Quantum State<a class="headerlink" href="#6.-Neural-Network-Quantum-State" title="Permalink to this headline">¶</a></h2>
+<p>We now want to use a more sofisticated ansatz, based on a neural network representation of the wave function. At this point, this is quite straightforward, since we can again take advantage of automatic differentiation.</p>
+<p>Let us define a simple fully-connected feed-forward network with a ReLu activation function and a sum layer.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>class FFN(nn.Module):
+
+    # You can define attributes at the module-level
+    # with a default. This allows you to easily change
+    # some hyper-parameter without redefining the whole
+    # flax module.
+    alpha : int = 1
+
+    @nn.compact
+    def __call__(self, x):
+
+        # here we construct the first dense layer using a
+        # pre-built implementation in flax.
+        # features is the number of output nodes
+        # WARNING: Won&#39;t work with complex hamiltonians because
+        # of a bug in flax. Use nk.nn.Dense otherwise.
+        dense = nn.Dense(features=self.alpha * x.shape[-1])
+
+        # we apply the dense layer to the input
+        y = dense(x)
+
+        # the non-linearity is a simple ReLu
+        y = nn.relu(y)
+
+        # sum the output
+        return jnp.sum(y, axis=-1)
+
+model = FFN(alpha=1)
+
+vstate = nk.vqs.MCState(sampler, model, n_samples=1000)
+</pre></div>
+</div>
+</div>
+<p><em>Warning</em>: Flax has a bug with its layers, where they drop the imaginary part of complex numbers if the layer has real weights. This is not a problem in the above example, but if you try to work on more complex problems where you work with complex numbers you should rather use the equivalent <code class="docutils literal notranslate"><span class="pre">nk.nn.Dense</span></code> which contains a fix for this bug.</p>
+<p>We then proceed to the optimization as before.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>optimizer = nk.optimizer.Sgd(learning_rate=0.1)
+
+# Notice the use, again of Stochastic Reconfiguration, which considerably improves the optimisation
+gs = nk.driver.VMC(H, optimizer, variational_state=vstate,preconditioner=nk.optimizer.SR(diag_shift=0.1))
+
+log=nk.logging.RuntimeLog()
+gs.run(n_iter=300,out=log)
+
+ffn_energy=vstate.expect(H)
+error=abs((ffn_energy.mean-eig_vals[0])/eig_vals[0])
+print(&quot;Optimized energy and relative error: &quot;,ffn_energy,error)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|███████████████████████████████████████████████████████████████████████████████████████████████| 300/300 [00:08&lt;00:00, 33.98it/s, Energy=-25.480 ± 0.011 [σ²=0.118, R̂=0.9995]]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Optimized energy and relative error:  -25.501 ± 0.012 [σ²=0.150, R̂=0.9964] 0.000406655916988611
+</pre></div></div>
+</div>
+<p>And we can compare the results between the two different ansatze:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>data_FFN = log.data
+
+plt.errorbar(data_jastrow[&quot;Energy&quot;].iters, data_jastrow[&quot;Energy&quot;].Mean, yerr=data_jastrow[&quot;Energy&quot;].Sigma, label=&quot;Jastrow&quot;)
+plt.errorbar(data_FFN[&quot;Energy&quot;].iters, data_FFN[&quot;Energy&quot;].Mean, yerr=data_FFN[&quot;Energy&quot;].Sigma, label=&quot;FFN&quot;)
+plt.hlines([E_gs], xmin=0, xmax=300, color=&#39;black&#39;, label=&quot;Exact&quot;)
+plt.legend()
+
+plt.xlabel(&#39;Iterations&#39;)
+plt.ylabel(&#39;Energy&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0, 0.5, &#39;Energy&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_netket3_45_1.png" src="../_images/tutorials_netket3_45_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="7.-Translation-Symmetry">
+<h2>7. Translation Symmetry<a class="headerlink" href="#7.-Translation-Symmetry" title="Permalink to this headline">¶</a></h2>
+<p>In order to enforce spatial symmetries we can use some built-in functionalities of NetKet, in conjunction with equivariant layers.</p>
+<p>The first step is to construct explicitly a graph that contains the edges of our interactions, in this case this is a simple chain with periodic boundaries. NetKet has builtin several symmetry groups that can be used to target specific spatial symmetries. In this case for example after constructing the graph we can also print its translation group.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>graph=nk.graph.Chain(length=N, pbc=True)
+
+print(graph.translation_group())
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+PermutationGroup(elems=[Id(), Translation([1]), Translation([2]), Translation([3]), Translation([4]), Translation([5]), Translation([6]), Translation([7]), Translation([8]), Translation([9]), Translation([10]), Translation([11]), Translation([12]), Translation([13]), Translation([14]), Translation([15]), Translation([16]), Translation([17]), Translation([18]), Translation([19])], degree=20)
+</pre></div></div>
+</div>
+<p>Graphs are in general quite handy when defining hamiltonian terms on their edges. For example we can define our Hamiltonian as</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>Gamma=-1
+H = sum([Gamma*sigmax(hi,i) for i in range(N)])
+
+V=-1
+H += sum([V*sigmaz(hi,i)*sigmaz(hi,j) for (i,j) in graph.edges()])
+</pre></div>
+</div>
+</div>
+<p>We now write a model with an invariant transformation given by the translation group. Notice that we will now use NetKet’s own <code class="docutils literal notranslate"><span class="pre">nn</span></code> module, instead of Flax, since it contains several additions and also an extended and seamless support for complex layers/parameters.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>import netket.nn as nknn
+
+class SymmModel(nn.Module):
+    alpha: int
+
+    @nn.compact
+    def __call__(self, x):
+
+        x = nknn.DenseSymm(symmetries=graph.translation_group(),
+                           features=self.alpha,
+                           kernel_init=nk.nn.initializers.normal(stddev=0.01))(x)
+        x = nn.relu(x)
+
+        # sum the output
+        return jnp.sum(x,axis=(-1,-2))
+
+
+sampler = nk.sampler.MetropolisLocal(hi)
+
+#Let us define a model with 4 features per symmetry
+model=SymmModel(alpha=4)
+
+vstate = nk.vqs.MCState(sampler, model, n_samples=1000)
+
+vstate.n_parameters
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+84
+</pre></div></div>
+</div>
+<p>As it can be seen, the number of parameters of this model is greatly reduced, because of the symmetries that impose constraints on the weights of the dense layers. We can now optimize the model, using a few more optimization steps than before.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>optimizer = nk.optimizer.Sgd(learning_rate=0.1)
+
+gs = nk.driver.VMC(H, optimizer, variational_state=vstate,preconditioner=nk.optimizer.SR(diag_shift=0.1))
+
+log=nk.logging.RuntimeLog()
+gs.run(n_iter=600,out=log)
+
+symm_energy=vstate.expect(H)
+error=abs((symm_energy.mean-eig_vals[0])/eig_vals[0])
+print(&quot;Optimized energy and relative error: &quot;,symm_energy,error)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|████████████████████████████████████████████████████████████████████████████████████████████| 600/600 [00:30&lt;00:00, 19.58it/s, Energy=-25.4888 ± 0.0014 [σ²=0.0020, R̂=1.0006]]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Optimized energy and relative error:  -25.4910 ± 0.0015 [σ²=0.0024, R̂=1.0010] 1.8086847978220319e-06
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>plt.errorbar(log.data[&quot;Energy&quot;].iters[50:],log.data[&quot;Energy&quot;].Mean[50:],yerr=log.data[&quot;Energy&quot;].Sigma[50:],label=&quot;SymmModel&quot;)
+
+plt.axhline(y=eig_vals[0], xmin=0, xmax=log.data[&quot;Energy&quot;].iters[-1], linewidth=2, color=&quot;k&quot;, label=&quot;Exact&quot;)
+plt.xlabel(&#39;Iterations&#39;)
+plt.ylabel(&#39;Energy&#39;)
+plt.legend(frameon=False)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x147d05dc0&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_netket3_54_1.png" src="../_images/tutorials_netket3_54_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="8.-Measuring-Other-Properties">
+<h2>8. Measuring Other Properties<a class="headerlink" href="#8.-Measuring-Other-Properties" title="Permalink to this headline">¶</a></h2>
+<p>Once the model has been optimized, we can of course measure also other observables that are not the energy. For example, we could decide to measure the value of the nearest-neighbor <span class="math notranslate nohighlight">\(X-X\)</span> correlator. Notice that since correlators do not enjoy the zero-variance principle as the Hamiltonian instead does, it is important to use a larger number of samples to have a sufficiently low error bar on their measurement.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>corr = sum([sigmax(hi,i)*sigmax(hi,j) for (i,j) in graph.edges()])
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>vstate.n_samples=400000
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>vstate.expect(corr)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+10.858 ± 0.018 [σ²=31.582, R̂=1.0000]
+</pre></div></div>
+</div>
+<p>And we can further compare this to the exact ED result.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>psi = eig_vecs[:, 0]
+exact_corr=psi@(corr.to_sparse()@psi)
+print(exact_corr)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+10.85224871312767
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="9.-Learning-the-Phase-of-the-Wave-Function">
+<h2>9. Learning the Phase of the Wave Function<a class="headerlink" href="#9.-Learning-the-Phase-of-the-Wave-Function" title="Permalink to this headline">¶</a></h2>
+<p>In the examples shown before we have ignored completely the phase of the wave function, since we were working with a Hamiltonian whose ground-state has a definite sign. We now generalize the previous discussion and study a model, the Heisenberg model</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{H}= J\sum_{i}\vec{\sigma}_{i}\cdot \vec{\sigma}_{i+1}^.\]</div>
+<p>that has a non-trivial sign structure for the ground state.</p>
+<p>Training models with a phase is significantly less trivial than optimizing phaseless models, thus we will adopt here a heuristic approximation approach that has proven quite robust. What we will do here is that we will train the model using different (and time-dependent) learning rates for the phase and modulus parts of the wave function. The learning schedule rate is chosen in such as way that in the firs stages we will optimize mostly only the phase, while leaving the amplitude more or less
+constant. The schedule then will ramp up the learning rate for the amplitude and we will optimize everything at the same time.</p>
+<p>For the moment, we start defining our Hamiltonian (with <span class="math notranslate nohighlight">\(J=1\)</span>), and we also focus on the sector with vanishing total spin, since we know that the ground state is in this sector :</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span># We define an hilbert space for N spins with total magnetization fixed at 0.
+hi = nk.hilbert.Spin(s=1 / 2, N=N, total_sz=0)
+
+from netket.operator.spin import sigmax, sigmaz, sigmay
+
+graph = nk.graph.Chain(length=N, pbc=True)
+
+def exchange(i, j):
+    return (
+        sigmax(hi, i) * sigmax(hi, j)
+        + sigmay(hi, i) * sigmay(hi, j)
+        + sigmaz(hi, i) * sigmaz(hi, j)
+    )
+
+
+H = sum([exchange(i, j) for (i, j) in graph.edges()])
+</pre></div>
+</div>
+</div>
+<p>Since we fixed the magnetization, random states generated by the hilbert space will have 0 magnetization. See below:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>import jax
+
+v = hi.random_state(jax.random.PRNGKey(0), (2,))
+
+print(&quot;The total magnetization for those two states are: &quot;, v.sum(axis=-1))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The total magnetization for those two states are:  [0. 0.]
+</pre></div></div>
+</div>
+<p>As before, we also compute the exact energy, for future benchmarking.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>sp_h = H.to_sparse().real
+
+from scipy.sparse.linalg import eigsh
+import numpy as np
+
+print(&quot;diagonalizing...&quot;)
+eig_vals = np.sort(eigsh(sp_h, k=4, which=&quot;SA&quot;, return_eigenvectors=False, tol=1.0e-8))
+
+print(&quot;eigenvalues with scipy sparse:&quot;, eig_vals)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+diagonalizing...
+eigenvalues with scipy sparse: [-35.61754612 -34.74576394 -34.21753829 -33.63032594]
+</pre></div></div>
+</div>
+<p>We then define a symmetric neural network model as before, but this time we also allow for another real-valued network that represents the phase:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>import flax.linen as nn
+import netket.nn as nknn
+import jax.numpy as jnp
+
+class FullModel(nn.Module):
+
+    alpha: int
+
+    @nn.compact
+    def __call__(self, x):
+
+        # We use a symmetrized dense layer, and the symmetries are given
+        # by the translational group on our lattice
+        rho = nknn.DenseSymm(
+            symmetries=graph.translation_group(),
+            features=self.alpha,
+            dtype=float,
+            kernel_init=nn.initializers.normal(stddev=0.001),
+            name=&quot;Modulus&quot;
+        )(x)
+        rho = nn.relu(rho)
+
+        # We use nknn.Dense and not nn.Dense because the latter has a bug
+        # with complex number inputs
+        phase= nknn.Dense(
+            features=self.alpha*N,
+            dtype=float,
+            kernel_init=nn.initializers.normal(stddev=0.001),
+            name=&quot;Phase&quot;
+        )(x)
+        phase = nn.relu(phase)
+
+        return jnp.sum(rho, axis=(-1, -2)) + 1.0j*jnp.sum(phase, axis=(-1))
+</pre></div>
+</div>
+</div>
+<p>We then construct a suitable Variational State, using this model (with the phase only, for the moment) and also a sampler that preserves the total magnetization. For the latter, we will use a MCMC sampler that exchanges spins at random, thus preserving the total magnetization.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>model = FullModel(alpha=4)
+
+# MetropolisLocal does not conserve the total magnetization of the states initially imposed by
+# the hilbert space. MetropolisExchange, instead, exchanges the population at two sites so
+# it does.
+sampler = nk.sampler.MetropolisExchange(hi, graph=graph)
+
+vstate = nk.vqs.MCState(sampler, model, n_samples=1000)
+</pre></div>
+</div>
+</div>
+<p>We then proceed to the optimization of the phase only. This is achieved the scheduling functionalities of <code class="docutils literal notranslate"><span class="pre">optax</span></code>, the optimization library that is fully compatible with NetKet. Notice that here we start with zero learning rate for the modulus and fintie learning rate for the phase.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>import optax,flax
+
+# A linear schedule varies the learning rate from 0 to 0.01 across 600 steps.
+modulus_schedule=optax.linear_schedule(0,0.01,600)
+
+# The phase starts with a larger learning rate and then is decreased.
+phase_schedule=optax.linear_schedule(0.05,0.01,600)
+
+# Combine the linear schedule with SGD
+optm=optax.sgd(modulus_schedule)
+optp=optax.sgd(phase_schedule)
+
+# The multi-transform optimizer uses different optimisers for different parts of the
+# parameters.
+optimizer = optax.multi_transform({&#39;o1&#39;: optm, &#39;o2&#39;: optp},
+                flax.core.freeze({&quot;Modulus&quot;:&quot;o1&quot;, &quot;Phase&quot;:&quot;o2&quot;}))
+</pre></div>
+</div>
+</div>
+<p>We then use this advanced optimizer as usual in our VMC code.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>gs = nk.driver.VMC(
+    H,
+    optimizer,
+    variational_state=vstate,
+    preconditioner=nk.optimizer.SR(diag_shift=0.1)
+)
+
+log = nk.logging.RuntimeLog()
+gs.run(n_iter=600, out=log)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|████████████████████████████████████████████████████████████████████████████████████████| 600/600 [01:10&lt;00:00,  8.47it/s, Energy=-35.610-0.000j ± 0.011 [σ²=0.120, R̂=0.9977]]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;netket.logging.runtime_log.RuntimeLog at 0x1487fc910&gt;,)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>symm_energy=vstate.expect(H)
+error=abs((symm_energy.mean-eig_vals[0])/eig_vals[0])
+print(&quot;Optimized energy and relative error: &quot;,symm_energy,error)
+
+
+from matplotlib import pyplot as plt
+plt.errorbar(log.data[&quot;Energy&quot;].iters,log.data[&quot;Energy&quot;].Mean.real,yerr=log.data[&quot;Energy&quot;].Sigma,label=&quot;FullModel&quot;)
+plt.axhline(y=eig_vals[0], xmin=0, xmax=log.data[&quot;Energy&quot;].iters[-1], linewidth=2, color=&quot;k&quot;, label=&quot;Exact&quot;)
+plt.xlabel(&#39;Iterations&#39;)
+plt.ylabel(&#39;Energy&#39;)
+plt.legend(frameon=False)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Optimized energy and relative error:  -35.600+0.001j ± 0.010 [σ²=0.104, R̂=1.0037] 0.0005007882608163399
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x149456700&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_netket3_75_2.png" src="../_images/tutorials_netket3_75_2.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019-2021, The Netket authors - All rights reserved.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+    </p>
+  </div>
+</footer>
+
+<script type="text/javascript">
+    jQuery(function () {
+        SphinxRtdTheme.Navigation.enable(true);
+      })
+</script>
+
+<!-- Temporary footer
+<div class="footer-wip">
+  <div class="footer-wip-content">
+    This documentation refers to an unreleased version of Netket.
+  </div>
+</div>
+-->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118013987-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-118013987-1');
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "url": "https://www.netket.org",
+  "name": "NetKet",
+  "founder": "Giuseppe Carleo",
+  "foundingDate": "2018-04-24",
+  "foundingLocation" : "New York",
+  "logo": "https://www.netket.org/img/logo_small.jpg",
+  "sameAs": [
+    "https://twitter.com/NetKetOrg",
+    "https://github.com/NetKet/netket"
+  ],
+  "description" : "Netket is an open-source project delivering cutting-edge
+  methods for the study of many-body quantum systems with artificial neural
+  networks and machine learning techniques."
+}
+</script>
+
+  </body>
+</html>

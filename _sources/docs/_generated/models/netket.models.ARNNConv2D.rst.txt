@@ -1,0 +1,31 @@
+﻿netket.models.ARNNConv2D
+========================
+
+.. currentmodule:: netket.models
+
+.. autoclass:: ARNNConv2D
+   :show-inheritance:
+
+
+   
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Attributes
+      .. autoattribute:: ARNNConv2D.kernel_dilation
+      .. autoattribute:: ARNNConv2D.machine_pow
+      .. autoattribute:: ARNNConv2D.precision
+      .. autoattribute:: ARNNConv2D.use_bias
+      .. autoattribute:: ARNNConv2D.variables
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Methods
+      .. automethod:: ARNNConv2D.activation
+      .. automethod:: ARNNConv2D.bias_init
+      .. automethod:: ARNNConv2D.conditionals
+      .. automethod:: ARNNConv2D.kernel_init
+
+   

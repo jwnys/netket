@@ -6,8 +6,15 @@
 .. autoclass:: HamiltonianRuleNumpy
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.sampler.rules.HamiltonianRuleNumpy
+         :parts: 2
+
+
    
       
    

@@ -1,0 +1,5 @@
+<map id="inheritancec40df745c5" name="inheritancec40df745c5">
+<area shape="rect" id="node1" href="netket.operator.AbstractOperator.html#netket.operator.AbstractOperator" target="_top" title="Abstract class for quantum Operators. This class prototypes the methods" alt="" coords="5,5,196,31"/>
+<area shape="rect" id="node2" href="netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator" target="_top" title="This class is the abstract base class for operators defined on a" alt="" coords="244,5,455,31"/>
+<area shape="rect" id="node3" href="#netket.operator.PotentialEnergy" target="_top" title="Returns the local potential energy defined in afun" alt="" coords="503,5,685,31"/>
+</map>

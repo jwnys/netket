@@ -1,0 +1,5 @@
+<map id="inheritancea05b6cc87e" name="inheritancea05b6cc87e">
+<area shape="rect" id="node1" href="netket.operator.AbstractOperator.html#netket.operator.AbstractOperator" target="_top" title="Abstract class for quantum Operators. This class prototypes the methods" alt="" coords="5,5,196,31"/>
+<area shape="rect" id="node2" href="netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator" target="_top" title="This class is the abstract base class for operators defined on a" alt="" coords="244,5,455,31"/>
+<area shape="rect" id="node3" href="#netket.operator.KineticEnergy" target="_top" title="This is the kinetic energy operator (hbar = 1). The local value is given by:" alt="" coords="503,5,673,31"/>
+</map>

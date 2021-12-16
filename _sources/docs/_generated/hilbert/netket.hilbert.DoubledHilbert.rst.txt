@@ -6,8 +6,15 @@
 .. autoclass:: DoubledHilbert
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.hilbert.DoubledHilbert
+         :parts: 2
+
+
    
 
    .. automethod:: DoubledHilbert.__init__

@@ -6,8 +6,15 @@
 .. autoclass:: QGTAuto
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.optimizer.qgt.QGTAuto
+         :parts: 2
+
+
    
       
    

@@ -1,0 +1,4 @@
+<map id="inheritance6e2908c68f" name="inheritance6e2908c68f">
+<area shape="rect" id="node1" title="Convolution Module wrapping lax.conv_general_dilated." alt="" coords="176,5,271,31"/>
+<area shape="rect" id="node2" title="Base class for all neural network modules. Layers and models should subclass this class." alt="" coords="5,5,128,31"/>
+</map>

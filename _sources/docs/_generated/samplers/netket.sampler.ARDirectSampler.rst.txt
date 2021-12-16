@@ -6,8 +6,15 @@
 .. autoclass:: ARDirectSampler
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.sampler.ARDirectSampler
+         :parts: 2
+
+
    
       
    .. rst-class:: class-dl-groups
@@ -28,6 +35,6 @@
       .. automethod:: ARDirectSampler.replace
       .. automethod:: ARDirectSampler.reset
       .. automethod:: ARDirectSampler.sample
-      .. automethod:: ARDirectSampler.sample_next
+      .. automethod:: ARDirectSampler.samples
 
    

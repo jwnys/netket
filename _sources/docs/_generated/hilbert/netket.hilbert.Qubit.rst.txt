@@ -6,8 +6,15 @@
 .. autoclass:: Qubit
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.hilbert.Qubit
+         :parts: 2
+
+
    
 
    .. automethod:: Qubit.__init__

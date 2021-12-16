@@ -6,7 +6,6 @@
 .. autoclass:: Edgeless
    :show-inheritance:
 
-
    
       
    

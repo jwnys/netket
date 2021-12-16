@@ -6,8 +6,15 @@
 .. autoclass:: MCState
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.vqs.MCState
+         :parts: 2
+
+
    
 
    .. automethod:: MCState.__init__
@@ -16,6 +23,7 @@
 
    Attributes
       .. autoattribute:: MCState.chain_length
+      .. autoattribute:: MCState.chunk_size
       .. autoattribute:: MCState.hilbert
       .. autoattribute:: MCState.model
       .. autoattribute:: MCState.model_state
@@ -44,5 +52,6 @@
       .. automethod:: MCState.reset
       .. automethod:: MCState.sample
       .. automethod:: MCState.to_array
+      .. automethod:: MCState.to_qobj
 
    

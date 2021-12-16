@@ -6,8 +6,15 @@
 .. autoclass:: SamplerState
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.sampler.SamplerState
+         :parts: 2
+
+
    
       
    

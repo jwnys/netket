@@ -1,0 +1,24 @@
+﻿netket.models.AbstractARNN
+==========================
+
+.. currentmodule:: netket.models
+
+.. autoclass:: AbstractARNN
+   :show-inheritance:
+
+
+   
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Attributes
+      .. autoattribute:: AbstractARNN.variables
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Methods
+      .. automethod:: AbstractARNN.conditionals
+
+   

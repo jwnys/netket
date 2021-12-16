@@ -1,0 +1,48 @@
+﻿netket.vqs.ExactState
+=====================
+
+.. currentmodule:: netket.vqs
+
+.. autoclass:: ExactState
+   :show-inheritance:
+
+   
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.vqs.ExactState
+         :parts: 2
+
+
+   
+
+   .. automethod:: ExactState.__init__
+      
+   .. rst-class:: class-dl-groups
+
+   Attributes
+      .. autoattribute:: ExactState.hilbert
+      .. autoattribute:: ExactState.model
+      .. autoattribute:: ExactState.model_state
+      .. autoattribute:: ExactState.n_parameters
+      .. autoattribute:: ExactState.parameters
+      .. autoattribute:: ExactState.variables
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Methods
+      .. automethod:: ExactState.expect
+      .. automethod:: ExactState.expect_and_grad
+      .. automethod:: ExactState.grad
+      .. automethod:: ExactState.init
+      .. automethod:: ExactState.init_parameters
+      .. automethod:: ExactState.log_value
+      .. automethod:: ExactState.probability_distribution
+      .. automethod:: ExactState.quantum_geometric_tensor
+      .. automethod:: ExactState.reset
+      .. automethod:: ExactState.to_array
+      .. automethod:: ExactState.to_qobj
+
+   

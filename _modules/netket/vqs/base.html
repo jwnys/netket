@@ -7,6 +7,7 @@
     <title>netket.vqs.base &#8212; netket v3.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/jumbo-style.css" />
@@ -26,9 +27,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -113,22 +114,24 @@
 <span class="kn">import</span> <span class="nn">abc</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
 <span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">from</span> <span class="nn">jax.nn.initializers</span> <span class="kn">import</span> <span class="n">normal</span>
+
 <span class="kn">import</span> <span class="nn">flax</span>
 <span class="kn">from</span> <span class="nn">flax.core.frozen_dict</span> <span class="kn">import</span> <span class="n">FrozenDict</span>
 
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-
 <span class="kn">import</span> <span class="nn">netket.jax</span> <span class="k">as</span> <span class="nn">nkjax</span>
-<span class="kn">import</span> <span class="nn">netket.nn</span> <span class="k">as</span> <span class="nn">nknn</span>
-<span class="kn">from</span> <span class="nn">netket.operator</span> <span class="kn">import</span> <span class="n">AbstractOperator</span>
+<span class="kn">from</span> <span class="nn">netket.operator</span> <span class="kn">import</span> <span class="n">AbstractOperator</span><span class="p">,</span> <span class="n">Squared</span>
 <span class="kn">from</span> <span class="nn">netket.hilbert</span> <span class="kn">import</span> <span class="n">AbstractHilbert</span>
 <span class="kn">from</span> <span class="nn">netket.utils.types</span> <span class="kn">import</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">PRNGKeyT</span><span class="p">,</span> <span class="n">NNInitFunc</span>
 <span class="kn">from</span> <span class="nn">netket.utils.dispatch</span> <span class="kn">import</span> <span class="n">dispatch</span><span class="p">,</span> <span class="n">TrueT</span><span class="p">,</span> <span class="n">FalseT</span>
 <span class="kn">from</span> <span class="nn">netket.stats</span> <span class="kn">import</span> <span class="n">Stats</span>
 
 
-<div class="viewcode-block" id="VariationalState"><a class="viewcode-back" href="../../../docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState">[docs]</a><span class="k">class</span> <span class="nc">VariationalState</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">VariationalState</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Abstract class for variational states representing either pure states</span>
 <span class="sd">    or mixed quantum states.</span>
 
@@ -202,33 +205,34 @@
         <span class="k">return</span> <span class="n">flax</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">freeze</span><span class="p">({</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">model_state</span><span class="p">})</span>
 
     <span class="nd">@variables</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">variables</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">vars</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="n">FrozenDict</span><span class="p">):</span>
-            <span class="nb">vars</span> <span class="o">=</span> <span class="n">flax</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">freeze</span><span class="p">(</span><span class="nb">vars</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">variables</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">FrozenDict</span><span class="p">):</span>
+            <span class="n">var</span> <span class="o">=</span> <span class="n">flax</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">freeze</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">model_state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="nb">vars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;params&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;params&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="VariationalState.init_parameters"><a class="viewcode-back" href="../../../docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.init_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">init_parameters</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">init_fun</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NNInitFunc</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PRNGKeyT</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Re-initializes all the parameters with the provided initialization function, defaulting to</span>
-<span class="sd">        the normal distribution of standard deviation 0.01.</span>
+<span class="sd">        Re-initializes all the parameters with the provided initialization function,</span>
+<span class="sd">        defaulting to the normal distribution of standard deviation 0.01.</span>
 
 <span class="sd">        .. warning::</span>
 
-<span class="sd">            The init function will not change the dtype of the parameters, which is determined by the</span>
-<span class="sd">            model. DO NOT SPECIFY IT INSIDE THE INIT FUNCTION</span>
+<span class="sd">            The init function will not change the dtype of the parameters, which is</span>
+<span class="sd">            determined by the model. DO NOT SPECIFY IT INSIDE THE INIT FUNCTION</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            init_fun: a jax initializer such as :ref:`netket.nn.initializers.normal`. Must be a Callable</span>
-<span class="sd">                taking 3 inputs, the jax PRNG key, the shape and the dtype, and outputting an array with</span>
-<span class="sd">                the valid dtype and shape. If left unspecified, defaults to :code:`netket.nn.initializers.normal(stddev=0.01)`</span>
-<span class="sd">            seed: Optional seed to be used. The seed is synced across all MPI processes. If unspecified, uses</span>
-<span class="sd">                a random seed.</span>
+<span class="sd">            init_fun: a jax initializer such as :ref:`jax.nn.initializers.normal`.</span>
+<span class="sd">                Must be a Callable taking 3 inputs, the jax PRNG key, the shape and the</span>
+<span class="sd">                dtype, and outputting an array with the valid dtype and shape. If left</span>
+<span class="sd">                unspecified, defaults to :code:`jax.nn.initializers.normal(stddev=0.01)`</span>
+<span class="sd">            seed: Optional seed to be used. The seed is synced across all MPI processes.</span>
+<span class="sd">                If unspecified, uses a random seed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">init_fun</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">init_fun</span> <span class="o">=</span> <span class="n">nknn</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+            <span class="n">init_fun</span> <span class="o">=</span> <span class="n">normal</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 
         <span class="n">rng</span> <span class="o">=</span> <span class="n">nkjax</span><span class="o">.</span><span class="n">PRNGSeq</span><span class="p">(</span><span class="n">nkjax</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="p">))</span>
 
@@ -243,8 +247,7 @@
 <div class="viewcode-block" id="VariationalState.reset"><a class="viewcode-back" href="../../../docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Resets the internal cache of th variational state.</span>
 <span class="sd">        Called automatically when the parameters/state is updated.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>  <span class="c1"># pragma: no cover</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
 
 <div class="viewcode-block" id="VariationalState.expect"><a class="viewcode-back" href="../../../docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.expect">[docs]</a>    <span class="k">def</span> <span class="nf">expect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Ô</span><span class="p">:</span> <span class="n">AbstractOperator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Stats</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Estimates the quantum expectation value for a given operator O.</span>
@@ -260,7 +263,11 @@
         <span class="k">return</span> <span class="n">expect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Ô</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="VariationalState.grad"><a class="viewcode-back" href="../../../docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.grad">[docs]</a>    <span class="k">def</span> <span class="nf">grad</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">Ô</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_hermitian</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mutable</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">Ô</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">use_covariance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">mutable</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Estimates the gradient of the quantum expectation value of a given operator O.</span>
 
@@ -272,7 +279,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            array: An estimation of the average gradient of the quantum expectation value &lt;O&gt;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">expect_and_grad</span><span class="p">(</span><span class="n">Ô</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expect_and_grad</span><span class="p">(</span><span class="n">Ô</span><span class="p">,</span> <span class="n">use_covariance</span><span class="o">=</span><span class="n">use_covariance</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="VariationalState.expect_and_grad"><a class="viewcode-back" href="../../../docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.expect_and_grad">[docs]</a>    <span class="k">def</span> <span class="nf">expect_and_grad</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -284,16 +292,17 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Estimates both the gradient of the quantum expectation value of a given operator O.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            Ô: the operator Ô for which we compute the expectation value and it&#39;s gradient</span>
-<span class="sd">            mutable: Can be bool, str, or list. Specifies which collections in the model_state should</span>
-<span class="sd">                     be treated as  mutable: bool: all/no collections are mutable. str: The name of a</span>
-<span class="sd">                     single mutable  collection. list: A list of names of mutable collections.</span>
-<span class="sd">                     This is used to mutate the state of the model while you train it (for example</span>
-<span class="sd">                     to implement BatchNorm. Consult</span>
-<span class="sd">                     `Flax&#39;s Module.apply documentation &lt;https://flax.readthedocs.io/en/latest/_modules/flax/linen/module.html#Module.apply&gt;`_</span>
-<span class="sd">                     for a more in-depth exaplanation).</span>
-<span class="sd">            is_hermitian: optional override for whever to use or not the hermitian logic. By default</span>
-<span class="sd">                          it&#39;s automatically detected.</span>
+<span class="sd">            Ô: the operator Ô for which we compute the expectation value and its</span>
+<span class="sd">                gradient</span>
+<span class="sd">            mutable: Can be bool, str, or list. Specifies which collections in the</span>
+<span class="sd">                `model_state` should be treated as  mutable: bool: all/no collections</span>
+<span class="sd">                are mutable. str: The name of a single mutable  collection. list: A list</span>
+<span class="sd">                of names of mutable collections. This is used to mutate the state of the</span>
+<span class="sd">                model while you train it (for example to implement BatchNorm. Consult</span>
+<span class="sd">                `Flax&#39;s Module.apply documentation &lt;https://flax.readthedocs.io/en/latest/_modules/flax/linen/module.html#Module.apply&gt;`_</span>
+<span class="sd">                for a more in-depth exaplanation).</span>
+<span class="sd">            use_covariance: whever to use the covariance formula, usually reserved for</span>
+<span class="sd">                hermitian operators, ⟨∂logψ Oˡᵒᶜ⟩ - ⟨∂logψ⟩⟨Oˡᵒᶜ⟩</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            An estimation of the quantum expectation value &lt;O&gt;.</span>
@@ -302,20 +311,22 @@
         <span class="k">if</span> <span class="n">mutable</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">mutable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutable</span>
 
-        <span class="k">return</span> <span class="n">expect_and_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Ô</span><span class="p">,</span> <span class="n">use_covariance</span><span class="o">=</span><span class="n">use_covariance</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">expect_and_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Ô</span><span class="p">,</span> <span class="n">use_covariance</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">)</span></div>
 
     <span class="c1"># @abc.abstractmethod</span>
-<div class="viewcode-block" id="VariationalState.quantum_geometric_tensor"><a class="viewcode-back" href="../../../docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.quantum_geometric_tensor">[docs]</a>    <span class="k">def</span> <span class="nf">quantum_geometric_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qgt_T</span><span class="p">):</span>
+<div class="viewcode-block" id="VariationalState.quantum_geometric_tensor"><a class="viewcode-back" href="../../../docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.quantum_geometric_tensor">[docs]</a>    <span class="k">def</span> <span class="nf">quantum_geometric_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qgt_type</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Computes an estimate of the quantum geometric tensor G_ij.</span>
 
-<span class="sd">        This function returns a linear operator that can be used to apply G_ij to a given vector</span>
-<span class="sd">        or can be converted to a full matrix.</span>
+<span class="sd">        This function returns a linear operator that can be used to apply G_ij to a</span>
+<span class="sd">        given vector or can be converted to a full matrix.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            qgt_T: the optional type of the quantum geometric tensor. By default it&#39;s automatically selected.</span>
+<span class="sd">            qgt_type: the optional type of the quantum geometric tensor. By default it</span>
+<span class="sd">                is automatically selected.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            nk.optimizer.LinearOperator: A linear operator representing the quantum geometric tensor.</span>
+<span class="sd">            nk.optimizer.LinearOperator: A linear operator representing the quantum</span>
+<span class="sd">                geometric tensor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>  <span class="c1"># pragma: no cover</span></div>
 
@@ -330,7 +341,18 @@
 <span class="sd">            An exponentially large vector representing the state in the computational</span>
 <span class="sd">            basis.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">NotImplemented</span>  <span class="c1"># pragma: no cover</span></div></div>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>  <span class="c1"># pragma: no cover</span></div>
+
+<div class="viewcode-block" id="VariationalState.to_qobj"><a class="viewcode-back" href="../../../docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.to_qobj">[docs]</a>    <span class="k">def</span> <span class="nf">to_qobj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Convert the variational state to a qutip&#39;s ket Qobj.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A `qutip.Qobj` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">qutip</span> <span class="kn">import</span> <span class="n">Qobj</span>
+
+        <span class="n">q_dims</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hilbert</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="p">[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hilbert</span><span class="o">.</span><span class="n">size</span><span class="p">)]]</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_array</span><span class="p">()),</span> <span class="n">dims</span><span class="o">=</span><span class="n">q_dims</span><span class="p">)</span></div>
 
 
 <span class="k">class</span> <span class="nc">VariationalMixedState</span><span class="p">(</span><span class="n">VariationalState</span><span class="p">):</span>
@@ -355,8 +377,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">NotImplemented</span>  <span class="c1"># pragma: no cover</span>
 
+    <span class="k">def</span> <span class="nf">to_qobj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Convert this mixed state to a qutip density matrix Qobj.</span>
 
-<div class="viewcode-block" id="expect"><a class="viewcode-back" href="../../../docs/custom_expect.html#netket.vqs.expect">[docs]</a><span class="nd">@dispatch</span><span class="o">.</span><span class="n">abstract</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A `qutip.Qobj` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">qutip</span> <span class="kn">import</span> <span class="n">Qobj</span>
+
+        <span class="n">q_dims</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hilbert_physical</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hilbert_physical</span><span class="o">.</span><span class="n">shape</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">Qobj</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_matrix</span><span class="p">()),</span> <span class="n">dims</span><span class="o">=</span><span class="n">q_dims</span><span class="p">)</span>
+
+
+<span class="nd">@dispatch</span><span class="o">.</span><span class="n">abstract</span>
 <span class="k">def</span> <span class="nf">expect</span><span class="p">(</span><span class="n">vstate</span><span class="p">:</span> <span class="n">VariationalState</span><span class="p">,</span> <span class="n">operator</span><span class="p">:</span> <span class="n">AbstractOperator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes the expectation value of the given operator over the</span>
@@ -379,17 +412,26 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        The expectation value wrapped in a `Stats` object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>  <span class="c1"># pragma: no cover</span></div>
 
 
 <span class="c1"># default dispatch where use_covariance is not specified</span>
-<div class="viewcode-block" id="expect_and_grad"><a class="viewcode-back" href="../../../docs/custom_expect.html#netket.vqs.expect_and_grad">[docs]</a><span class="nd">@dispatch</span>
+<span class="c1"># Give it an higher precedence so this is always executed first, no matter what, if there</span>
+<span class="c1"># is a dispatch ambiguity.</span>
+<span class="c1"># This is not needed, but makes the dispatch logic work fine even if the users write weak</span>
+<span class="c1"># signatures (eg: if an users defines `expect_grad(vs: MCState, op: MyOperator, use_cov: Any)`</span>
+<span class="c1"># instead of `expect_grad(vs: MCState, op: MyOperator, use_cov: bool)`</span>
+<span class="c1"># there would be a resolution error because the signature defined by the user is stricter</span>
+<span class="c1"># for some arguments, but the one below here is stricter for `use_covariance` which is</span>
+<span class="c1"># set to bool. Since this signature below, in the worst case, does nothing, this ensures</span>
+<span class="c1"># that `expect_and_grad` is more user-friendly.</span>
+<span class="nd">@dispatch</span><span class="p">(</span><span class="n">precedence</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">expect_and_grad</span><span class="p">(</span>
     <span class="n">vstate</span><span class="p">:</span> <span class="n">VariationalState</span><span class="p">,</span>
     <span class="n">operator</span><span class="p">:</span> <span class="n">AbstractOperator</span><span class="p">,</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">use_covariance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_covariance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="n">mutable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Estimates both the gradient of the quantum expectation value of a given operator O.</span>
 
@@ -408,7 +450,7 @@
 <span class="sd">        vstate: The variational state</span>
 <span class="sd">        Ô: the operator Ô for which we compute the expectation value and it&#39;s gradient</span>
 <span class="sd">        use_covariance: whever to use the covariance formula, usually reserved for</span>
-<span class="sd">            hermitian operators.</span>
+<span class="sd">            hermitian operators, ⟨∂logψ Oˡᵒᶜ⟩ - ⟨∂logψ⟩⟨Oˡᵒᶜ⟩</span>
 <span class="sd">        mutable: Can be bool, str, or list. Specifies which collections in the model_state should</span>
 <span class="sd">                 be treated as  mutable: bool: all/no collections are mutable. str: The name of a</span>
 <span class="sd">                 single mutable  collection. list: A list of names of mutable collections.</span>
@@ -427,12 +469,17 @@
         <span class="n">use_covariance</span> <span class="o">=</span> <span class="n">TrueT</span><span class="p">()</span> <span class="k">if</span> <span class="n">use_covariance</span> <span class="k">else</span> <span class="n">FalseT</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">use_covariance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">use_covariance</span> <span class="o">=</span> <span class="n">TrueT</span><span class="p">()</span> <span class="k">if</span> <span class="n">operator</span><span class="o">.</span><span class="n">is_hermitian</span> <span class="k">else</span> <span class="n">FalseT</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">Squared</span><span class="p">):</span>
+            <span class="n">use_covariance</span> <span class="o">=</span> <span class="n">FalseT</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">use_covariance</span> <span class="o">=</span> <span class="n">TrueT</span><span class="p">()</span> <span class="k">if</span> <span class="n">operator</span><span class="o">.</span><span class="n">is_hermitian</span> <span class="k">else</span> <span class="n">FalseT</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">mutable</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">mutable</span> <span class="o">=</span> <span class="n">vstate</span><span class="o">.</span><span class="n">mutable</span>
 
-    <span class="k">return</span> <span class="n">expect_and_grad</span><span class="p">(</span><span class="n">vstate</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">use_covariance</span><span class="p">,</span> <span class="n">mutable</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">expect_and_grad</span><span class="p">(</span>
+        <span class="n">vstate</span><span class="p">,</span> <span class="n">operator</span><span class="p">,</span> <span class="n">use_covariance</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">mutable</span><span class="o">=</span><span class="n">mutable</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span>
 </pre></div>
 
     </div>

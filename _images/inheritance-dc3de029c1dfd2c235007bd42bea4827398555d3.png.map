@@ -1,0 +1,4 @@
+<map id="inheritance65b26c90f2" name="inheritance65b26c90f2">
+<area shape="rect" id="node1" title="A linear transformation with flexible axes." alt="" coords="176,5,331,31"/>
+<area shape="rect" id="node2" title="Base class for all neural network modules. Layers and models should subclass this class." alt="" coords="5,5,128,31"/>
+</map>

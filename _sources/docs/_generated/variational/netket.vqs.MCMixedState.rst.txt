@@ -6,8 +6,15 @@
 .. autoclass:: MCMixedState
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.vqs.MCMixedState
+         :parts: 2
+
+
    
 
    .. automethod:: MCMixedState.__init__
@@ -17,6 +24,7 @@
    Attributes
       .. autoattribute:: MCMixedState.chain_length
       .. autoattribute:: MCMixedState.chain_length_diag
+      .. autoattribute:: MCMixedState.chunk_size
       .. autoattribute:: MCMixedState.diagonal
       .. autoattribute:: MCMixedState.hilbert
       .. autoattribute:: MCMixedState.hilbert_physical
@@ -53,5 +61,6 @@
       .. automethod:: MCMixedState.sample
       .. automethod:: MCMixedState.to_array
       .. automethod:: MCMixedState.to_matrix
+      .. automethod:: MCMixedState.to_qobj
 
    

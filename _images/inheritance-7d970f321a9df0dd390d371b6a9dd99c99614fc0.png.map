@@ -1,0 +1,4 @@
+<map id="inheritance84bc0ef49a" name="inheritance84bc0ef49a">
+<area shape="rect" id="node1" href="#netket.sampler.rules.LocalRule" target="_top" title="A transition rule acting on the local degree of freedom." alt="" coords="229,5,351,31"/>
+<area shape="rect" id="node2" href="netket.sampler.MetropolisRule.html#netket.sampler.MetropolisRule" target="_top" title="Base class for Transition rules of Metropolis, such as Local, Exchange, Hamiltonian" alt="" coords="5,5,181,31"/>
+</map>

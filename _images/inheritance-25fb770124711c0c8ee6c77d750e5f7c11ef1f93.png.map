@@ -1,0 +1,6 @@
+<map id="inheritancebef4ac1362" name="inheritancebef4ac1362">
+<area shape="rect" id="node1" href="netket.operator.AbstractOperator.html#netket.operator.AbstractOperator" target="_top" title="Abstract class for quantum Operators. This class prototypes the methods" alt="" coords="5,5,171,27"/>
+<area shape="rect" id="node2" href="netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator" target="_top" title="This class is the base class for operators defined on a" alt="" coords="212,5,378,27"/>
+<area shape="rect" id="node4" href="netket.operator.LocalOperator.html#netket.operator.LocalOperator" target="_top" title="A custom local operator. This is a sum of an arbitrary number of operators" alt="" coords="420,5,568,27"/>
+<area shape="rect" id="node3" href="#netket.operator.GraphOperator" target="_top" title="A graph&#45;based quantum operator. In its simplest terms, this is the sum of" alt="" coords="610,5,763,27"/>
+</map>

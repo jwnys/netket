@@ -1,0 +1,4 @@
+<map id="inheritance883d13bb1b" name="inheritance883d13bb1b">
+<area shape="rect" id="node1" href="#netket.sampler.ExactSampler" target="_top" title="This sampler generates i.i.d. samples from :math:`|Psi(sigma)|^2`." alt="" coords="185,5,353,31"/>
+<area shape="rect" id="node2" href="netket.sampler.Sampler.html#netket.sampler.Sampler" target="_top" title="Abstract base class for all samplers." alt="" coords="5,5,137,31"/>
+</map>

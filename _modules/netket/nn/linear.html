@@ -7,6 +7,7 @@
     <title>netket.nn.linear &#8212; netket v3.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/jumbo-style.css" />
@@ -26,9 +27,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -115,21 +116,18 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">flax</span>
-<span class="kn">from</span> <span class="nn">flax.linen.module</span> <span class="kn">import</span> <span class="n">Module</span><span class="p">,</span> <span class="n">compact</span>
-<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">lax</span>
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="kn">from</span> <span class="nn">netket.nn.initializers</span> <span class="kn">import</span> <span class="n">lecun_normal</span><span class="p">,</span> <span class="n">normal</span><span class="p">,</span> <span class="n">zeros</span>
+<span class="kn">from</span> <span class="nn">flax.linen.module</span> <span class="kn">import</span> <span class="n">Module</span><span class="p">,</span> <span class="n">compact</span>
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">lax</span>
+<span class="kn">from</span> <span class="nn">jax.nn.initializers</span> <span class="kn">import</span> <span class="n">lecun_normal</span><span class="p">,</span> <span class="n">zeros</span>
 
 <span class="n">PRNGKey</span> <span class="o">=</span> <span class="n">Any</span>
 <span class="n">Shape</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
 <span class="n">Dtype</span> <span class="o">=</span> <span class="n">Any</span>  <span class="c1"># this could be a real type?</span>
 <span class="n">Array</span> <span class="o">=</span> <span class="n">Any</span>
 
-
-<span class="n">default_kernel_init</span> <span class="o">=</span> <span class="n">normal</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
-<span class="c1"># complex_kernel_init = lecun_normal()</span>
+<span class="n">default_kernel_init</span> <span class="o">=</span> <span class="n">lecun_normal</span><span class="p">()</span>
 
 
 <span class="k">def</span> <span class="nf">_normalize_axes</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">ndim</span><span class="p">):</span>

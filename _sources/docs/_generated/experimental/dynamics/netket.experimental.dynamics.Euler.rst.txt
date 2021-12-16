@@ -1,0 +1,6 @@
+﻿netket.experimental.dynamics.Euler
+==================================
+
+.. currentmodule:: netket.experimental.dynamics
+
+.. autodata:: Euler

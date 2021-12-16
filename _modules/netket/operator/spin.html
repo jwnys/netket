@@ -7,6 +7,7 @@
     <title>netket.operator.spin &#8212; netket v3.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/jumbo-style.css" />
@@ -26,9 +27,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -110,13 +111,16 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 
-<span class="kn">from</span> <span class="nn">netket.hilbert</span> <span class="kn">import</span> <span class="n">AbstractHilbert</span>
-<span class="kn">from</span> <span class="nn">netket.utils.types</span> <span class="kn">import</span> <span class="n">DType</span>
+<span class="kn">from</span> <span class="nn">netket.utils.types</span> <span class="kn">import</span> <span class="n">DType</span> <span class="k">as</span> <span class="n">_DType</span>
+
+<span class="kn">from</span> <span class="nn">netket.hilbert</span> <span class="kn">import</span> <span class="n">AbstractHilbert</span> <span class="k">as</span> <span class="n">_AbstractHilbert</span>
 
 <span class="kn">from</span> <span class="nn">._local_operator</span> <span class="kn">import</span> <span class="n">LocalOperator</span> <span class="k">as</span> <span class="n">_LocalOperator</span>
 
 
-<div class="viewcode-block" id="sigmax"><a class="viewcode-back" href="../../../docs/_generated/hilbert/netket.operator.spin.sigmax.html#netket.operator.spin.sigmax">[docs]</a><span class="k">def</span> <span class="nf">sigmax</span><span class="p">(</span><span class="n">hilbert</span><span class="p">:</span> <span class="n">AbstractHilbert</span><span class="p">,</span> <span class="n">site</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">DType</span> <span class="o">=</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_LocalOperator</span><span class="p">:</span>
+<div class="viewcode-block" id="sigmax"><a class="viewcode-back" href="../../../docs/_generated/operator/netket.operator.spin.sigmax.html#netket.operator.spin.sigmax">[docs]</a><span class="k">def</span> <span class="nf">sigmax</span><span class="p">(</span>
+    <span class="n">hilbert</span><span class="p">:</span> <span class="n">_AbstractHilbert</span><span class="p">,</span> <span class="n">site</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">_DType</span> <span class="o">=</span> <span class="nb">float</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_LocalOperator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Builds the :math:`\\sigma^x` operator acting on the `site`-th of the Hilbert</span>
 <span class="sd">    space `hilbert`.</span>
@@ -138,8 +142,8 @@
     <span class="k">return</span> <span class="n">_LocalOperator</span><span class="p">(</span><span class="n">hilbert</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="p">[</span><span class="n">site</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="sigmay"><a class="viewcode-back" href="../../../docs/_generated/hilbert/netket.operator.spin.sigmay.html#netket.operator.spin.sigmay">[docs]</a><span class="k">def</span> <span class="nf">sigmay</span><span class="p">(</span>
-    <span class="n">hilbert</span><span class="p">:</span> <span class="n">AbstractHilbert</span><span class="p">,</span> <span class="n">site</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">DType</span> <span class="o">=</span> <span class="nb">complex</span>
+<div class="viewcode-block" id="sigmay"><a class="viewcode-back" href="../../../docs/_generated/operator/netket.operator.spin.sigmay.html#netket.operator.spin.sigmay">[docs]</a><span class="k">def</span> <span class="nf">sigmay</span><span class="p">(</span>
+    <span class="n">hilbert</span><span class="p">:</span> <span class="n">_AbstractHilbert</span><span class="p">,</span> <span class="n">site</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">_DType</span> <span class="o">=</span> <span class="nb">complex</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_LocalOperator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Builds the :math:`\\sigma^y` operator acting on the `site`-th of the Hilbert</span>
@@ -162,7 +166,9 @@
     <span class="k">return</span> <span class="n">_LocalOperator</span><span class="p">(</span><span class="n">hilbert</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="p">[</span><span class="n">site</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="sigmaz"><a class="viewcode-back" href="../../../docs/_generated/hilbert/netket.operator.spin.sigmaz.html#netket.operator.spin.sigmaz">[docs]</a><span class="k">def</span> <span class="nf">sigmaz</span><span class="p">(</span><span class="n">hilbert</span><span class="p">:</span> <span class="n">AbstractHilbert</span><span class="p">,</span> <span class="n">site</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">DType</span> <span class="o">=</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_LocalOperator</span><span class="p">:</span>
+<div class="viewcode-block" id="sigmaz"><a class="viewcode-back" href="../../../docs/_generated/operator/netket.operator.spin.sigmaz.html#netket.operator.spin.sigmaz">[docs]</a><span class="k">def</span> <span class="nf">sigmaz</span><span class="p">(</span>
+    <span class="n">hilbert</span><span class="p">:</span> <span class="n">_AbstractHilbert</span><span class="p">,</span> <span class="n">site</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">_DType</span> <span class="o">=</span> <span class="nb">float</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_LocalOperator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Builds the :math:`\\sigma^z` operator acting on the `site`-th of the Hilbert</span>
 <span class="sd">    space `hilbert`.</span>
@@ -184,9 +190,11 @@
     <span class="k">return</span> <span class="n">_LocalOperator</span><span class="p">(</span><span class="n">hilbert</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="p">[</span><span class="n">site</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="sigmam"><a class="viewcode-back" href="../../../docs/_generated/hilbert/netket.operator.spin.sigmam.html#netket.operator.spin.sigmam">[docs]</a><span class="k">def</span> <span class="nf">sigmam</span><span class="p">(</span><span class="n">hilbert</span><span class="p">:</span> <span class="n">AbstractHilbert</span><span class="p">,</span> <span class="n">site</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">DType</span> <span class="o">=</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_LocalOperator</span><span class="p">:</span>
+<div class="viewcode-block" id="sigmam"><a class="viewcode-back" href="../../../docs/_generated/operator/netket.operator.spin.sigmam.html#netket.operator.spin.sigmam">[docs]</a><span class="k">def</span> <span class="nf">sigmam</span><span class="p">(</span>
+    <span class="n">hilbert</span><span class="p">:</span> <span class="n">_AbstractHilbert</span><span class="p">,</span> <span class="n">site</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">_DType</span> <span class="o">=</span> <span class="nb">float</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_LocalOperator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Builds the :math:`\\sigma^{-} = \\sigma^x - i \\sigma^y` operator acting on the</span>
+<span class="sd">    Builds the :math:`\\sigma^{-} = \\frac{1}{2}(\\sigma^x - i \\sigma^y)` operator acting on the</span>
 <span class="sd">    `site`-th of the Hilbert space `hilbert`.</span>
 
 <span class="sd">    If `hilbert` is a non-Spin space of local dimension M, it is considered</span>
@@ -207,9 +215,11 @@
     <span class="k">return</span> <span class="n">_LocalOperator</span><span class="p">(</span><span class="n">hilbert</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="p">[</span><span class="n">site</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="sigmap"><a class="viewcode-back" href="../../../docs/_generated/hilbert/netket.operator.spin.sigmap.html#netket.operator.spin.sigmap">[docs]</a><span class="k">def</span> <span class="nf">sigmap</span><span class="p">(</span><span class="n">hilbert</span><span class="p">:</span> <span class="n">AbstractHilbert</span><span class="p">,</span> <span class="n">site</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">DType</span> <span class="o">=</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_LocalOperator</span><span class="p">:</span>
+<div class="viewcode-block" id="sigmap"><a class="viewcode-back" href="../../../docs/_generated/operator/netket.operator.spin.sigmap.html#netket.operator.spin.sigmap">[docs]</a><span class="k">def</span> <span class="nf">sigmap</span><span class="p">(</span>
+    <span class="n">hilbert</span><span class="p">:</span> <span class="n">_AbstractHilbert</span><span class="p">,</span> <span class="n">site</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">_DType</span> <span class="o">=</span> <span class="nb">float</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_LocalOperator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Builds the :math:`\\sigma^{+} = \\sigma^x + i \\sigma^y` operator acting on the</span>
+<span class="sd">    Builds the :math:`\\sigma^{+} = \\frac{1}{2}(\\sigma^x + i \\sigma^y)` operator acting on the</span>
 <span class="sd">    `site`-th of the Hilbert space `hilbert`.</span>
 
 <span class="sd">    If `hilbert` is a non-Spin space of local dimension M, it is considered</span>
@@ -228,10 +238,6 @@
     <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">S2</span> <span class="o">-</span> <span class="n">m</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">S</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">S</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)])</span>
     <span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_LocalOperator</span><span class="p">(</span><span class="n">hilbert</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="p">[</span><span class="n">site</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span></div>
-
-
-<span class="c1"># clean up the module</span>
-<span class="k">del</span> <span class="n">AbstractHilbert</span><span class="p">,</span> <span class="n">DType</span>
 </pre></div>
 
     </div>

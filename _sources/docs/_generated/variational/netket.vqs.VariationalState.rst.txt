@@ -6,8 +6,15 @@
 .. autoclass:: VariationalState
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.vqs.VariationalState
+         :parts: 2
+
+
    
 
    .. automethod:: VariationalState.__init__
@@ -32,5 +39,6 @@
       .. automethod:: VariationalState.quantum_geometric_tensor
       .. automethod:: VariationalState.reset
       .. automethod:: VariationalState.to_array
+      .. automethod:: VariationalState.to_qobj
 
    

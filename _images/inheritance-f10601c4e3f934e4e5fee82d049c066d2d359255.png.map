@@ -1,0 +1,4 @@
+<map id="inheritancebd4b42ee01" name="inheritancebd4b42ee01">
+<area shape="rect" id="node1" href="netket.operator.AbstractOperator.html#netket.operator.AbstractOperator" target="_top" title="Abstract class for quantum Operators. This class prototypes the methods" alt="" coords="5,5,196,31"/>
+<area shape="rect" id="node2" href="#netket.operator.DiscreteOperator" target="_top" title="This class is the base class for operators defined on a" alt="" coords="244,5,435,31"/>
+</map>

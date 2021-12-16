@@ -6,8 +6,15 @@
 .. autoclass:: MetropolisSamplerNumpy
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.sampler.MetropolisSamplerNumpy
+         :parts: 2
+
+
    
 
    .. automethod:: MetropolisSamplerNumpy.__init__
@@ -34,5 +41,6 @@
       .. automethod:: MetropolisSamplerNumpy.reset
       .. automethod:: MetropolisSamplerNumpy.sample
       .. automethod:: MetropolisSamplerNumpy.sample_next
+      .. automethod:: MetropolisSamplerNumpy.samples
 
    

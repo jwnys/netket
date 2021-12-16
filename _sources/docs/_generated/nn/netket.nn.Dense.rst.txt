@@ -6,8 +6,15 @@
 .. autoclass:: Dense
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.nn.Dense
+         :parts: 2
+
+
    
       
    .. rst-class:: class-dl-groups

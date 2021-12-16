@@ -7,6 +7,7 @@
     <title>Index &#8212; netket v3.0 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     <link rel="stylesheet" type="text/css" href="_static/jumbo-style.css" />
@@ -26,9 +27,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -153,9 +154,9 @@
 </li>
         <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.__call__">(netket.nn.MaskedDense1D method)</a>
 </li>
-        <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.__call__">(netket.operator.AbstractOperator method)</a>
-</li>
         <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.__call__">(netket.operator.BoseHubbard method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.__call__">(netket.operator.DiscreteOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.__call__">(netket.operator.GraphOperator method)</a>
 </li>
@@ -177,21 +178,37 @@
 </li>
         <li><a href="docs/_generated/driver/netket.driver.VMC.html#netket.driver.VMC.__init__">(netket.driver.VMC method)</a>
 </li>
+        <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.__init__">(netket.experimental.driver.TDVP method)</a>
+</li>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.__init__">(netket.experimental.sampler.MetropolisPtSampler method)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.__init__">[1]</a>
+</li>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.__init__">(netket.experimental.sampler.MetropolisSamplerPmap method)</a>
+</li>
         <li><a href="docs/_generated/graph/netket.graph.AbstractGraph.html#netket.graph.AbstractGraph.__init__">(netket.graph.AbstractGraph method)</a>
 </li>
         <li><a href="docs/_generated/graph/netket.graph.Graph.html#netket.graph.Graph.__init__">(netket.graph.Graph method)</a>
 </li>
         <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.__init__">(netket.graph.Lattice method)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.ContinuousHilbert.html#netket.hilbert.ContinuousHilbert.__init__">(netket.hilbert.ContinuousHilbert method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.__init__">(netket.hilbert.CustomHilbert method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.__init__">(netket.hilbert.DiscreteHilbert method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.__init__">(netket.hilbert.DoubledHilbert method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.__init__">(netket.hilbert.Fock method)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.__init__">(netket.hilbert.HomogeneousHilbert method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.Particle.html#netket.hilbert.Particle.__init__">(netket.hilbert.Particle method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.__init__">(netket.hilbert.Qubit method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.__init__">(netket.hilbert.Spin method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.__init__">(netket.hilbert.TensorHilbert method)</a>
 </li>
         <li><a href="docs/_generated/driver/netket.logging.JsonLog.html#netket.logging.JsonLog.__init__">(netket.logging.JsonLog method)</a>
 </li>
@@ -199,7 +216,11 @@
 </li>
         <li><a href="docs/_generated/driver/netket.logging.StateLog.html#netket.logging.StateLog.__init__">(netket.logging.StateLog method)</a>
 </li>
+        <li><a href="docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.__init__">(netket.nn.Module method)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.__init__">(netket.operator.BoseHubbard method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator.__init__">(netket.operator.ContinuousOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.__init__">(netket.operator.GraphOperator method)</a>
 </li>
@@ -207,17 +228,23 @@
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising.__init__">(netket.operator.Ising method)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy.__init__">(netket.operator.KineticEnergy method)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.__init__">(netket.operator.LocalOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.__init__">(netket.operator.PauliStrings method)</a>
 </li>
-        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.__init__">(netket.sampler.MetropolisPtSampler method)</a>
+        <li><a href="docs/_generated/operator/netket.operator.PotentialEnergy.html#netket.operator.PotentialEnergy.__init__">(netket.operator.PotentialEnergy method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.SumOperator.html#netket.operator.SumOperator.__init__">(netket.operator.SumOperator method)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler.__init__">(netket.sampler.MetropolisSampler method)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSamplerNumpy.html#netket.sampler.MetropolisSamplerNumpy.__init__">(netket.sampler.MetropolisSamplerNumpy method)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.Sampler.html#netket.sampler.Sampler.__init__">(netket.sampler.Sampler method)</a>
+</li>
+        <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.__init__">(netket.vqs.ExactState method)</a>
 </li>
         <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.__init__">(netket.vqs.MCMixedState method)</a>
 </li>
@@ -232,6 +259,8 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/_generated/models/netket.models.AbstractARNN.html#netket.models.AbstractARNN">AbstractARNN (class in netket.models)</a>
+</li>
       <li><a href="docs/_generated/graph/netket.graph.AbstractGraph.html#netket.graph.AbstractGraph">AbstractGraph (class in netket.graph)</a>
 </li>
       <li><a href="docs/_generated/hilbert/netket.hilbert.AbstractHilbert.html#netket.hilbert.AbstractHilbert">AbstractHilbert (class in netket.hilbert)</a>
@@ -252,9 +281,23 @@
         <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.acting_on">(netket.operator.LocalOperator attribute)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense.activation">activation() (netket.models.ARNNDense method)</a>
+      <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.acting_on_subspace">acting_on_subspace (netket.operator.GraphOperator attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/operator/netket.operator.Heisenberg.html#netket.operator.Heisenberg.acting_on_subspace">(netket.operator.Heisenberg attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="docs/_generated/models/netket.models.ARNNConv1D.html#netket.models.ARNNConv1D.activation">activation() (netket.models.ARNNConv1D method)</a>
+
+      <ul>
+        <li><a href="docs/_generated/models/netket.models.ARNNConv2D.html#netket.models.ARNNConv2D.activation">(netket.models.ARNNConv2D method)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense.activation">(netket.models.ARNNDense method)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv1D.html#netket.models.FastARNNConv1D.activation">(netket.models.FastARNNConv1D method)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv2D.html#netket.models.FastARNNConv2D.activation">(netket.models.FastARNNConv2D method)</a>
+</li>
         <li><a href="docs/_generated/models/netket.models.NDM.html#netket.models.NDM.activation">(netket.models.NDM method)</a>
 </li>
         <li><a href="docs/_generated/models/netket.models.RBM.html#netket.models.RBM.activation">(netket.models.RBM method)</a>
@@ -289,17 +332,25 @@
 </li>
         <li><a href="docs/_generated/driver/netket.driver.VMC.html#netket.driver.VMC.advance">(netket.driver.VMC method)</a>
 </li>
+        <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.advance">(netket.experimental.driver.TDVP method)</a>
+</li>
       </ul></li>
       <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.all_states">all_states() (netket.hilbert.CustomHilbert method)</a>
 
       <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.all_states">(netket.hilbert.DiscreteHilbert method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.all_states">(netket.hilbert.DoubledHilbert method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.all_states">(netket.hilbert.Fock method)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.all_states">(netket.hilbert.HomogeneousHilbert method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.all_states">(netket.hilbert.Qubit method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.all_states">(netket.hilbert.Spin method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.all_states">(netket.hilbert.TensorHilbert method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -333,9 +384,9 @@
 </li>
         <li><a href="docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.apply">(netket.nn.Module method)</a>
 </li>
-        <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.apply">(netket.operator.AbstractOperator method)</a>
-</li>
         <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.apply">(netket.operator.BoseHubbard method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.apply">(netket.operator.DiscreteOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.apply">(netket.operator.GraphOperator method)</a>
 </li>
@@ -352,7 +403,9 @@
       </ul></li>
       <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler">ARDirectSampler (class in netket.sampler)</a>
 </li>
-      <li><a href="docs/_generated/models/netket.models.ARNN.html#netket.models.ARNN">ARNN (class in netket.models)</a>
+      <li><a href="docs/_generated/models/netket.models.ARNNConv1D.html#netket.models.ARNNConv1D">ARNNConv1D (class in netket.models)</a>
+</li>
+      <li><a href="docs/_generated/models/netket.models.ARNNConv2D.html#netket.models.ARNNConv2D">ARNNConv2D (class in netket.models)</a>
 </li>
       <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense">ARNNDense (class in netket.models)</a>
 </li>
@@ -395,16 +448,18 @@
 </li>
         <li><a href="docs/_generated/nn/netket.nn.DenseGeneral.html#netket.nn.DenseGeneral.bias_init">(netket.nn.DenseGeneral attribute)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.bias_init">(netket.nn.MaskedConv1D attribute)</a>
-</li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.bias_init">(netket.nn.MaskedConv2D attribute)</a>
-</li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.bias_init">(netket.nn.MaskedDense1D attribute)</a>
-</li>
       </ul></li>
-      <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense.bias_init">bias_init() (netket.models.ARNNDense method)</a>
+      <li><a href="docs/_generated/models/netket.models.ARNNConv1D.html#netket.models.ARNNConv1D.bias_init">bias_init() (netket.models.ARNNConv1D method)</a>
 
       <ul>
+        <li><a href="docs/_generated/models/netket.models.ARNNConv2D.html#netket.models.ARNNConv2D.bias_init">(netket.models.ARNNConv2D method)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense.bias_init">(netket.models.ARNNDense method)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv1D.html#netket.models.FastARNNConv1D.bias_init">(netket.models.FastARNNConv1D method)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv2D.html#netket.models.FastARNNConv2D.bias_init">(netket.models.FastARNNConv2D method)</a>
+</li>
         <li><a href="docs/_generated/models/netket.models.NDM.html#netket.models.NDM.bias_init">(netket.models.NDM method)</a>
 </li>
         <li><a href="docs/_generated/nn/netket.nn.Conv.html#id7">(netket.nn.Conv method)</a>
@@ -413,11 +468,11 @@
 </li>
         <li><a href="docs/_generated/nn/netket.nn.DenseGeneral.html#id4">(netket.nn.DenseGeneral method)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#id3">(netket.nn.MaskedConv1D method)</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.bias_init">(netket.nn.MaskedConv1D method)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#id3">(netket.nn.MaskedConv2D method)</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.bias_init">(netket.nn.MaskedConv2D method)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#id2">(netket.nn.MaskedDense1D method)</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.bias_init">(netket.nn.MaskedDense1D method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -462,6 +517,12 @@
 </li>
       <li><a href="docs/_generated/optim/netket.optimizer.solver.cholesky.html#netket.optimizer.solver.cholesky">cholesky() (in module netket.optimizer.solver)</a>
 </li>
+      <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.chunk_size">chunk_size (netket.vqs.MCMixedState attribute)</a>
+
+      <ul>
+        <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.chunk_size">(netket.vqs.MCState attribute)</a>
+</li>
+      </ul></li>
       <li><a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.clone">clone() (netket.nn.Conv method)</a>
 
       <ul>
@@ -487,11 +548,17 @@
       <ul>
         <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.collect">(netket.operator.BoseHubbard method)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator.collect">(netket.operator.ContinuousOperator method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.collect">(netket.operator.DiscreteOperator method)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.collect">(netket.operator.GraphOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Heisenberg.html#netket.operator.Heisenberg.collect">(netket.operator.Heisenberg method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising.collect">(netket.operator.Ising method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy.collect">(netket.operator.KineticEnergy method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.collect">(netket.operator.LocalLiouvillian method)</a>
 </li>
@@ -499,11 +566,23 @@
 </li>
         <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.collect">(netket.operator.PauliStrings method)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.PotentialEnergy.html#netket.operator.PotentialEnergy.collect">(netket.operator.PotentialEnergy method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.SumOperator.html#netket.operator.SumOperator.collect">(netket.operator.SumOperator method)</a>
+</li>
       </ul></li>
-      <li><a href="docs/_generated/models/netket.models.ARNN.html#netket.models.ARNN.conditionals">conditionals() (netket.models.ARNN method)</a>
+      <li><a href="docs/_generated/models/netket.models.AbstractARNN.html#netket.models.AbstractARNN.conditionals">conditionals() (netket.models.AbstractARNN method)</a>
 
       <ul>
+        <li><a href="docs/_generated/models/netket.models.ARNNConv1D.html#netket.models.ARNNConv1D.conditionals">(netket.models.ARNNConv1D method)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.ARNNConv2D.html#netket.models.ARNNConv2D.conditionals">(netket.models.ARNNConv2D method)</a>
+</li>
         <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense.conditionals">(netket.models.ARNNDense method)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv1D.html#netket.models.FastARNNConv1D.conditionals">(netket.models.FastARNNConv1D method)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv2D.html#netket.models.FastARNNConv2D.conditionals">(netket.models.FastARNNConv2D method)</a>
 </li>
       </ul></li>
       <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.conj">conj() (netket.operator.AbstractOperator method)</a>
@@ -511,17 +590,27 @@
       <ul>
         <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.conj">(netket.operator.BoseHubbard method)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator.conj">(netket.operator.ContinuousOperator method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.conj">(netket.operator.DiscreteOperator method)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.conj">(netket.operator.GraphOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Heisenberg.html#netket.operator.Heisenberg.conj">(netket.operator.Heisenberg method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising.conj">(netket.operator.Ising method)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy.conj">(netket.operator.KineticEnergy method)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.conj">(netket.operator.LocalLiouvillian method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.conj">(netket.operator.LocalOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.conj">(netket.operator.PauliStrings method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.PotentialEnergy.html#netket.operator.PotentialEnergy.conj">(netket.operator.PotentialEnergy method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.SumOperator.html#netket.operator.SumOperator.conj">(netket.operator.SumOperator method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -531,17 +620,27 @@
       <ul>
         <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.conjugate">(netket.operator.BoseHubbard method)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator.conjugate">(netket.operator.ContinuousOperator method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.conjugate">(netket.operator.DiscreteOperator method)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.conjugate">(netket.operator.GraphOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Heisenberg.html#netket.operator.Heisenberg.conjugate">(netket.operator.Heisenberg method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising.conjugate">(netket.operator.Ising method)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy.conjugate">(netket.operator.KineticEnergy method)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.conjugate">(netket.operator.LocalLiouvillian method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.conjugate">(netket.operator.LocalOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.conjugate">(netket.operator.PauliStrings method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.PotentialEnergy.html#netket.operator.PotentialEnergy.conjugate">(netket.operator.PotentialEnergy method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.SumOperator.html#netket.operator.SumOperator.conjugate">(netket.operator.SumOperator method)</a>
 </li>
       </ul></li>
       <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.constant">constant (netket.operator.GraphOperator attribute)</a>
@@ -557,11 +656,17 @@
       <ul>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.constrained">(netket.hilbert.Fock attribute)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.constrained">(netket.hilbert.HomogeneousHilbert attribute)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.constrained">(netket.hilbert.Qubit attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.constrained">(netket.hilbert.Spin attribute)</a>
 </li>
       </ul></li>
+      <li><a href="docs/_generated/hilbert/netket.hilbert.ContinuousHilbert.html#netket.hilbert.ContinuousHilbert">ContinuousHilbert (class in netket.hilbert)</a>
+</li>
+      <li><a href="docs/_generated/operator/netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator">ContinuousOperator (class in netket.operator)</a>
+</li>
       <li><a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv">Conv (class in netket.nn)</a>
 </li>
       <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.coordinates">coordinates (netket.graph.Lattice attribute)</a>
@@ -578,7 +683,7 @@
         <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.copy">(netket.operator.LocalOperator method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/hilbert/netket.operator.boson.create.html#netket.operator.boson.create">create() (in module netket.operator.boson)</a>
+      <li><a href="docs/_generated/operator/netket.operator.boson.create.html#netket.operator.boson.create">create() (in module netket.operator.boson)</a>
 </li>
       <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert">CustomHilbert (class in netket.hilbert)</a>
 </li>
@@ -604,11 +709,15 @@
 </li>
       <li><a href="docs/_generated/nn/netket.nn.DenseSymm.html#netket.nn.DenseSymm">DenseSymm() (in module netket.nn)</a>
 </li>
-      <li><a href="docs/_generated/hilbert/netket.operator.boson.destroy.html#netket.operator.boson.destroy">destroy() (in module netket.operator.boson)</a>
+      <li><a href="docs/_generated/operator/netket.operator.boson.destroy.html#netket.operator.boson.destroy">destroy() (in module netket.operator.boson)</a>
 </li>
       <li><a href="docs/_generated/models/netket.models.MPSPeriodic.html#netket.models.MPSPeriodic.diag">diag (netket.models.MPSPeriodic attribute)</a>
 </li>
       <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.diagonal">diagonal (netket.vqs.MCMixedState attribute)</a>
+</li>
+      <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert">DiscreteHilbert (class in netket.hilbert)</a>
+</li>
+      <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator">DiscreteOperator (class in netket.operator)</a>
 </li>
       <li><a href="docs/_generated/graph/netket.graph.AbstractGraph.html#netket.graph.AbstractGraph.distances">distances() (netket.graph.AbstractGraph method)</a>
 
@@ -622,6 +731,8 @@
 </li>
       <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.draw">draw() (netket.graph.Lattice method)</a>
 </li>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.dt">dt (netket.experimental.driver.TDVP attribute)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.dtype">dtype (netket.nn.Conv attribute)</a>
@@ -633,15 +744,13 @@
 </li>
         <li><a href="docs/_generated/nn/netket.nn.Embed.html#netket.nn.Embed.dtype">(netket.nn.Embed attribute)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.dtype">(netket.nn.MaskedConv1D attribute)</a>
-</li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.dtype">(netket.nn.MaskedConv2D attribute)</a>
-</li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.dtype">(netket.nn.MaskedDense1D attribute)</a>
-</li>
         <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.dtype">(netket.operator.AbstractOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.dtype">(netket.operator.BoseHubbard attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator.dtype">(netket.operator.ContinuousOperator attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.dtype">(netket.operator.DiscreteOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.dtype">(netket.operator.GraphOperator attribute)</a>
 </li>
@@ -649,11 +758,17 @@
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising.dtype">(netket.operator.Ising attribute)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy.dtype">(netket.operator.KineticEnergy attribute)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.dtype">(netket.operator.LocalLiouvillian attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.dtype">(netket.operator.LocalOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.dtype">(netket.operator.PauliStrings attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.PotentialEnergy.html#netket.operator.PotentialEnergy.dtype">(netket.operator.PotentialEnergy attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.SumOperator.html#netket.operator.SumOperator.dtype">(netket.operator.SumOperator attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -705,9 +820,13 @@
 </li>
         <li><a href="docs/_generated/driver/netket.driver.VMC.html#netket.driver.VMC.estimate">(netket.driver.VMC method)</a>
 </li>
+        <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.estimate">(netket.experimental.driver.TDVP method)</a>
+</li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.dynamics.Euler.html#netket.experimental.dynamics.Euler">Euler (in module netket.experimental.dynamics)</a>
+</li>
       <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.evaluate">evaluate() (netket.vqs.MCMixedState method)</a>
 
       <ul>
@@ -716,17 +835,11 @@
       </ul></li>
       <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler">ExactSampler (class in netket.sampler)</a>
 </li>
+      <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState">ExactState (class in netket.vqs)</a>
+</li>
       <li><a href="docs/_generated/samplers/netket.sampler.rules.ExchangeRule.html#netket.sampler.rules.ExchangeRule">ExchangeRule() (in module netket.sampler.rules)</a>
 </li>
-      <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.exclusive">exclusive (netket.nn.MaskedConv1D attribute)</a>
-
-      <ul>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.exclusive">(netket.nn.MaskedConv2D attribute)</a>
-</li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.exclusive">(netket.nn.MaskedDense1D attribute)</a>
-</li>
-      </ul></li>
-      <li><a href="docs/custom_expect.html#netket.vqs.expect">expect() (in module netket.vqs)</a>
+      <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.expect">expect() (netket.vqs.ExactState method)</a>
 
       <ul>
         <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.expect">(netket.vqs.MCMixedState method)</a>
@@ -736,7 +849,7 @@
         <li><a href="docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.expect">(netket.vqs.VariationalState method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/custom_expect.html#netket.vqs.expect_and_grad">expect_and_grad() (in module netket.vqs)</a>
+      <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.expect_and_grad">expect_and_grad() (netket.vqs.ExactState method)</a>
 
       <ul>
         <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.expect_and_grad">(netket.vqs.MCMixedState method)</a>
@@ -749,19 +862,29 @@
       <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.expect_and_grad_operator">expect_and_grad_operator() (netket.vqs.MCMixedState method)</a>
 </li>
       <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.extent">extent (netket.graph.Lattice attribute)</a>
+
+      <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.ContinuousHilbert.html#netket.hilbert.ContinuousHilbert.extent">(netket.hilbert.ContinuousHilbert attribute)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.Particle.html#netket.hilbert.Particle.extent">(netket.hilbert.Particle attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/_generated/models/netket.models.FastARNNConv1D.html#netket.models.FastARNNConv1D">FastARNNConv1D (class in netket.models)</a>
+</li>
+      <li><a href="docs/_generated/models/netket.models.FastARNNConv2D.html#netket.models.FastARNNConv2D">FastARNNConv2D (class in netket.models)</a>
+</li>
       <li><a href="docs/_generated/nn/netket.nn.Conv.html#id0">feature_group_count (netket.nn.Conv attribute)</a>, <a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.feature_group_count">[1]</a>
 
       <ul>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#id0">(netket.nn.MaskedConv1D attribute)</a>, <a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.feature_group_count">[1]</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.feature_group_count">(netket.nn.MaskedConv1D attribute)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#id0">(netket.nn.MaskedConv2D attribute)</a>, <a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.feature_group_count">[1]</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.feature_group_count">(netket.nn.MaskedConv2D attribute)</a>
 </li>
       </ul></li>
       <li><a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.features">features (netket.nn.Conv attribute)</a>
@@ -773,15 +896,7 @@
 </li>
         <li><a href="docs/_generated/nn/netket.nn.Embed.html#netket.nn.Embed.features">(netket.nn.Embed attribute)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.features">(netket.nn.MaskedConv1D attribute)</a>
-</li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.features">(netket.nn.MaskedConv2D attribute)</a>
-</li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.features">(netket.nn.MaskedDense1D attribute)</a>
-</li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/_generated/driver/netket.logging.JsonLog.html#netket.logging.JsonLog.flush">flush() (netket.logging.JsonLog method)</a>
 
       <ul>
@@ -792,6 +907,8 @@
         <li><a href="docs/_generated/driver/netket.logging.TensorBoardLog.html#netket.logging.TensorBoardLog.flush">(netket.logging.TensorBoardLog method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock">Fock (class in netket.hilbert)</a>
 </li>
       <li><a href="docs/_generated/graph/netket.graph.Graph.html#netket.graph.Graph.from_igraph">from_igraph() (netket.graph.Graph class method)</a>
@@ -806,6 +923,8 @@
         <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.from_networkx">(netket.graph.Lattice class method)</a>
 </li>
       </ul></li>
+      <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.from_openfermion">from_openfermion() (netket.operator.PauliStrings static method)</a>
+</li>
       <li><a href="docs/_generated/exact/netket.exact.full_ed.html#netket.exact.full_ed">full_ed() (in module netket.exact)</a>
 </li>
   </ul></td>
@@ -818,10 +937,12 @@
 </li>
       <li><a href="docs/_generated/nn/netket.nn.gelu.html#netket.nn.gelu">gelu() (in module netket.nn)</a>
 </li>
-      <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.get_conn">get_conn() (netket.operator.AbstractOperator method)</a>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.generator">generator (netket.experimental.driver.TDVP attribute)</a>
+</li>
+      <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.get_conn">get_conn() (netket.operator.BoseHubbard method)</a>
 
       <ul>
-        <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.get_conn">(netket.operator.BoseHubbard method)</a>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.get_conn">(netket.operator.DiscreteOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.get_conn">(netket.operator.GraphOperator method)</a>
 </li>
@@ -844,10 +965,10 @@
         <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.get_conn_filtered">(netket.operator.LocalOperator method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.get_conn_flattened">get_conn_flattened() (netket.operator.AbstractOperator method)</a>
+      <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.get_conn_flattened">get_conn_flattened() (netket.operator.BoseHubbard method)</a>
 
       <ul>
-        <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.get_conn_flattened">(netket.operator.BoseHubbard method)</a>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.get_conn_flattened">(netket.operator.DiscreteOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.get_conn_flattened">(netket.operator.GraphOperator method)</a>
 </li>
@@ -862,10 +983,10 @@
         <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.get_conn_flattened">(netket.operator.PauliStrings method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.get_conn_padded">get_conn_padded() (netket.operator.AbstractOperator method)</a>
+      <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.get_conn_padded">get_conn_padded() (netket.operator.BoseHubbard method)</a>
 
       <ul>
-        <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.get_conn_padded">(netket.operator.BoseHubbard method)</a>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.get_conn_padded">(netket.operator.DiscreteOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.get_conn_padded">(netket.operator.GraphOperator method)</a>
 </li>
@@ -902,9 +1023,11 @@
       </ul></li>
       <li><a href="docs/_generated/nn/netket.nn.glu.html#netket.nn.glu">glu() (in module netket.nn)</a>
 </li>
-      <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.grad">grad() (netket.vqs.MCMixedState method)</a>
+      <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.grad">grad() (netket.vqs.ExactState method)</a>
 
       <ul>
+        <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.grad">(netket.vqs.MCMixedState method)</a>
+</li>
         <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.grad">(netket.vqs.MCState method)</a>
 </li>
         <li><a href="docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.grad">(netket.vqs.VariationalState method)</a>
@@ -933,6 +1056,10 @@
       <ul>
         <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.H">(netket.operator.BoseHubbard attribute)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator.H">(netket.operator.ContinuousOperator attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.H">(netket.operator.DiscreteOperator attribute)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.H">(netket.operator.GraphOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Heisenberg.html#netket.operator.Heisenberg.H">(netket.operator.Heisenberg attribute)</a>
@@ -942,12 +1069,18 @@
       </ul></li>
       <li><a href="docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising.h">h (netket.operator.Ising attribute)</a>
 </li>
-      <li><a href="docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.H">H (netket.operator.LocalLiouvillian attribute)</a>
+      <li><a href="docs/_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy.H">H (netket.operator.KineticEnergy attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.H">(netket.operator.LocalLiouvillian attribute)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.H">(netket.operator.LocalOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.H">(netket.operator.PauliStrings attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.PotentialEnergy.html#netket.operator.PotentialEnergy.H">(netket.operator.PotentialEnergy attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.SumOperator.html#netket.operator.SumOperator.H">(netket.operator.SumOperator attribute)</a>
 </li>
       </ul></li>
       <li><a href="docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.hamiltonian">hamiltonian (netket.operator.LocalLiouvillian attribute)</a>
@@ -982,10 +1115,16 @@
 </li>
       <li><a href="docs/_generated/operator/netket.operator.Heisenberg.html#netket.operator.Heisenberg">Heisenberg (class in netket.operator)</a>
 </li>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.dynamics.Heun.html#netket.experimental.dynamics.Heun">Heun (in module netket.experimental.dynamics)</a>
+</li>
       <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.hilbert">hilbert (netket.operator.AbstractOperator attribute)</a>
 
       <ul>
         <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.hilbert">(netket.operator.BoseHubbard attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator.hilbert">(netket.operator.ContinuousOperator attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.hilbert">(netket.operator.DiscreteOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.hilbert">(netket.operator.GraphOperator attribute)</a>
 </li>
@@ -993,11 +1132,19 @@
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising.hilbert">(netket.operator.Ising attribute)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy.hilbert">(netket.operator.KineticEnergy attribute)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.hilbert">(netket.operator.LocalLiouvillian attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.hilbert">(netket.operator.LocalOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.hilbert">(netket.operator.PauliStrings attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.PotentialEnergy.html#netket.operator.PotentialEnergy.hilbert">(netket.operator.PotentialEnergy attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.SumOperator.html#netket.operator.SumOperator.hilbert">(netket.operator.SumOperator attribute)</a>
+</li>
+        <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.hilbert">(netket.vqs.ExactState attribute)</a>
 </li>
         <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.hilbert">(netket.vqs.MCMixedState attribute)</a>
 </li>
@@ -1012,6 +1159,8 @@
         <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.hilbert_physical">(netket.vqs.MCMixedState attribute)</a>
 </li>
       </ul></li>
+      <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert">HomogeneousHilbert (class in netket.hilbert)</a>
+</li>
       <li><a href="docs/_generated/graph/netket.graph.Hypercube.html#netket.graph.Hypercube">Hypercube (class in netket.graph)</a>
 </li>
   </ul></td>
@@ -1024,12 +1173,16 @@
 </li>
       <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.id_from_position">id_from_position() (netket.graph.Lattice method)</a>
 </li>
+      <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.identity">identity() (netket.operator.PauliStrings static method)</a>
+</li>
       <li><a href="docs/_generated/driver/netket.driver.AbstractVariationalDriver.html#netket.driver.AbstractVariationalDriver.info">info() (netket.driver.AbstractVariationalDriver method)</a>
 
       <ul>
         <li><a href="docs/_generated/driver/netket.driver.SteadyState.html#netket.driver.SteadyState.info">(netket.driver.SteadyState method)</a>
 </li>
         <li><a href="docs/_generated/driver/netket.driver.VMC.html#netket.driver.VMC.info">(netket.driver.VMC method)</a>
+</li>
+        <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.info">(netket.experimental.driver.TDVP method)</a>
 </li>
       </ul></li>
       <li><a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.init">init() (netket.nn.Conv method)</a>
@@ -1049,25 +1202,31 @@
 </li>
         <li><a href="docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.init">(netket.nn.Module method)</a>
 </li>
+        <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.init">(netket.vqs.ExactState method)</a>
+</li>
         <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.init">(netket.vqs.MCMixedState method)</a>
 </li>
         <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.init">(netket.vqs.MCState method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.init_parameters">init_parameters() (netket.vqs.MCMixedState method)</a>
+      <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.init_parameters">init_parameters() (netket.vqs.ExactState method)</a>
 
       <ul>
+        <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.init_parameters">(netket.vqs.MCMixedState method)</a>
+</li>
         <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.init_parameters">(netket.vqs.MCState method)</a>
 </li>
         <li><a href="docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.init_parameters">(netket.vqs.VariationalState method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.init_state">init_state() (netket.sampler.ARDirectSampler method)</a>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.init_state">init_state() (netket.experimental.sampler.MetropolisPtSampler method)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.init_state">[1]</a>
 
       <ul>
-        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.init_state">(netket.sampler.ExactSampler method)</a>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.init_state">(netket.experimental.sampler.MetropolisSamplerPmap method)</a>
 </li>
-        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.init_state">(netket.sampler.MetropolisPtSampler method)</a>
+        <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.init_state">(netket.sampler.ARDirectSampler method)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.init_state">(netket.sampler.ExactSampler method)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisRule.html#netket.sampler.MetropolisRule.init_state">(netket.sampler.MetropolisRule method)</a>
 </li>
@@ -1106,6 +1265,8 @@
       </ul></li>
       <li><a href="docs/_generated/nn/netket.nn.Conv.html#id1">input_dilation (netket.nn.Conv attribute)</a>, <a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.input_dilation">[1]</a>
 </li>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.integrator">integrator (netket.experimental.driver.TDVP attribute)</a>
+</li>
       <li><a href="docs/_generated/graph/netket.graph.AbstractGraph.html#netket.graph.AbstractGraph.is_bipartite">is_bipartite() (netket.graph.AbstractGraph method)</a>
 
       <ul>
@@ -1114,8 +1275,6 @@
         <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.is_bipartite">(netket.graph.Lattice method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/_generated/graph/netket.graph.AbstractGraph.html#netket.graph.AbstractGraph.is_connected">is_connected() (netket.graph.AbstractGraph method)</a>
 
       <ul>
@@ -1124,12 +1283,14 @@
         <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.is_connected">(netket.graph.Lattice method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.is_exact">is_exact (netket.sampler.ARDirectSampler attribute)</a>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.is_exact">is_exact (netket.experimental.sampler.MetropolisPtSampler attribute)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.is_exact">[1]</a>
 
       <ul>
-        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.is_exact">(netket.sampler.ExactSampler attribute)</a>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.is_exact">(netket.experimental.sampler.MetropolisSamplerPmap attribute)</a>
 </li>
-        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.is_exact">(netket.sampler.MetropolisPtSampler attribute)</a>
+        <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.is_exact">(netket.sampler.ARDirectSampler attribute)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.is_exact">(netket.sampler.ExactSampler attribute)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler.is_exact">(netket.sampler.MetropolisSampler attribute)</a>
 </li>
@@ -1138,16 +1299,24 @@
         <li><a href="docs/_generated/samplers/netket.sampler.Sampler.html#netket.sampler.Sampler.is_exact">(netket.sampler.Sampler attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.is_finite">is_finite (netket.hilbert.CustomHilbert attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.is_finite">(netket.hilbert.DiscreteHilbert attribute)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.is_finite">(netket.hilbert.DoubledHilbert attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.is_finite">(netket.hilbert.Fock attribute)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.is_finite">(netket.hilbert.HomogeneousHilbert attribute)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.is_finite">(netket.hilbert.Qubit attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.is_finite">(netket.hilbert.Spin attribute)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.is_finite">(netket.hilbert.TensorHilbert attribute)</a>
 </li>
       </ul></li>
       <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.is_hermitian">is_hermitian (netket.operator.AbstractOperator attribute)</a>
@@ -1155,11 +1324,17 @@
       <ul>
         <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.is_hermitian">(netket.operator.BoseHubbard attribute)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator.is_hermitian">(netket.operator.ContinuousOperator attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.is_hermitian">(netket.operator.DiscreteOperator attribute)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.is_hermitian">(netket.operator.GraphOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Heisenberg.html#netket.operator.Heisenberg.is_hermitian">(netket.operator.Heisenberg attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising.is_hermitian">(netket.operator.Ising attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy.is_hermitian">(netket.operator.KineticEnergy attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.is_hermitian">(netket.operator.LocalLiouvillian attribute)</a>
 </li>
@@ -1167,19 +1342,33 @@
 </li>
         <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.is_hermitian">(netket.operator.PauliStrings attribute)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.PotentialEnergy.html#netket.operator.PotentialEnergy.is_hermitian">(netket.operator.PotentialEnergy attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.SumOperator.html#netket.operator.SumOperator.is_hermitian">(netket.operator.SumOperator attribute)</a>
+</li>
       </ul></li>
       <li><a href="docs/_generated/hilbert/netket.hilbert.AbstractHilbert.html#netket.hilbert.AbstractHilbert.is_indexable">is_indexable (netket.hilbert.AbstractHilbert attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.ContinuousHilbert.html#netket.hilbert.ContinuousHilbert.is_indexable">(netket.hilbert.ContinuousHilbert attribute)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.is_indexable">(netket.hilbert.CustomHilbert attribute)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.is_indexable">(netket.hilbert.DiscreteHilbert attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.is_indexable">(netket.hilbert.DoubledHilbert attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.is_indexable">(netket.hilbert.Fock attribute)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.is_indexable">(netket.hilbert.HomogeneousHilbert attribute)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.Particle.html#netket.hilbert.Particle.is_indexable">(netket.hilbert.Particle attribute)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.is_indexable">(netket.hilbert.Qubit attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.is_indexable">(netket.hilbert.Spin attribute)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.is_indexable">(netket.hilbert.TensorHilbert attribute)</a>
 </li>
       </ul></li>
       <li><a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.is_mutable_collection">is_mutable_collection() (netket.nn.Conv method)</a>
@@ -1208,6 +1397,8 @@
         <li><a href="docs/_generated/driver/netket.driver.SteadyState.html#netket.driver.SteadyState.iter">(netket.driver.SteadyState method)</a>
 </li>
         <li><a href="docs/_generated/driver/netket.driver.VMC.html#netket.driver.VMC.iter">(netket.driver.VMC method)</a>
+</li>
+        <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.iter">(netket.experimental.driver.TDVP method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1238,12 +1429,16 @@
 <h2 id="K">K</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/_generated/nn/netket.nn.Conv.html#id2">kernel_dilation (netket.nn.Conv attribute)</a>, <a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.kernel_dilation">[1]</a>
+      <li><a href="docs/_generated/models/netket.models.ARNNConv1D.html#netket.models.ARNNConv1D.kernel_dilation">kernel_dilation (netket.models.ARNNConv1D attribute)</a>
 
       <ul>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.kernel_dilation">(netket.nn.MaskedConv1D attribute)</a>
+        <li><a href="docs/_generated/models/netket.models.ARNNConv2D.html#netket.models.ARNNConv2D.kernel_dilation">(netket.models.ARNNConv2D attribute)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.kernel_dilation">(netket.nn.MaskedConv2D attribute)</a>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv1D.html#netket.models.FastARNNConv1D.kernel_dilation">(netket.models.FastARNNConv1D attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv2D.html#netket.models.FastARNNConv2D.kernel_dilation">(netket.models.FastARNNConv2D attribute)</a>
+</li>
+        <li><a href="docs/_generated/nn/netket.nn.Conv.html#id2">(netket.nn.Conv attribute)</a>, <a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.kernel_dilation">[1]</a>
 </li>
       </ul></li>
       <li><a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.kernel_init">kernel_init (netket.nn.Conv attribute)</a>
@@ -1253,16 +1448,18 @@
 </li>
         <li><a href="docs/_generated/nn/netket.nn.DenseGeneral.html#netket.nn.DenseGeneral.kernel_init">(netket.nn.DenseGeneral attribute)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.kernel_init">(netket.nn.MaskedConv1D attribute)</a>
-</li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.kernel_init">(netket.nn.MaskedConv2D attribute)</a>
-</li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.kernel_init">(netket.nn.MaskedDense1D attribute)</a>
-</li>
       </ul></li>
-      <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense.kernel_init">kernel_init() (netket.models.ARNNDense method)</a>
+      <li><a href="docs/_generated/models/netket.models.ARNNConv1D.html#netket.models.ARNNConv1D.kernel_init">kernel_init() (netket.models.ARNNConv1D method)</a>
 
       <ul>
+        <li><a href="docs/_generated/models/netket.models.ARNNConv2D.html#netket.models.ARNNConv2D.kernel_init">(netket.models.ARNNConv2D method)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense.kernel_init">(netket.models.ARNNDense method)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv1D.html#netket.models.FastARNNConv1D.kernel_init">(netket.models.FastARNNConv1D method)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv2D.html#netket.models.FastARNNConv2D.kernel_init">(netket.models.FastARNNConv2D method)</a>
+</li>
         <li><a href="docs/_generated/models/netket.models.Jastrow.html#netket.models.Jastrow.kernel_init">(netket.models.Jastrow method)</a>
 </li>
         <li><a href="docs/_generated/models/netket.models.MPSPeriodic.html#netket.models.MPSPeriodic.kernel_init">(netket.models.MPSPeriodic method)</a>
@@ -1283,23 +1480,19 @@
 </li>
         <li><a href="docs/_generated/nn/netket.nn.DenseGeneral.html#id5">(netket.nn.DenseGeneral method)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#id4">(netket.nn.MaskedConv1D method)</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.kernel_init">(netket.nn.MaskedConv1D method)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#id4">(netket.nn.MaskedConv2D method)</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.kernel_init">(netket.nn.MaskedConv2D method)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#id3">(netket.nn.MaskedDense1D method)</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.kernel_init">(netket.nn.MaskedDense1D method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.kernel_size">kernel_size (netket.nn.Conv attribute)</a>
-
-      <ul>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.kernel_size">(netket.nn.MaskedConv1D attribute)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.kernel_size">(netket.nn.MaskedConv2D attribute)</a>
+      <li><a href="docs/_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy">KineticEnergy (class in netket.operator)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1321,6 +1514,8 @@
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.local_size">(netket.hilbert.Fock attribute)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.local_size">(netket.hilbert.HomogeneousHilbert attribute)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.local_size">(netket.hilbert.Qubit attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.local_size">(netket.hilbert.Spin attribute)</a>
@@ -1332,6 +1527,8 @@
         <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.local_states">(netket.hilbert.DoubledHilbert attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.local_states">(netket.hilbert.Fock attribute)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.local_states">(netket.hilbert.HomogeneousHilbert attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.local_states">(netket.hilbert.Qubit attribute)</a>
 </li>
@@ -1348,12 +1545,14 @@
 </li>
       <li><a href="docs/_generated/nn/netket.nn.log_cosh.html#netket.nn.log_cosh">log_cosh() (in module netket.nn)</a>
 </li>
-      <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.log_pdf">log_pdf() (netket.sampler.ARDirectSampler method)</a>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.log_pdf">log_pdf() (netket.experimental.sampler.MetropolisPtSampler method)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.log_pdf">[1]</a>
 
       <ul>
-        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.log_pdf">(netket.sampler.ExactSampler method)</a>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.log_pdf">(netket.experimental.sampler.MetropolisSamplerPmap method)</a>
 </li>
-        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.log_pdf">(netket.sampler.MetropolisPtSampler method)</a>
+        <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.log_pdf">(netket.sampler.ARDirectSampler method)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.log_pdf">(netket.sampler.ExactSampler method)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler.log_pdf">(netket.sampler.MetropolisSampler method)</a>
 </li>
@@ -1366,9 +1565,11 @@
 </li>
       <li><a href="docs/_generated/nn/netket.nn.log_softmax.html#netket.nn.log_softmax">log_softmax() (in module netket.nn)</a>
 </li>
-      <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.log_value">log_value() (netket.vqs.MCMixedState method)</a>
+      <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.log_value">log_value() (netket.vqs.ExactState method)</a>
 
       <ul>
+        <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.log_value">(netket.vqs.MCMixedState method)</a>
+</li>
         <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.log_value">(netket.vqs.MCState method)</a>
 </li>
       </ul></li>
@@ -1380,12 +1581,24 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.machine_pow">machine_pow (netket.sampler.ARDirectSampler attribute)</a>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.machine_pow">machine_pow (netket.experimental.sampler.MetropolisPtSampler attribute)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.machine_pow">[1]</a>
 
       <ul>
-        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.machine_pow">(netket.sampler.ExactSampler attribute)</a>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.machine_pow">(netket.experimental.sampler.MetropolisSamplerPmap attribute)</a>
 </li>
-        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.machine_pow">(netket.sampler.MetropolisPtSampler attribute)</a>
+        <li><a href="docs/_generated/models/netket.models.ARNNConv1D.html#netket.models.ARNNConv1D.machine_pow">(netket.models.ARNNConv1D attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.ARNNConv2D.html#netket.models.ARNNConv2D.machine_pow">(netket.models.ARNNConv2D attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense.machine_pow">(netket.models.ARNNDense attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv1D.html#netket.models.FastARNNConv1D.machine_pow">(netket.models.FastARNNConv1D attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv2D.html#netket.models.FastARNNConv2D.machine_pow">(netket.models.FastARNNConv2D attribute)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.machine_pow">(netket.sampler.ARDirectSampler attribute)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.machine_pow">(netket.sampler.ExactSampler attribute)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler.machine_pow">(netket.sampler.MetropolisSampler attribute)</a>
 </li>
@@ -1418,10 +1631,12 @@
 </li>
       <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D">MaskedDense1D (class in netket.nn)</a>
 </li>
-      <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.max_conn_size">max_conn_size (netket.operator.AbstractOperator attribute)</a>
+      <li><a href="docs/_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy.mass">mass (netket.operator.KineticEnergy attribute)</a>
+</li>
+      <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.max_conn_size">max_conn_size (netket.operator.BoseHubbard attribute)</a>
 
       <ul>
-        <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.max_conn_size">(netket.operator.BoseHubbard attribute)</a>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.max_conn_size">(netket.operator.DiscreteOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.max_conn_size">(netket.operator.GraphOperator attribute)</a>
 </li>
@@ -1452,15 +1667,15 @@
       </ul></li>
       <li><a href="docs/_generated/samplers/netket.sampler.MetropolisExchange.html#netket.sampler.MetropolisExchange">MetropolisExchange (class in netket.sampler)</a>
 </li>
-      <li><a href="docs/_generated/samplers/netket.sampler.MetropolisExchangePt.html#netket.sampler.MetropolisExchangePt">MetropolisExchangePt (class in netket.sampler)</a>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisExchangePt.html#netket.experimental.sampler.MetropolisExchangePt">MetropolisExchangePt (class in netket.experimental.sampler)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisExchangePt.html#netket.experimental.sampler.MetropolisExchangePt">[1]</a>
 </li>
       <li><a href="docs/_generated/samplers/netket.sampler.MetropolisHamiltonian.html#netket.sampler.MetropolisHamiltonian">MetropolisHamiltonian (class in netket.sampler)</a>
 </li>
       <li><a href="docs/_generated/samplers/netket.sampler.MetropolisLocal.html#netket.sampler.MetropolisLocal">MetropolisLocal (class in netket.sampler)</a>
 </li>
-      <li><a href="docs/_generated/samplers/netket.sampler.MetropolisLocalPt.html#netket.sampler.MetropolisLocalPt">MetropolisLocalPt (class in netket.sampler)</a>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisLocalPt.html#netket.experimental.sampler.MetropolisLocalPt">MetropolisLocalPt (class in netket.experimental.sampler)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisLocalPt.html#netket.experimental.sampler.MetropolisLocalPt">[1]</a>
 </li>
-      <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler">MetropolisPtSampler (class in netket.sampler)</a>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler">MetropolisPtSampler (class in netket.experimental.sampler)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler">[1]</a>
 </li>
       <li><a href="docs/_generated/samplers/netket.sampler.MetropolisRule.html#netket.sampler.MetropolisRule">MetropolisRule (class in netket.sampler)</a>
 </li>
@@ -1468,19 +1683,27 @@
 </li>
       <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSamplerNumpy.html#netket.sampler.MetropolisSamplerNumpy">MetropolisSamplerNumpy (class in netket.sampler)</a>
 </li>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap">MetropolisSamplerPmap (class in netket.experimental.sampler)</a>
+</li>
       <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSamplerState.html#netket.sampler.MetropolisSamplerState">MetropolisSamplerState (class in netket.sampler)</a>
+</li>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.dynamics.Midpoint.html#netket.experimental.dynamics.Midpoint">Midpoint (in module netket.experimental.dynamics)</a>
 </li>
       <li><a href="docs/_generated/callbacks/netket.callbacks.EarlyStopping.html#netket.callbacks.EarlyStopping.min_delta">min_delta (netket.callbacks.EarlyStopping attribute)</a>
 </li>
-      <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.model">model (netket.vqs.MCMixedState attribute)</a>
+      <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.model">model (netket.vqs.ExactState attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.model">(netket.vqs.MCMixedState attribute)</a>
+</li>
         <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.model">(netket.vqs.MCState attribute)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.model_state">model_state (netket.vqs.MCMixedState attribute)</a>
+      <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.model_state">model_state (netket.vqs.ExactState attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.model_state">(netket.vqs.MCMixedState attribute)</a>
+</li>
         <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.model_state">(netket.vqs.MCState attribute)</a>
 </li>
         <li><a href="docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.model_state">(netket.vqs.VariationalState attribute)</a>
@@ -1504,14 +1727,14 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSamplerState.html#netket.sampler.MetropolisSamplerState.n_accepted">n_accepted (netket.sampler.MetropolisSamplerState attribute)</a>
 </li>
-      <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSamplerState.html#netket.sampler.MetropolisSamplerState.n_accepted_proc">n_accepted_proc (netket.sampler.MetropolisSamplerState attribute)</a>
-</li>
-      <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.n_batches">n_batches (netket.sampler.ARDirectSampler attribute)</a>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.n_batches">n_batches (netket.experimental.sampler.MetropolisPtSampler attribute)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.n_batches">[1]</a>
 
       <ul>
-        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.n_batches">(netket.sampler.ExactSampler attribute)</a>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.n_batches">(netket.experimental.sampler.MetropolisSamplerPmap attribute)</a>
 </li>
-        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.n_batches">(netket.sampler.MetropolisPtSampler attribute)</a>
+        <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.n_batches">(netket.sampler.ARDirectSampler attribute)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.n_batches">(netket.sampler.ExactSampler attribute)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler.n_batches">(netket.sampler.MetropolisSampler attribute)</a>
 </li>
@@ -1520,12 +1743,14 @@
         <li><a href="docs/_generated/samplers/netket.sampler.Sampler.html#netket.sampler.Sampler.n_batches">(netket.sampler.Sampler attribute)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.n_chains">n_chains (netket.sampler.ARDirectSampler attribute)</a>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.n_chains">n_chains (netket.experimental.sampler.MetropolisPtSampler attribute)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.n_chains">[1]</a>
 
       <ul>
-        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.n_chains">(netket.sampler.ExactSampler attribute)</a>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.n_chains">(netket.experimental.sampler.MetropolisSamplerPmap attribute)</a>
 </li>
-        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.n_chains">(netket.sampler.MetropolisPtSampler attribute)</a>
+        <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.n_chains">(netket.sampler.ARDirectSampler attribute)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.n_chains">(netket.sampler.ExactSampler attribute)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler.n_chains">(netket.sampler.MetropolisSampler attribute)</a>
 </li>
@@ -1534,12 +1759,16 @@
         <li><a href="docs/_generated/samplers/netket.sampler.Sampler.html#netket.sampler.Sampler.n_chains">(netket.sampler.Sampler attribute)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.n_chains_per_rank">n_chains_per_rank (netket.sampler.ARDirectSampler attribute)</a>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.n_chains_per_device">n_chains_per_device (netket.experimental.sampler.MetropolisSamplerPmap attribute)</a>
+</li>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.n_chains_per_rank">n_chains_per_rank (netket.experimental.sampler.MetropolisPtSampler attribute)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.n_chains_per_rank">[1]</a>
 
       <ul>
-        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.n_chains_per_rank">(netket.sampler.ExactSampler attribute)</a>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.n_chains_per_rank">(netket.experimental.sampler.MetropolisSamplerPmap attribute)</a>
 </li>
-        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.n_chains_per_rank">(netket.sampler.MetropolisPtSampler attribute)</a>
+        <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.n_chains_per_rank">(netket.sampler.ARDirectSampler attribute)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.n_chains_per_rank">(netket.sampler.ExactSampler attribute)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler.n_chains_per_rank">(netket.sampler.MetropolisSampler attribute)</a>
 </li>
@@ -1548,10 +1777,10 @@
         <li><a href="docs/_generated/samplers/netket.sampler.Sampler.html#netket.sampler.Sampler.n_chains_per_rank">(netket.sampler.Sampler attribute)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.n_conn">n_conn() (netket.operator.AbstractOperator method)</a>
+      <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.n_conn">n_conn() (netket.operator.BoseHubbard method)</a>
 
       <ul>
-        <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.n_conn">(netket.operator.BoseHubbard method)</a>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.n_conn">(netket.operator.DiscreteOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.n_conn">(netket.operator.GraphOperator method)</a>
 </li>
@@ -1600,8 +1829,6 @@
         <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.n_nodes">(netket.graph.Lattice attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.n_operators">n_operators (netket.operator.GraphOperator attribute)</a>
 
       <ul>
@@ -1610,17 +1837,25 @@
         <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.n_operators">(netket.operator.LocalOperator attribute)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.n_parameters">n_parameters (netket.vqs.MCMixedState attribute)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.n_parameters">n_parameters (netket.vqs.ExactState attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.n_parameters">(netket.vqs.MCMixedState attribute)</a>
+</li>
         <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.n_parameters">(netket.vqs.MCState attribute)</a>
 </li>
         <li><a href="docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.n_parameters">(netket.vqs.VariationalState attribute)</a>
 </li>
       </ul></li>
       <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.n_particles">n_particles (netket.hilbert.Fock attribute)</a>
+
+      <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.Particle.html#netket.hilbert.Particle.n_particles">(netket.hilbert.Particle attribute)</a>
 </li>
-      <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.n_replicas">n_replicas (netket.sampler.MetropolisPtSampler attribute)</a>
+      </ul></li>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.n_replicas">n_replicas (netket.experimental.sampler.MetropolisPtSampler attribute)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.n_replicas">[1]</a>
 </li>
       <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.n_samples">n_samples (netket.vqs.MCMixedState attribute)</a>
 
@@ -1639,22 +1874,28 @@
       <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.n_states">n_states (netket.hilbert.CustomHilbert attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.n_states">(netket.hilbert.DiscreteHilbert attribute)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.n_states">(netket.hilbert.DoubledHilbert attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.n_states">(netket.hilbert.Fock attribute)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.n_states">(netket.hilbert.HomogeneousHilbert attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.n_states">(netket.hilbert.Qubit attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.n_states">(netket.hilbert.Spin attribute)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.n_states">(netket.hilbert.TensorHilbert attribute)</a>
+</li>
       </ul></li>
       <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSamplerState.html#netket.sampler.MetropolisSamplerState.n_steps">n_steps (netket.sampler.MetropolisSamplerState attribute)</a>
 </li>
-      <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSamplerState.html#netket.sampler.MetropolisSamplerState.n_steps_proc">n_steps_proc (netket.sampler.MetropolisSamplerState attribute)</a>
-</li>
-      <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.n_sweeps">n_sweeps (netket.sampler.MetropolisPtSampler attribute)</a>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.n_sweeps">n_sweeps (netket.experimental.sampler.MetropolisPtSampler attribute)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.n_sweeps">[1]</a>
 
       <ul>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.n_sweeps">(netket.experimental.sampler.MetropolisSamplerPmap attribute)</a>
+</li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler.n_sweeps">(netket.sampler.MetropolisSampler attribute)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSamplerNumpy.html#netket.sampler.MetropolisSamplerNumpy.n_sweeps">(netket.sampler.MetropolisSamplerNumpy attribute)</a>
@@ -1690,18 +1931,24 @@
       </ul></li>
       <li><a href="docs/_generated/nn/netket.nn.Embed.html#netket.nn.Embed.num_embeddings">num_embeddings (netket.nn.Embed attribute)</a>
 </li>
-      <li><a href="docs/_generated/hilbert/netket.operator.boson.number.html#netket.operator.boson.number">number() (in module netket.operator.boson)</a>
+      <li><a href="docs/_generated/operator/netket.operator.boson.number.html#netket.operator.boson.number">number() (in module netket.operator.boson)</a>
 </li>
       <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.numbers_to_states">numbers_to_states() (netket.hilbert.CustomHilbert method)</a>
 
       <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.numbers_to_states">(netket.hilbert.DiscreteHilbert method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.numbers_to_states">(netket.hilbert.DoubledHilbert method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.numbers_to_states">(netket.hilbert.Fock method)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.numbers_to_states">(netket.hilbert.HomogeneousHilbert method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.numbers_to_states">(netket.hilbert.Qubit method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.numbers_to_states">(netket.hilbert.Spin method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.numbers_to_states">(netket.hilbert.TensorHilbert method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1726,6 +1973,8 @@
         <li><a href="docs/_generated/driver/netket.driver.SteadyState.html#netket.driver.SteadyState.optimizer">(netket.driver.SteadyState attribute)</a>
 </li>
         <li><a href="docs/_generated/driver/netket.driver.VMC.html#netket.driver.VMC.optimizer">(netket.driver.VMC attribute)</a>
+</li>
+        <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.optimizer">(netket.experimental.driver.TDVP attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1754,9 +2003,11 @@
         <li><a href="docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.param">(netket.nn.Module method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.parameters">parameters (netket.vqs.MCMixedState attribute)</a>
+      <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.parameters">parameters (netket.vqs.ExactState attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.parameters">(netket.vqs.MCMixedState attribute)</a>
+</li>
         <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.parameters">(netket.vqs.MCState attribute)</a>
 </li>
         <li><a href="docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.parameters">(netket.vqs.VariationalState attribute)</a>
@@ -1778,23 +2029,41 @@
         <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.parent">(netket.nn.MaskedDense1D attribute)</a>
 </li>
       </ul></li>
+      <li><a href="docs/_generated/hilbert/netket.hilbert.Particle.html#netket.hilbert.Particle">Particle (class in netket.hilbert)</a>
+</li>
       <li><a href="docs/_generated/callbacks/netket.callbacks.EarlyStopping.html#netket.callbacks.EarlyStopping.patience">patience (netket.callbacks.EarlyStopping attribute)</a>
 </li>
       <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings">PauliStrings (class in netket.operator)</a>
 </li>
       <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.pbc">pbc (netket.graph.Lattice attribute)</a>
+
+      <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.ContinuousHilbert.html#netket.hilbert.ContinuousHilbert.pbc">(netket.hilbert.ContinuousHilbert attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.Particle.html#netket.hilbert.Particle.pbc">(netket.hilbert.Particle attribute)</a>
+</li>
+      </ul></li>
       <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.point_group">point_group() (netket.graph.Lattice method)</a>
 </li>
       <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.position_from_basis_coords">position_from_basis_coords() (netket.graph.Lattice method)</a>
 </li>
       <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.positions">positions (netket.graph.Lattice attribute)</a>
 </li>
-      <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense.precision">precision (netket.models.ARNNDense attribute)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/_generated/operator/netket.operator.PotentialEnergy.html#netket.operator.PotentialEnergy">PotentialEnergy (class in netket.operator)</a>
+</li>
+      <li><a href="docs/_generated/models/netket.models.ARNNConv1D.html#netket.models.ARNNConv1D.precision">precision (netket.models.ARNNConv1D attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/models/netket.models.ARNNConv2D.html#netket.models.ARNNConv2D.precision">(netket.models.ARNNConv2D attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense.precision">(netket.models.ARNNDense attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv1D.html#netket.models.FastARNNConv1D.precision">(netket.models.FastARNNConv1D attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv2D.html#netket.models.FastARNNConv2D.precision">(netket.models.FastARNNConv2D attribute)</a>
+</li>
         <li><a href="docs/_generated/models/netket.models.NDM.html#netket.models.NDM.precision">(netket.models.NDM attribute)</a>
 </li>
         <li><a href="docs/_generated/models/netket.models.RBM.html#netket.models.RBM.precision">(netket.models.RBM attribute)</a>
@@ -1811,27 +2080,39 @@
 </li>
         <li><a href="docs/_generated/nn/netket.nn.DenseGeneral.html#id2">(netket.nn.DenseGeneral attribute)</a>, <a href="docs/_generated/nn/netket.nn.DenseGeneral.html#netket.nn.DenseGeneral.precision">[1]</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#id1">(netket.nn.MaskedConv1D attribute)</a>, <a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.precision">[1]</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.precision">(netket.nn.MaskedConv1D attribute)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#id1">(netket.nn.MaskedConv2D attribute)</a>, <a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.precision">[1]</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.precision">(netket.nn.MaskedConv2D attribute)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#id0">(netket.nn.MaskedDense1D attribute)</a>, <a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.precision">[1]</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.precision">(netket.nn.MaskedDense1D attribute)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/hilbert/netket.operator.boson.proj.html#netket.operator.boson.proj">proj() (in module netket.operator.boson)</a>
+      <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.probability_distribution">probability_distribution() (netket.vqs.ExactState method)</a>
+</li>
+      <li><a href="docs/_generated/operator/netket.operator.boson.proj.html#netket.operator.boson.proj">proj() (in module netket.operator.boson)</a>
 </li>
       <li><a href="docs/_generated/hilbert/netket.hilbert.AbstractHilbert.html#netket.hilbert.AbstractHilbert.ptrace">ptrace() (netket.hilbert.AbstractHilbert method)</a>
 
       <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.ContinuousHilbert.html#netket.hilbert.ContinuousHilbert.ptrace">(netket.hilbert.ContinuousHilbert method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.ptrace">(netket.hilbert.CustomHilbert method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.ptrace">(netket.hilbert.DiscreteHilbert method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.ptrace">(netket.hilbert.DoubledHilbert method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.ptrace">(netket.hilbert.Fock method)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.ptrace">(netket.hilbert.HomogeneousHilbert method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.Particle.html#netket.hilbert.Particle.ptrace">(netket.hilbert.Particle method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.ptrace">(netket.hilbert.Qubit method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.ptrace">(netket.hilbert.Spin method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.ptrace">(netket.hilbert.TensorHilbert method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1850,9 +2131,11 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.quantum_geometric_tensor">quantum_geometric_tensor() (netket.vqs.MCMixedState method)</a>
+      <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.quantum_geometric_tensor">quantum_geometric_tensor() (netket.vqs.ExactState method)</a>
 
       <ul>
+        <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.quantum_geometric_tensor">(netket.vqs.MCMixedState method)</a>
+</li>
         <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.quantum_geometric_tensor">(netket.vqs.MCState method)</a>
 </li>
         <li><a href="docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.quantum_geometric_tensor">(netket.vqs.VariationalState method)</a>
@@ -1866,18 +2149,28 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/_generated/hilbert/netket.hilbert.AbstractHilbert.html#netket.hilbert.AbstractHilbert.random_state">random_state() (netket.hilbert.AbstractHilbert method)</a>
+      <li><a href="docs/_generated/hilbert/netket.hilbert.AbstractHilbert.html#netket.hilbert.AbstractHilbert.random_state">random_state() (netket.hilbert.AbstractHilbert method)</a>, <a href="docs/hilbert.html#netket.hilbert.AbstractHilbert.random_state">[1]</a>
 
       <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.ContinuousHilbert.html#netket.hilbert.ContinuousHilbert.random_state">(netket.hilbert.ContinuousHilbert method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.random_state">(netket.hilbert.CustomHilbert method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.random_state">(netket.hilbert.DiscreteHilbert method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.random_state">(netket.hilbert.DoubledHilbert method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.random_state">(netket.hilbert.Fock method)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.random_state">(netket.hilbert.HomogeneousHilbert method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.Particle.html#netket.hilbert.Particle.random_state">(netket.hilbert.Particle method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.random_state">(netket.hilbert.Qubit method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.random_state">(netket.hilbert.Spin method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.random_state">(netket.hilbert.TensorHilbert method)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisRule.html#netket.sampler.MetropolisRule.random_state">(netket.sampler.MetropolisRule method)</a>
 </li>
@@ -1898,14 +2191,20 @@
 </li>
       <li><a href="docs/_generated/models/netket.models.RBMSymm.html#netket.models.RBMSymm">RBMSymm (class in netket.models)</a>
 </li>
+      <li><a href="docs/_generated/nn/netket.nn.reim_relu.html#netket.nn.reim_relu">reim_relu() (in module netket.nn)</a>
+</li>
+      <li><a href="docs/_generated/nn/netket.nn.reim_selu.html#netket.nn.reim_selu">reim_selu() (in module netket.nn)</a>
+</li>
       <li><a href="docs/_generated/nn/netket.nn.relu.html#netket.nn.relu">relu (in module netket.nn)</a>
 </li>
-      <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.replace">replace() (netket.sampler.ARDirectSampler method)</a>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.replace">replace() (netket.experimental.sampler.MetropolisPtSampler method)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.replace">[1]</a>
 
       <ul>
-        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.replace">(netket.sampler.ExactSampler method)</a>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.replace">(netket.experimental.sampler.MetropolisSamplerPmap method)</a>
 </li>
-        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.replace">(netket.sampler.MetropolisPtSampler method)</a>
+        <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.replace">(netket.sampler.ARDirectSampler method)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.replace">(netket.sampler.ExactSampler method)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisRule.html#netket.sampler.MetropolisRule.replace">(netket.sampler.MetropolisRule method)</a>
 </li>
@@ -1930,8 +2229,6 @@
         <li><a href="docs/_generated/utils/netket.utils.HashableArray.html#netket.utils.HashableArray.replace">(netket.utils.HashableArray method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/_generated/samplers/netket.sampler.reset.html#netket.sampler.reset">reset() (in module netket.sampler)</a>
 
       <ul>
@@ -1943,11 +2240,15 @@
 </li>
         <li><a href="docs/_generated/driver/netket.driver.VMC.html#netket.driver.VMC.reset">(netket.driver.VMC method)</a>
 </li>
+        <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.reset">(netket.experimental.driver.TDVP method)</a>
+</li>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.reset">(netket.experimental.sampler.MetropolisPtSampler method)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.reset">[1]</a>
+</li>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.reset">(netket.experimental.sampler.MetropolisSamplerPmap method)</a>
+</li>
         <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.reset">(netket.sampler.ARDirectSampler method)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.reset">(netket.sampler.ExactSampler method)</a>
-</li>
-        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.reset">(netket.sampler.MetropolisPtSampler method)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisRule.html#netket.sampler.MetropolisRule.reset">(netket.sampler.MetropolisRule method)</a>
 </li>
@@ -1965,6 +2266,8 @@
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.Sampler.html#netket.sampler.Sampler.reset">(netket.sampler.Sampler method)</a>
 </li>
+        <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.reset">(netket.vqs.ExactState method)</a>
+</li>
         <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.reset">(netket.vqs.MCMixedState method)</a>
 </li>
         <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.reset">(netket.vqs.MCState method)</a>
@@ -1972,21 +2275,35 @@
         <li><a href="docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.reset">(netket.vqs.VariationalState method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.reset_chains">reset_chains (netket.sampler.MetropolisPtSampler attribute)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.reset_chains">reset_chains (netket.experimental.sampler.MetropolisPtSampler attribute)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.reset_chains">[1]</a>
 
       <ul>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.reset_chains">(netket.experimental.sampler.MetropolisSamplerPmap attribute)</a>
+</li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler.reset_chains">(netket.sampler.MetropolisSampler attribute)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSamplerNumpy.html#netket.sampler.MetropolisSamplerNumpy.reset_chains">(netket.sampler.MetropolisSamplerNumpy attribute)</a>
 </li>
       </ul></li>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.dynamics.RK12.html#netket.experimental.dynamics.RK12">RK12 (in module netket.experimental.dynamics)</a>
+</li>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.dynamics.RK23.html#netket.experimental.dynamics.RK23">RK23 (in module netket.experimental.dynamics)</a>
+</li>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.dynamics.RK4.html#netket.experimental.dynamics.RK4">RK4 (in module netket.experimental.dynamics)</a>
+</li>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.dynamics.RK45.html#netket.experimental.dynamics.RK45">RK45 (in module netket.experimental.dynamics)</a>
+</li>
       <li><a href="docs/_generated/optim/netket.optimizer.RmsProp.html#netket.optimizer.RmsProp">RmsProp() (in module netket.optimizer)</a>
 </li>
       <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.rotation_group">rotation_group() (netket.graph.Lattice method)</a>
 </li>
-      <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.rule">rule (netket.sampler.MetropolisPtSampler attribute)</a>
+      <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.rule">rule (netket.experimental.sampler.MetropolisPtSampler attribute)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.rule">[1]</a>
 
       <ul>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.rule">(netket.experimental.sampler.MetropolisSamplerPmap attribute)</a>
+</li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler.rule">(netket.sampler.MetropolisSampler attribute)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSamplerNumpy.html#netket.sampler.MetropolisSamplerNumpy.rule">(netket.sampler.MetropolisSamplerNumpy attribute)</a>
@@ -1998,6 +2315,8 @@
         <li><a href="docs/_generated/driver/netket.driver.SteadyState.html#netket.driver.SteadyState.run">(netket.driver.SteadyState method)</a>
 </li>
         <li><a href="docs/_generated/driver/netket.driver.VMC.html#netket.driver.VMC.run">(netket.driver.VMC method)</a>
+</li>
+        <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.run">(netket.experimental.driver.TDVP method)</a>
 </li>
       </ul></li>
       <li><a href="docs/_generated/driver/netket.logging.RuntimeLog.html#netket.logging.RuntimeLog">RuntimeLog (class in netket.logging)</a>
@@ -2011,11 +2330,13 @@
       <li><a href="docs/_generated/samplers/netket.sampler.sample.html#netket.sampler.sample">sample() (in module netket.sampler)</a>
 
       <ul>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.sample">(netket.experimental.sampler.MetropolisPtSampler method)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.sample">[1]</a>
+</li>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.sample">(netket.experimental.sampler.MetropolisSamplerPmap method)</a>
+</li>
         <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.sample">(netket.sampler.ARDirectSampler method)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.sample">(netket.sampler.ExactSampler method)</a>
-</li>
-        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.sample">(netket.sampler.MetropolisPtSampler method)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler.sample">(netket.sampler.MetropolisSampler method)</a>
 </li>
@@ -2031,17 +2352,13 @@
       <li><a href="docs/_generated/samplers/netket.sampler.sample_next.html#netket.sampler.sample_next">sample_next() (in module netket.sampler)</a>
 
       <ul>
-        <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.sample_next">(netket.sampler.ARDirectSampler method)</a>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.sample_next">(netket.experimental.sampler.MetropolisPtSampler method)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.sample_next">[1]</a>
 </li>
-        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.sample_next">(netket.sampler.ExactSampler method)</a>
-</li>
-        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisPtSampler.html#netket.sampler.MetropolisPtSampler.sample_next">(netket.sampler.MetropolisPtSampler method)</a>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.sample_next">(netket.experimental.sampler.MetropolisSamplerPmap method)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler.sample_next">(netket.sampler.MetropolisSampler method)</a>
 </li>
         <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSamplerNumpy.html#netket.sampler.MetropolisSamplerNumpy.sample_next">(netket.sampler.MetropolisSamplerNumpy method)</a>
-</li>
-        <li><a href="docs/_generated/samplers/netket.sampler.Sampler.html#netket.sampler.Sampler.sample_next">(netket.sampler.Sampler method)</a>
 </li>
       </ul></li>
       <li><a href="docs/_generated/samplers/netket.sampler.Sampler.html#netket.sampler.Sampler">Sampler (class in netket.sampler)</a>
@@ -2065,7 +2382,23 @@
 </li>
       </ul></li>
       <li><a href="docs/_generated/samplers/netket.sampler.samples.html#netket.sampler.samples">samples() (in module netket.sampler)</a>
+
+      <ul>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.samples">(netket.experimental.sampler.MetropolisPtSampler method)</a>, <a href="docs/_generated/samplers/netket.experimental.sampler.MetropolisPtSampler.html#netket.experimental.sampler.MetropolisPtSampler.samples">[1]</a>
 </li>
+        <li><a href="docs/_generated/experimental/samplers/netket.experimental.sampler.MetropolisSamplerPmap.html#netket.experimental.sampler.MetropolisSamplerPmap.samples">(netket.experimental.sampler.MetropolisSamplerPmap method)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.ARDirectSampler.html#netket.sampler.ARDirectSampler.samples">(netket.sampler.ARDirectSampler method)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.ExactSampler.html#netket.sampler.ExactSampler.samples">(netket.sampler.ExactSampler method)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler.samples">(netket.sampler.MetropolisSampler method)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.MetropolisSamplerNumpy.html#netket.sampler.MetropolisSamplerNumpy.samples">(netket.sampler.MetropolisSamplerNumpy method)</a>
+</li>
+        <li><a href="docs/_generated/samplers/netket.sampler.Sampler.html#netket.sampler.Sampler.samples">(netket.sampler.Sampler method)</a>
+</li>
+      </ul></li>
       <li><a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.scope">scope (netket.nn.Conv attribute)</a>
 
       <ul>
@@ -2105,26 +2438,32 @@
       <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.shape">shape (netket.hilbert.CustomHilbert attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.shape">(netket.hilbert.DiscreteHilbert attribute)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.shape">(netket.hilbert.DoubledHilbert attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.shape">(netket.hilbert.Fock attribute)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.shape">(netket.hilbert.HomogeneousHilbert attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.shape">(netket.hilbert.Qubit attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.shape">(netket.hilbert.Spin attribute)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.shape">(netket.hilbert.TensorHilbert attribute)</a>
+</li>
         <li><a href="docs/_generated/utils/netket.utils.HashableArray.html#netket.utils.HashableArray.shape">(netket.utils.HashableArray attribute)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/hilbert/netket.operator.spin.sigmam.html#netket.operator.spin.sigmam">sigmam() (in module netket.operator.spin)</a>
+      <li><a href="docs/_generated/operator/netket.operator.spin.sigmam.html#netket.operator.spin.sigmam">sigmam() (in module netket.operator.spin)</a>
 </li>
-      <li><a href="docs/_generated/hilbert/netket.operator.spin.sigmap.html#netket.operator.spin.sigmap">sigmap() (in module netket.operator.spin)</a>
+      <li><a href="docs/_generated/operator/netket.operator.spin.sigmap.html#netket.operator.spin.sigmap">sigmap() (in module netket.operator.spin)</a>
 </li>
-      <li><a href="docs/_generated/hilbert/netket.operator.spin.sigmax.html#netket.operator.spin.sigmax">sigmax() (in module netket.operator.spin)</a>
+      <li><a href="docs/_generated/operator/netket.operator.spin.sigmax.html#netket.operator.spin.sigmax">sigmax() (in module netket.operator.spin)</a>
 </li>
-      <li><a href="docs/_generated/hilbert/netket.operator.spin.sigmay.html#netket.operator.spin.sigmay">sigmay() (in module netket.operator.spin)</a>
+      <li><a href="docs/_generated/operator/netket.operator.spin.sigmay.html#netket.operator.spin.sigmay">sigmay() (in module netket.operator.spin)</a>
 </li>
-      <li><a href="docs/_generated/hilbert/netket.operator.spin.sigmaz.html#netket.operator.spin.sigmaz">sigmaz() (in module netket.operator.spin)</a>
+      <li><a href="docs/_generated/operator/netket.operator.spin.sigmaz.html#netket.operator.spin.sigmaz">sigmaz() (in module netket.operator.spin)</a>
 </li>
       <li><a href="docs/_generated/nn/netket.nn.sigmoid.html#netket.nn.sigmoid">sigmoid() (in module netket.nn)</a>
 </li>
@@ -2139,19 +2478,33 @@
       <li><a href="docs/_generated/hilbert/netket.hilbert.AbstractHilbert.html#netket.hilbert.AbstractHilbert.size">size (netket.hilbert.AbstractHilbert attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.ContinuousHilbert.html#netket.hilbert.ContinuousHilbert.size">(netket.hilbert.ContinuousHilbert attribute)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.size">(netket.hilbert.CustomHilbert attribute)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.size">(netket.hilbert.DiscreteHilbert attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.size">(netket.hilbert.DoubledHilbert attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.size">(netket.hilbert.Fock attribute)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.size">(netket.hilbert.HomogeneousHilbert attribute)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.Particle.html#netket.hilbert.Particle.size">(netket.hilbert.Particle attribute)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.size">(netket.hilbert.Qubit attribute)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.size">(netket.hilbert.Spin attribute)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.size">(netket.hilbert.TensorHilbert attribute)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.size">(netket.operator.AbstractOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.size">(netket.operator.BoseHubbard attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator.size">(netket.operator.ContinuousOperator attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.size">(netket.operator.DiscreteOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.size">(netket.operator.GraphOperator attribute)</a>
 </li>
@@ -2159,11 +2512,17 @@
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising.size">(netket.operator.Ising attribute)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy.size">(netket.operator.KineticEnergy attribute)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.size">(netket.operator.LocalLiouvillian attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.size">(netket.operator.LocalOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.size">(netket.operator.PauliStrings attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.PotentialEnergy.html#netket.operator.PotentialEnergy.size">(netket.operator.PotentialEnergy attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.SumOperator.html#netket.operator.SumOperator.size">(netket.operator.SumOperator attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -2171,11 +2530,17 @@
       <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.size_at_index">size_at_index() (netket.hilbert.CustomHilbert method)</a>
 
       <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.size_at_index">(netket.hilbert.DiscreteHilbert method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.size_at_index">(netket.hilbert.Fock method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.size_at_index">(netket.hilbert.HomogeneousHilbert method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.size_at_index">(netket.hilbert.Qubit method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.size_at_index">(netket.hilbert.Spin method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.size_at_index">(netket.hilbert.TensorHilbert method)</a>
 </li>
       </ul></li>
       <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.size_physical">size_physical (netket.hilbert.DoubledHilbert attribute)</a>
@@ -2221,41 +2586,61 @@
 </li>
         <li><a href="docs/_generated/driver/netket.driver.VMC.html#netket.driver.VMC.state">(netket.driver.VMC attribute)</a>
 </li>
+        <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.state">(netket.experimental.driver.TDVP attribute)</a>
+</li>
       </ul></li>
       <li><a href="docs/_generated/driver/netket.logging.StateLog.html#netket.logging.StateLog">StateLog (class in netket.logging)</a>
 </li>
       <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.states">states() (netket.hilbert.CustomHilbert method)</a>
 
       <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.states">(netket.hilbert.DiscreteHilbert method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.states">(netket.hilbert.DoubledHilbert method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.states">(netket.hilbert.Fock method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.states">(netket.hilbert.HomogeneousHilbert method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.states">(netket.hilbert.Qubit method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.states">(netket.hilbert.Spin method)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.states">(netket.hilbert.TensorHilbert method)</a>
+</li>
       </ul></li>
       <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.states_at_index">states_at_index() (netket.hilbert.CustomHilbert method)</a>
 
       <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.states_at_index">(netket.hilbert.DiscreteHilbert method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.states_at_index">(netket.hilbert.Fock method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.states_at_index">(netket.hilbert.HomogeneousHilbert method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.states_at_index">(netket.hilbert.Qubit method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.states_at_index">(netket.hilbert.Spin method)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.states_at_index">(netket.hilbert.TensorHilbert method)</a>
+</li>
       </ul></li>
       <li><a href="docs/_generated/hilbert/netket.hilbert.CustomHilbert.html#netket.hilbert.CustomHilbert.states_to_numbers">states_to_numbers() (netket.hilbert.CustomHilbert method)</a>
 
       <ul>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.DiscreteHilbert.html#netket.hilbert.DiscreteHilbert.states_to_numbers">(netket.hilbert.DiscreteHilbert method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.DoubledHilbert.html#netket.hilbert.DoubledHilbert.states_to_numbers">(netket.hilbert.DoubledHilbert method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Fock.html#netket.hilbert.Fock.states_to_numbers">(netket.hilbert.Fock method)</a>
 </li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.HomogeneousHilbert.html#netket.hilbert.HomogeneousHilbert.states_to_numbers">(netket.hilbert.HomogeneousHilbert method)</a>
+</li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Qubit.html#netket.hilbert.Qubit.states_to_numbers">(netket.hilbert.Qubit method)</a>
 </li>
         <li><a href="docs/_generated/hilbert/netket.hilbert.Spin.html#netket.hilbert.Spin.states_to_numbers">(netket.hilbert.Spin method)</a>
+</li>
+        <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert.states_to_numbers">(netket.hilbert.TensorHilbert method)</a>
 </li>
       </ul></li>
       <li><a href="docs/_generated/exact/netket.exact.steady_state.html#netket.exact.steady_state">steady_state() (in module netket.exact)</a>
@@ -2269,8 +2654,14 @@
 </li>
         <li><a href="docs/_generated/driver/netket.driver.VMC.html#netket.driver.VMC.step_count">(netket.driver.VMC attribute)</a>
 </li>
+        <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.step_count">(netket.experimental.driver.TDVP attribute)</a>
+</li>
       </ul></li>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.step_value">step_value (netket.experimental.driver.TDVP attribute)</a>
+</li>
       <li><a href="docs/_generated/nn/netket.nn.Conv.html#id5">strides (netket.nn.Conv attribute)</a>, <a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.strides">[1]</a>
+</li>
+      <li><a href="docs/_generated/operator/netket.operator.SumOperator.html#netket.operator.SumOperator">SumOperator (class in netket.operator)</a>
 </li>
       <li><a href="docs/_generated/optim/netket.optimizer.solver.svd.html#netket.optimizer.solver.svd">svd() (in module netket.optimizer.solver)</a>
 </li>
@@ -2284,10 +2675,16 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.t">t (netket.experimental.driver.TDVP attribute)</a>
+</li>
       <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.T">T (netket.operator.AbstractOperator attribute)</a>
 
       <ul>
         <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.T">(netket.operator.BoseHubbard attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator.T">(netket.operator.ContinuousOperator attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.T">(netket.operator.DiscreteOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.T">(netket.operator.GraphOperator attribute)</a>
 </li>
@@ -2295,29 +2692,43 @@
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising.T">(netket.operator.Ising attribute)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy.T">(netket.operator.KineticEnergy attribute)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.T">(netket.operator.LocalLiouvillian attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.T">(netket.operator.LocalOperator attribute)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.T">(netket.operator.PauliStrings attribute)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.PotentialEnergy.html#netket.operator.PotentialEnergy.T">(netket.operator.PotentialEnergy attribute)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.SumOperator.html#netket.operator.SumOperator.T">(netket.operator.SumOperator attribute)</a>
+</li>
       </ul></li>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.t0">t0 (netket.experimental.driver.TDVP attribute)</a>
+</li>
+      <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP">TDVP (class in netket.experimental.driver)</a>
+</li>
       <li><a href="docs/_generated/driver/netket.logging.TensorBoardLog.html#netket.logging.TensorBoardLog">TensorBoardLog (class in netket.logging)</a>
+</li>
+      <li><a href="docs/_generated/hilbert/netket.hilbert.TensorHilbert.html#netket.hilbert.TensorHilbert">TensorHilbert (class in netket.hilbert)</a>
 </li>
       <li><a href="docs/_generated/callbacks/netket.callbacks.Timeout.html#netket.callbacks.Timeout">Timeout (class in netket.callbacks)</a>
 </li>
-      <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.to_array">to_array() (netket.vqs.MCMixedState method)</a>
+      <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.to_array">to_array() (netket.vqs.ExactState method)</a>
 
       <ul>
+        <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.to_array">(netket.vqs.MCMixedState method)</a>
+</li>
         <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.to_array">(netket.vqs.MCState method)</a>
 </li>
         <li><a href="docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.to_array">(netket.vqs.VariationalState method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.to_dense">to_dense() (netket.operator.AbstractOperator method)</a>
+      <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.to_dense">to_dense() (netket.operator.BoseHubbard method)</a>
 
       <ul>
-        <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.to_dense">(netket.operator.BoseHubbard method)</a>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.to_dense">(netket.operator.DiscreteOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.to_dense">(netket.operator.GraphOperator method)</a>
 </li>
@@ -2338,10 +2749,10 @@
         <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.to_igraph">(netket.graph.Lattice method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.to_linear_operator">to_linear_operator() (netket.operator.AbstractOperator method)</a>
+      <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.to_linear_operator">to_linear_operator() (netket.operator.BoseHubbard method)</a>
 
       <ul>
-        <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.to_linear_operator">(netket.operator.BoseHubbard method)</a>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.to_linear_operator">(netket.operator.DiscreteOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.to_linear_operator">(netket.operator.GraphOperator method)</a>
 </li>
@@ -2356,14 +2767,14 @@
         <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.to_linear_operator">(netket.operator.PauliStrings method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.to_local_operator">to_local_operator() (netket.operator.BoseHubbard method)</a>
 
       <ul>
         <li><a href="docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising.to_local_operator">(netket.operator.Ising method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.to_matrix">to_matrix() (netket.vqs.MCMixedState method)</a>
 </li>
       <li><a href="docs/_generated/graph/netket.graph.Graph.html#netket.graph.Graph.to_networkx">to_networkx() (netket.graph.Graph method)</a>
@@ -2372,12 +2783,38 @@
         <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.to_networkx">(netket.graph.Lattice method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.to_reciprocal_lattice">to_reciprocal_lattice() (netket.graph.Lattice method)</a>
-</li>
-      <li><a href="docs/_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator.to_sparse">to_sparse() (netket.operator.AbstractOperator method)</a>
+      <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.to_qobj">to_qobj() (netket.operator.BoseHubbard method)</a>
 
       <ul>
-        <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.to_sparse">(netket.operator.BoseHubbard method)</a>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.to_qobj">(netket.operator.DiscreteOperator method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.to_qobj">(netket.operator.GraphOperator method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.Heisenberg.html#netket.operator.Heisenberg.to_qobj">(netket.operator.Heisenberg method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising.to_qobj">(netket.operator.Ising method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.to_qobj">(netket.operator.LocalLiouvillian method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.to_qobj">(netket.operator.LocalOperator method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.to_qobj">(netket.operator.PauliStrings method)</a>
+</li>
+        <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.to_qobj">(netket.vqs.ExactState method)</a>
+</li>
+        <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.to_qobj">(netket.vqs.MCMixedState method)</a>
+</li>
+        <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.to_qobj">(netket.vqs.MCState method)</a>
+</li>
+        <li><a href="docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState.to_qobj">(netket.vqs.VariationalState method)</a>
+</li>
+      </ul></li>
+      <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.to_reciprocal_lattice">to_reciprocal_lattice() (netket.graph.Lattice method)</a>
+</li>
+      <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.to_sparse">to_sparse() (netket.operator.BoseHubbard method)</a>
+
+      <ul>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.to_sparse">(netket.operator.DiscreteOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.to_sparse">(netket.operator.GraphOperator method)</a>
 </li>
@@ -2411,17 +2848,27 @@
       <ul>
         <li><a href="docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard.transpose">(netket.operator.BoseHubbard method)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator.transpose">(netket.operator.ContinuousOperator method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator.transpose">(netket.operator.DiscreteOperator method)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator.transpose">(netket.operator.GraphOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Heisenberg.html#netket.operator.Heisenberg.transpose">(netket.operator.Heisenberg method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising.transpose">(netket.operator.Ising method)</a>
 </li>
+        <li><a href="docs/_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy.transpose">(netket.operator.KineticEnergy method)</a>
+</li>
         <li><a href="docs/_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian.transpose">(netket.operator.LocalLiouvillian method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator.transpose">(netket.operator.LocalOperator method)</a>
 </li>
         <li><a href="docs/_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings.transpose">(netket.operator.PauliStrings method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.PotentialEnergy.html#netket.operator.PotentialEnergy.transpose">(netket.operator.PotentialEnergy method)</a>
+</li>
+        <li><a href="docs/_generated/operator/netket.operator.SumOperator.html#netket.operator.SumOperator.transpose">(netket.operator.SumOperator method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -2439,23 +2886,33 @@
 </li>
         <li><a href="docs/_generated/driver/netket.driver.VMC.html#netket.driver.VMC.update_parameters">(netket.driver.VMC method)</a>
 </li>
+        <li><a href="docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.update_parameters">(netket.experimental.driver.TDVP method)</a>
+</li>
       </ul></li>
       <li><a href="docs/_generated/models/netket.models.NDM.html#netket.models.NDM.use_ancilla_bias">use_ancilla_bias (netket.models.NDM attribute)</a>
 </li>
-      <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense.use_bias">use_bias (netket.models.ARNNDense attribute)</a>
+      <li><a href="docs/_generated/models/netket.models.ARNNConv1D.html#netket.models.ARNNConv1D.use_bias">use_bias (netket.models.ARNNConv1D attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/models/netket.models.ARNNConv2D.html#netket.models.ARNNConv2D.use_bias">(netket.models.ARNNConv2D attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense.use_bias">(netket.models.ARNNDense attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv1D.html#netket.models.FastARNNConv1D.use_bias">(netket.models.FastARNNConv1D attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv2D.html#netket.models.FastARNNConv2D.use_bias">(netket.models.FastARNNConv2D attribute)</a>
+</li>
         <li><a href="docs/_generated/nn/netket.nn.Conv.html#id6">(netket.nn.Conv attribute)</a>, <a href="docs/_generated/nn/netket.nn.Conv.html#netket.nn.Conv.use_bias">[1]</a>
 </li>
         <li><a href="docs/_generated/nn/netket.nn.Dense.html#id1">(netket.nn.Dense attribute)</a>, <a href="docs/_generated/nn/netket.nn.Dense.html#netket.nn.Dense.use_bias">[1]</a>
 </li>
         <li><a href="docs/_generated/nn/netket.nn.DenseGeneral.html#id3">(netket.nn.DenseGeneral attribute)</a>, <a href="docs/_generated/nn/netket.nn.DenseGeneral.html#netket.nn.DenseGeneral.use_bias">[1]</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#id2">(netket.nn.MaskedConv1D attribute)</a>, <a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.use_bias">[1]</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.use_bias">(netket.nn.MaskedConv1D attribute)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#id2">(netket.nn.MaskedConv2D attribute)</a>, <a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.use_bias">[1]</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.use_bias">(netket.nn.MaskedConv2D attribute)</a>
 </li>
-        <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#id1">(netket.nn.MaskedDense1D attribute)</a>, <a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.use_bias">[1]</a>
+        <li><a href="docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.use_bias">(netket.nn.MaskedDense1D attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -2510,10 +2967,18 @@
         <li><a href="docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.variable">(netket.nn.Module method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/_generated/models/netket.models.ARNN.html#netket.models.ARNN.variables">variables (netket.models.ARNN attribute)</a>
+      <li><a href="docs/_generated/models/netket.models.AbstractARNN.html#netket.models.AbstractARNN.variables">variables (netket.models.AbstractARNN attribute)</a>
 
       <ul>
+        <li><a href="docs/_generated/models/netket.models.ARNNConv1D.html#netket.models.ARNNConv1D.variables">(netket.models.ARNNConv1D attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.ARNNConv2D.html#netket.models.ARNNConv2D.variables">(netket.models.ARNNConv2D attribute)</a>
+</li>
         <li><a href="docs/_generated/models/netket.models.ARNNDense.html#netket.models.ARNNDense.variables">(netket.models.ARNNDense attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv1D.html#netket.models.FastARNNConv1D.variables">(netket.models.FastARNNConv1D attribute)</a>
+</li>
+        <li><a href="docs/_generated/models/netket.models.FastARNNConv2D.html#netket.models.FastARNNConv2D.variables">(netket.models.FastARNNConv2D attribute)</a>
 </li>
         <li><a href="docs/_generated/models/netket.models.Jastrow.html#netket.models.Jastrow.variables">(netket.models.Jastrow attribute)</a>
 </li>
@@ -2545,6 +3010,8 @@
 </li>
         <li><a href="docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.variables">(netket.nn.Module attribute)</a>
 </li>
+        <li><a href="docs/_generated/variational/netket.vqs.ExactState.html#netket.vqs.ExactState.variables">(netket.vqs.ExactState attribute)</a>
+</li>
         <li><a href="docs/_generated/variational/netket.vqs.MCMixedState.html#netket.vqs.MCMixedState.variables">(netket.vqs.MCMixedState attribute)</a>
 </li>
         <li><a href="docs/_generated/variational/netket.vqs.MCState.html#netket.vqs.MCState.variables">(netket.vqs.MCState attribute)</a>
@@ -2554,6 +3021,10 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/_generated/experimental/variational/netket.experimental.vqs.variables_from_file.html#netket.experimental.vqs.variables_from_file">variables_from_file() (in module netket.experimental.vqs)</a>
+</li>
+      <li><a href="docs/_generated/experimental/variational/netket.experimental.vqs.variables_from_tar.html#netket.experimental.vqs.variables_from_tar">variables_from_tar() (in module netket.experimental.vqs)</a>
+</li>
       <li><a href="docs/_generated/variational/netket.vqs.VariationalState.html#netket.vqs.VariationalState">VariationalState (class in netket.vqs)</a>
 </li>
       <li><a href="docs/_generated/graph/netket.graph.Lattice.html#netket.graph.Lattice.vector_to_coord">vector_to_coord() (netket.graph.Lattice method)</a>

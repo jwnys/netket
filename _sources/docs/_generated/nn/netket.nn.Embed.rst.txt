@@ -6,8 +6,15 @@
 .. autoclass:: Embed
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.nn.Embed
+         :parts: 2
+
+
    
       
    .. rst-class:: class-dl-groups

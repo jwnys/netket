@@ -6,8 +6,15 @@
 .. autoclass:: Spin
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.hilbert.Spin
+         :parts: 2
+
+
    
 
    .. automethod:: Spin.__init__

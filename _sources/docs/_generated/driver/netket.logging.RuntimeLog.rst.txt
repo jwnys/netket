@@ -6,8 +6,15 @@
 .. autoclass:: RuntimeLog
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.logging.RuntimeLog
+         :parts: 2
+
+
    
 
    .. automethod:: RuntimeLog.__init__

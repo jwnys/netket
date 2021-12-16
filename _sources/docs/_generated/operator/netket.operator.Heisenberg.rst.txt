@@ -6,8 +6,15 @@
 .. autoclass:: Heisenberg
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.operator.Heisenberg
+         :parts: 2
+
+
    
 
    .. automethod:: Heisenberg.__init__
@@ -19,6 +26,7 @@
       .. autoattribute:: Heisenberg.J
       .. autoattribute:: Heisenberg.T
       .. autoattribute:: Heisenberg.acting_on
+      .. autoattribute:: Heisenberg.acting_on_subspace
       .. autoattribute:: Heisenberg.constant
       .. autoattribute:: Heisenberg.dtype
       .. autoattribute:: Heisenberg.graph
@@ -48,6 +56,7 @@
       .. automethod:: Heisenberg.n_conn
       .. automethod:: Heisenberg.to_dense
       .. automethod:: Heisenberg.to_linear_operator
+      .. automethod:: Heisenberg.to_qobj
       .. automethod:: Heisenberg.to_sparse
       .. automethod:: Heisenberg.transpose
 

@@ -7,6 +7,7 @@
     <title>netket.nn.activation &#8212; netket v3.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/jumbo-style.css" />
@@ -26,9 +27,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -146,6 +147,21 @@
 <span class="kn">from</span> <span class="nn">jax.numpy</span> <span class="kn">import</span> <span class="n">cosh</span>
 <span class="kn">from</span> <span class="nn">jax.numpy</span> <span class="kn">import</span> <span class="n">sinh</span>
 
+<span class="kn">from</span> <span class="nn">netket.jax</span> <span class="kn">import</span> <span class="n">HashablePartial</span>
+
+
+<span class="k">def</span> <span class="nf">reim</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Modifies a non-linearity to act seperately on the real and imaginary parts&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">reim_activation</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">sqrt2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">jnp</span><span class="o">.</span><span class="n">iscomplexobj</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">complex</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">sqrt2</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="n">sqrt2</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">imag</span><span class="p">))</span> <span class="o">/</span> <span class="n">sqrt2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">HashablePartial</span><span class="p">(</span><span class="n">reim_activation</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
 
 <div class="viewcode-block" id="log_cosh"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.log_cosh.html#netket.nn.log_cosh">[docs]</a><span class="k">def</span> <span class="nf">log_cosh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="n">sgn_x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">signbit</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
@@ -161,6 +177,13 @@
     <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">numpy</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">numpy</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 
 
+<span class="n">reim_selu</span> <span class="o">=</span> <span class="n">reim</span><span class="p">(</span><span class="n">selu</span><span class="p">)</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the selu non-linearity, applied seperately to the real and imaginary parts&quot;&quot;&quot;</span>
+
+<span class="n">reim_relu</span> <span class="o">=</span> <span class="n">reim</span><span class="p">(</span><span class="n">relu</span><span class="p">)</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the relu non-linearity, applied seperately to the real and imaginary parts&quot;&quot;&quot;</span>
+
+
 <span class="c1"># TODO: DEPRECATION 3.1</span>
 <span class="nd">@deprecated</span><span class="p">(</span><span class="s2">&quot;Deprecated. Use log_cosh instead&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">logcosh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -168,13 +191,13 @@
 
 
 <span class="c1"># TODO: DEPRECATION 3.1</span>
-<span class="nd">@deprecated</span><span class="p">(</span><span class="s2">&quot;Deprecated. Use log_cosh instead&quot;</span><span class="p">)</span>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s2">&quot;Deprecated. Use log_tanh instead&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">logtanh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">log_tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
 
 <span class="c1"># TODO: DEPRECATION 3.1</span>
-<span class="nd">@deprecated</span><span class="p">(</span><span class="s2">&quot;Deprecated. Use log_cosh instead&quot;</span><span class="p">)</span>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s2">&quot;Deprecated. Use log_sinh instead&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">logsinh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">log_sinh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>

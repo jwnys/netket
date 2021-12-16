@@ -6,8 +6,15 @@
 .. autoclass:: HashableArray
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.utils.HashableArray
+         :parts: 2
+
+
    
       
    .. rst-class:: class-dl-groups

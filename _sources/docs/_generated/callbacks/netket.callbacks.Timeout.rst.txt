@@ -6,8 +6,15 @@
 .. autoclass:: Timeout
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.callbacks.Timeout
+         :parts: 2
+
+
    
 
    .. automethod:: Timeout.__init__

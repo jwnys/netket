@@ -7,6 +7,7 @@
     <title>netket.nn.masked_linear &#8212; netket v3.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/jumbo-style.css" />
@@ -26,9 +27,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -116,10 +117,11 @@
 <span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">linen</span> <span class="k">as</span> <span class="n">nn</span>
 <span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">lax</span>
 <span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">jnp</span>
-<span class="kn">from</span> <span class="nn">netket.nn.initializers</span> <span class="kn">import</span> <span class="n">lecun_complex</span><span class="p">,</span> <span class="n">zeros</span>
+<span class="kn">from</span> <span class="nn">jax.nn.initializers</span> <span class="kn">import</span> <span class="n">lecun_normal</span><span class="p">,</span> <span class="n">zeros</span>
+
 <span class="kn">from</span> <span class="nn">netket.utils.types</span> <span class="kn">import</span> <span class="n">Array</span><span class="p">,</span> <span class="n">DType</span><span class="p">,</span> <span class="n">NNInitFunc</span>
 
-<span class="n">default_kernel_init</span> <span class="o">=</span> <span class="n">lecun_complex</span><span class="p">()</span>
+<span class="n">default_kernel_init</span> <span class="o">=</span> <span class="n">lecun_normal</span><span class="p">()</span>
 
 
 <span class="k">def</span> <span class="nf">wrap_kernel_init</span><span class="p">(</span><span class="n">kernel_init</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
@@ -134,28 +136,22 @@
 
 
 <div class="viewcode-block" id="MaskedDense1D"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D">[docs]</a><span class="k">class</span> <span class="nc">MaskedDense1D</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    1D linear transformation module with mask for autoregressive NN.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">      features: number of output features, should be the last dimension.</span>
-<span class="sd">      exclusive: True if an output element does not depend on the input element</span>
-<span class="sd">        at the same index.</span>
-<span class="sd">      use_bias: whether to add a bias to the output (default: True).</span>
-<span class="sd">      dtype: the dtype of the computation (default: float64).</span>
-<span class="sd">      precision: numerical precision of the computation, see `jax.lax.Precision`</span>
-<span class="sd">        for details.</span>
-<span class="sd">      kernel_init: initializer for the weight matrix.</span>
-<span class="sd">      bias_init: initializer for the bias.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;1D linear transformation module with mask for autoregressive NN.&quot;&quot;&quot;</span>
 
     <span class="n">features</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="sd">&quot;&quot;&quot;number of output features, should be the last dimension.&quot;&quot;&quot;</span>
     <span class="n">exclusive</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="sd">&quot;&quot;&quot;True if an output element does not depend on the input element at the same index.&quot;&quot;&quot;</span>
     <span class="n">use_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="sd">&quot;&quot;&quot;whether to add a bias to the output (default: True).&quot;&quot;&quot;</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="n">DType</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float64</span>
+    <span class="sd">&quot;&quot;&quot;the dtype of the computation (default: float64).&quot;&quot;&quot;</span>
     <span class="n">precision</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="sd">&quot;&quot;&quot;numerical precision of the computation, see `jax.lax.Precision` for details.&quot;&quot;&quot;</span>
     <span class="n">kernel_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">default_kernel_init</span>
+    <span class="sd">&quot;&quot;&quot;initializer for the weight matrix.&quot;&quot;&quot;</span>
     <span class="n">bias_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">zeros</span>
+    <span class="sd">&quot;&quot;&quot;initializer for the bias.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="MaskedDense1D.__call__"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.MaskedDense1D.html#netket.nn.MaskedDense1D.__call__">[docs]</a>    <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
@@ -209,35 +205,28 @@
 
 
 <div class="viewcode-block" id="MaskedConv1D"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D">[docs]</a><span class="k">class</span> <span class="nc">MaskedConv1D</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    1D convolution module with mask for autoregressive NN.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">      features: number of convolution filters.</span>
-<span class="sd">      kernel_size: length of the convolutional kernel.</span>
-<span class="sd">      kernel_dilation: dilation factor of the convolution kernel.</span>
-<span class="sd">      exclusive: True if an output element does not depend on the input element</span>
-<span class="sd">        at the same index.</span>
-<span class="sd">      feature_group_count: integer, default 1. If specified divides the input</span>
-<span class="sd">        features into groups.</span>
-<span class="sd">      use_bias: whether to add a bias to the output (default: True).</span>
-<span class="sd">      dtype: the dtype of the computation (default: float64).</span>
-<span class="sd">      precision: numerical precision of the computation, see `jax.lax.Precision`</span>
-<span class="sd">        for details.</span>
-<span class="sd">      kernel_init: initializer for the convolutional kernel.</span>
-<span class="sd">      bias_init: initializer for the bias.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;1D convolution module with mask for autoregressive NN.&quot;&quot;&quot;</span>
 
     <span class="n">features</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="sd">&quot;&quot;&quot;number of convolution filters.&quot;&quot;&quot;</span>
     <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="sd">&quot;&quot;&quot;length of the convolutional kernel.&quot;&quot;&quot;</span>
     <span class="n">kernel_dilation</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="sd">&quot;&quot;&quot;dilation factor of the convolution kernel.&quot;&quot;&quot;</span>
     <span class="n">exclusive</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="sd">&quot;&quot;&quot;True if an output element does not depend on the input element at the same index.&quot;&quot;&quot;</span>
     <span class="n">feature_group_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="sd">&quot;&quot;&quot;if specified, divides the input features into groups (default: 1).&quot;&quot;&quot;</span>
     <span class="n">use_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="sd">&quot;&quot;&quot;whether to add a bias to the output (default: True).&quot;&quot;&quot;</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="n">DType</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float64</span>
+    <span class="sd">&quot;&quot;&quot;the dtype of the computation (default: float64).&quot;&quot;&quot;</span>
     <span class="n">precision</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="sd">&quot;&quot;&quot;numerical precision of the computation, see `jax.lax.Precision` for details.&quot;&quot;&quot;</span>
     <span class="n">kernel_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">default_kernel_init</span>
+    <span class="sd">&quot;&quot;&quot;initializer for the convolutional kernel.&quot;&quot;&quot;</span>
     <span class="n">bias_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">zeros</span>
+    <span class="sd">&quot;&quot;&quot;initializer for the bias.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="MaskedConv1D.__call__"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.MaskedConv1D.html#netket.nn.MaskedConv1D.__call__">[docs]</a>    <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
@@ -313,37 +302,29 @@
 
 
 <div class="viewcode-block" id="MaskedConv2D"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D">[docs]</a><span class="k">class</span> <span class="nc">MaskedConv2D</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    2D convolution module with mask for autoregressive NN.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">      features: number of convolution filters.</span>
-<span class="sd">      kernel_size: shape of the convolutional kernel `(h, w)`. Typically,</span>
-<span class="sd">        `h = w // 2 + 1`.</span>
-<span class="sd">      kernel_dilation: a sequence of 2 integers, giving the dilation factor to</span>
-<span class="sd">        apply in each spatial dimension of the convolution kernel.</span>
-<span class="sd">      exclusive: True if an output element does not depend on the input element</span>
-<span class="sd">        at the same index.</span>
-<span class="sd">      feature_group_count: integer, default 1. If specified divides the input</span>
-<span class="sd">        features into groups.</span>
-<span class="sd">      use_bias: whether to add a bias to the output (default: True).</span>
-<span class="sd">      dtype: the dtype of the computation (default: float64).</span>
-<span class="sd">      precision: numerical precision of the computation, see `jax.lax.Precision`</span>
-<span class="sd">        for details.</span>
-<span class="sd">      kernel_init: initializer for the convolutional kernel.</span>
-<span class="sd">      bias_init: initializer for the bias.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;2D convolution module with mask for autoregressive NN.&quot;&quot;&quot;</span>
 
     <span class="n">features</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="sd">&quot;&quot;&quot;number of convolution filters.&quot;&quot;&quot;</span>
     <span class="n">kernel_size</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+    <span class="sd">&quot;&quot;&quot;shape of the convolutional kernel `(h, w)`. Typically, `h = w // 2 + 1`.&quot;&quot;&quot;</span>
     <span class="n">kernel_dilation</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+    <span class="sd">&quot;&quot;&quot;a sequence of 2 integers, giving the dilation factor to</span>
+<span class="sd">    apply in each spatial dimension of the convolution kernel.&quot;&quot;&quot;</span>
     <span class="n">exclusive</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="sd">&quot;&quot;&quot;True if an output element does not depend on the input element at the same index.&quot;&quot;&quot;</span>
     <span class="n">feature_group_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="sd">&quot;&quot;&quot;if specified, divides the input features into groups (default: 1).&quot;&quot;&quot;</span>
     <span class="n">use_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="sd">&quot;&quot;&quot;whether to add a bias to the output (default: True).&quot;&quot;&quot;</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="n">DType</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float64</span>
+    <span class="sd">&quot;&quot;&quot;the dtype of the computation (default: float64).&quot;&quot;&quot;</span>
     <span class="n">precision</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="sd">&quot;&quot;&quot;numerical precision of the computation, see `jax.lax.Precision` for details.&quot;&quot;&quot;</span>
     <span class="n">kernel_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">default_kernel_init</span>
+    <span class="sd">&quot;&quot;&quot;initializer for the convolutional kernel.&quot;&quot;&quot;</span>
     <span class="n">bias_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">zeros</span>
+    <span class="sd">&quot;&quot;&quot;initializer for the bias.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="MaskedConv2D.setup"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.MaskedConv2D.html#netket.nn.MaskedConv2D.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">kernel_h</span><span class="p">,</span> <span class="n">kernel_w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span>

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>netket.experimental.driver.tdvp &#8212; netket v3.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/jumbo-style.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/rtd_theme.css" />
+    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/rtd_theme.js"></script>
+    <link rel="author" title="About these documents" href="../../../../about.html" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../../../_static/js/jquery-1.12.4.min.js "></script>
+<script type="text/javascript" src="../../../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../../../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../../index.html"><span><img src="../../../../_static/logonav.png"></span>
+          NetKet</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../../getting_started.html">Get Started</a></li>
+                <li><a href="../../../../docs/getting_started.html">Documentation</a></li>
+                <li><a href="../../../../tutorials.html">Tutorials</a></li>
+                <li><a href="../../../../citing.html">Citing NetKet</a></li>
+                <li><a href="../../../../about.html">About</a></li>
+                <li><a href="https://github.com/netket/netket"><i class="fab fa-github" aria-hidden="true"></i></a></li>
+                <li><a href="https://twitter.com/NetKetOrg"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <h1>Source code for netket.experimental.driver.tdvp</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2020, 2021  The NetKet Authors - All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#    http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="kn">import</span> <span class="nn">netket</span> <span class="k">as</span> <span class="nn">nk</span>
+<span class="kn">from</span> <span class="nn">netket.driver</span> <span class="kn">import</span> <span class="n">AbstractVariationalDriver</span>
+<span class="kn">from</span> <span class="nn">netket.driver.abstract_variational_driver</span> <span class="kn">import</span> <span class="n">_to_iterable</span>
+<span class="kn">from</span> <span class="nn">netket.driver.vmc_common</span> <span class="kn">import</span> <span class="n">info</span>
+<span class="kn">from</span> <span class="nn">netket.logging.json_log</span> <span class="kn">import</span> <span class="n">JsonLog</span>
+<span class="kn">from</span> <span class="nn">netket.operator</span> <span class="kn">import</span> <span class="n">AbstractOperator</span>
+<span class="kn">from</span> <span class="nn">netket.optimizer</span> <span class="kn">import</span> <span class="n">LinearOperator</span>
+<span class="kn">from</span> <span class="nn">netket.optimizer.qgt</span> <span class="kn">import</span> <span class="n">QGTAuto</span>
+<span class="kn">from</span> <span class="nn">netket.utils</span> <span class="kn">import</span> <span class="n">mpi</span>
+<span class="kn">from</span> <span class="nn">netket.utils.dispatch</span> <span class="kn">import</span> <span class="n">dispatch</span>
+<span class="kn">from</span> <span class="nn">netket.utils.types</span> <span class="kn">import</span> <span class="n">PyTree</span>
+<span class="kn">from</span> <span class="nn">netket.vqs</span> <span class="kn">import</span> <span class="n">VariationalState</span><span class="p">,</span> <span class="n">VariationalMixedState</span><span class="p">,</span> <span class="n">MCState</span>
+
+<span class="kn">from</span> <span class="nn">netket.experimental.dynamics</span> <span class="kn">import</span> <span class="n">RKIntegratorConfig</span>
+<span class="kn">from</span> <span class="nn">netket.experimental.dynamics._rk_solver</span> <span class="kn">import</span> <span class="n">euclidean_norm</span><span class="p">,</span> <span class="n">maximum_norm</span>
+
+
+<span class="nd">@dispatch</span>
+<span class="k">def</span> <span class="nf">dwdt</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">stage</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># pylint: disable=unused-argument</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dwdt not implemented for </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="nd">@dispatch</span>
+<span class="k">def</span> <span class="nf">dwdt</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">MCState</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">stage</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># pylint: disable=protected-access</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">w</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="n">driver</span><span class="o">.</span><span class="n">_loss_stats</span><span class="p">,</span> <span class="n">driver</span><span class="o">.</span><span class="n">_loss_grad</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">expect_and_grad</span><span class="p">(</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">generator</span><span class="p">(</span><span class="n">t</span><span class="p">),</span>
+        <span class="n">use_covariance</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">driver</span><span class="o">.</span><span class="n">_loss_grad</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">driver</span><span class="o">.</span><span class="n">_loss_grad_factor</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">driver</span><span class="o">.</span><span class="n">_loss_grad</span>
+    <span class="p">)</span>
+
+    <span class="n">qgt</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">qgt</span><span class="p">(</span><span class="n">driver</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">stage</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># TODO: This does not work with FSAL.</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">_last_qgt</span> <span class="o">=</span> <span class="n">qgt</span>
+
+    <span class="n">initial_dw</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">driver</span><span class="o">.</span><span class="n">linear_solver_restart</span> <span class="k">else</span> <span class="n">driver</span><span class="o">.</span><span class="n">_dw</span>
+    <span class="n">driver</span><span class="o">.</span><span class="n">_dw</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">qgt</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">driver</span><span class="o">.</span><span class="n">linear_solver</span><span class="p">,</span> <span class="n">driver</span><span class="o">.</span><span class="n">_loss_grad</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">initial_dw</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">driver</span><span class="o">.</span><span class="n">_dw</span>
+
+
+<span class="k">class</span> <span class="nc">TDVP</span><span class="p">(</span><span class="n">AbstractVariationalDriver</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Variational time evolution based on the time-dependent variational principle which,</span>
+<span class="sd">    when used with Monte Carlo sampling via :ref:`~netket.vqs.MCState`, is the time-dependent VMC</span>
+<span class="sd">    (t-VMC) method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TDVP.__init__"><a class="viewcode-back" href="../../../../docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">operator</span><span class="p">:</span> <span class="n">AbstractOperator</span><span class="p">,</span>
+        <span class="n">variational_state</span><span class="p">:</span> <span class="n">VariationalState</span><span class="p">,</span>
+        <span class="n">integrator</span><span class="p">:</span> <span class="n">RKIntegratorConfig</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">t0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">propagation_type</span><span class="o">=</span><span class="s2">&quot;real&quot;</span><span class="p">,</span>
+        <span class="n">qgt</span><span class="p">:</span> <span class="n">LinearOperator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">linear_solver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">linear_solver_restart</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">error_norm</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the time evolution driver.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            operator: The generator of the dynamics (Hamiltonian for pure states,</span>
+<span class="sd">                Lindbladian for density operators).</span>
+<span class="sd">            variational_state: The variational state.</span>
+<span class="sd">            integrator: Configuration of the algorithm used for solving the ODE.</span>
+<span class="sd">            t0: Initial time at the start of the time evolution.</span>
+<span class="sd">            propagation_type: Determines the equation of motion: &quot;real&quot;  for the</span>
+<span class="sd">                real-time Schödinger equation (SE), &quot;imag&quot; for the imaginary-time SE.</span>
+<span class="sd">            qgt: The QGT specification.</span>
+<span class="sd">            linear_solver: The solver for solving the linear system determining the time evolution.</span>
+<span class="sd">            linear_solver_restart: If False (default), the last solution of the linear system</span>
+<span class="sd">                is used as initial value in subsequent steps.</span>
+<span class="sd">            error_norm: Norm function used to calculate the error with adaptive integrators.</span>
+<span class="sd">                Can be either &quot;euclidean&quot; for the standard L2 vector norm :math:`x^\dagger \cdot x`,</span>
+<span class="sd">                &quot;maximum&quot; for the maximum norm :math:`\max_i |x_i|`</span>
+<span class="sd">                or &quot;qgt&quot;, in which case the scalar product induced by the QGT :math:`S` is used</span>
+<span class="sd">                to compute the norm :math:`\Vert x \Vert^2_S = x^\dagger \cdot S \cdot x` as suggested</span>
+<span class="sd">                in PRL 125, 100503 (2020).</span>
+<span class="sd">                Additionally, it possible to pass a custom function with signature</span>
+<span class="sd">                    :code:`norm(driver: TDVP, x: PyTree) -&gt; float`</span>
+<span class="sd">                which can access the driver maps its second argument, a PyTree of parameters :code:`x`,</span>
+<span class="sd">                to its norm.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_t0</span> <span class="o">=</span> <span class="n">t0</span>
+
+        <span class="k">if</span> <span class="n">linear_solver</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">linear_solver</span> <span class="o">=</span> <span class="n">nk</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">svd</span>
+        <span class="k">if</span> <span class="n">qgt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">qgt</span> <span class="o">=</span> <span class="n">QGTAuto</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="n">linear_solver</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">variational_state</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">minimized_quantity_name</span><span class="o">=</span><span class="s2">&quot;Generator&quot;</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_generator_repr</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">AbstractOperator</span><span class="p">):</span>
+            <span class="n">op</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_generator</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">op</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_generator</span> <span class="o">=</span> <span class="n">operator</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">propagation_type</span> <span class="o">=</span> <span class="n">propagation_type</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">variational_state</span><span class="p">,</span> <span class="n">VariationalMixedState</span><span class="p">):</span>
+            <span class="c1"># assuming Lindblad Dynamics</span>
+            <span class="c1"># TODO: support density-matrix imaginary time evolution</span>
+            <span class="k">if</span> <span class="n">propagation_type</span> <span class="o">==</span> <span class="s2">&quot;real&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_loss_grad_factor</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;only real-time Lindblad evolution is supported for &quot;</span> <span class="s2">&quot;mixed states&quot;</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">propagation_type</span> <span class="o">==</span> <span class="s2">&quot;real&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_loss_grad_factor</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span><span class="n">j</span>
+            <span class="k">elif</span> <span class="n">propagation_type</span> <span class="o">==</span> <span class="s2">&quot;imag&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_loss_grad_factor</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;propagation_type must be one of &#39;real&#39;, &#39;imag&#39;&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">qgt</span> <span class="o">=</span> <span class="n">qgt</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear_solver</span> <span class="o">=</span> <span class="n">linear_solver</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear_solver_restart</span> <span class="o">=</span> <span class="n">linear_solver_restart</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dw</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># type: PyTree</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_qgt</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">error_norm</span><span class="p">,</span> <span class="n">Callable</span><span class="p">):</span>
+            <span class="n">error_norm</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">error_norm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">error_norm</span> <span class="o">==</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">:</span>
+            <span class="n">error_norm</span> <span class="o">=</span> <span class="n">euclidean_norm</span>
+        <span class="k">elif</span> <span class="n">error_norm</span> <span class="o">==</span> <span class="s2">&quot;maximum&quot;</span><span class="p">:</span>
+            <span class="n">error_norm</span> <span class="o">=</span> <span class="n">maximum_norm</span>
+        <span class="k">elif</span> <span class="n">error_norm</span> <span class="o">==</span> <span class="s2">&quot;qgt&quot;</span><span class="p">:</span>
+            <span class="n">error_norm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qgt_norm</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;error_norm must be a callable or one of &#39;euclidean&#39;, &#39;qgt&#39;, &#39;maximum&#39;.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span> <span class="o">=</span> <span class="n">integrator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_odefun</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_w</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">error_norm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop_count</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">integrator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The underlying integrator which computes the time steps.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">generator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The generator of the dynamics as a function with signature</span>
+<span class="sd">            generator(t: float) -&gt; AbstractOperator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generator</span>
+
+<div class="viewcode-block" id="TDVP.advance"><a class="viewcode-back" href="../../../../docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.advance">[docs]</a>    <span class="k">def</span> <span class="nf">advance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">T</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Advance the time propagation by `T` to `self.t + T`.</span>
+
+<span class="sd">           Args:</span>
+<span class="sd">               T: Length of the integration interval.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+            <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TDVP.iter"><a class="viewcode-back" href="../../../../docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.iter">[docs]</a>    <span class="k">def</span> <span class="nf">iter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">T</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tstops</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a generator which advances the time evolution in</span>
+<span class="sd">        steps of `step` for a total of `n_iter` times.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            T: Length of the integration interval.</span>
+<span class="sd">            tstops: A sequence of stopping times, each within the intervall :code:`[self.t0, self.t0 + T]`,</span>
+<span class="sd">                at which this method will stop and yield. By default, a stop is performed</span>
+<span class="sd">                after each time step (at potentially varying step size if an adaptive</span>
+<span class="sd">                integrator is used).</span>
+<span class="sd">        Yields:</span>
+<span class="sd">            The current step count.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">t_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">+</span> <span class="n">T</span>
+        <span class="k">if</span> <span class="n">tstops</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">less</span><span class="p">(</span><span class="n">tstops</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">))</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="n">tstops</span><span class="p">,</span> <span class="n">t_end</span><span class="p">))</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All tstops must be in range [t, t + T]=[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">T</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">tstops</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">tstops</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">tstops</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">tstops</span><span class="p">)</span>
+            <span class="n">always_stop</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tstops</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">always_stop</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">t_end</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">always_stop</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">tstops</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                <span class="ow">and</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">tstops</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">&gt;</span> <span class="n">tstops</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_stop_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span>
+                <span class="n">tstops</span> <span class="o">=</span> <span class="n">tstops</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+            <span class="n">step_accepted</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="n">step_accepted</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">always_stop</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">tstops</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">max_dt</span> <span class="o">=</span> <span class="n">tstops</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">max_dt</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">step_accepted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">max_dt</span><span class="o">=</span><span class="n">max_dt</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;RK solver: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">message</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span><span class="o">.</span><span class="n">warnings</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;RK solver: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span><span class="o">.</span><span class="n">warnings</span><span class="o">.</span><span class="n">message</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="ne">UserWarning</span><span class="p">,</span>
+                    <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_step_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Yield one last time if the remaining tstop is at t_end</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">always_stop</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">t_end</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">tstops</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">tstops</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_end</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span></div>
+
+<div class="viewcode-block" id="TDVP.run"><a class="viewcode-back" href="../../../../docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">T</span><span class="p">,</span>
+        <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">obs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">tstops</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">show_progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs the time evolution.</span>
+
+<span class="sd">        By default uses :ref:`netket.logging.JsonLog`. To know about the output format</span>
+<span class="sd">        check it&#39;s documentation. The logger object is also returned at the end of this function</span>
+<span class="sd">        so that you can inspect the results without reading the json output.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            T: The integration time period.</span>
+<span class="sd">            out: A logger object, or an iterable of loggers, to be used to store simulation log and data.</span>
+<span class="sd">                If this argument is a string, it will be used as output prefix for the standard JSON logger.</span>
+<span class="sd">            obs: An iterable containing the observables that should be computed.</span>
+<span class="sd">            tstops: A sequence of stopping times, each within the intervall :code:`[self.t0, self.t0 + T]`,</span>
+<span class="sd">                at which the driver will stop and perform estimation of observables, logging, and excecute</span>
+<span class="sd">                the callback function. By default, a stop is performed after each time step (at potentially</span>
+<span class="sd">                varying step size if an adaptive integrator is used).</span>
+<span class="sd">            show_progress: If true displays a progress bar (default=True)</span>
+<span class="sd">            callback: Callable or list of callable callback functions to be executed at each</span>
+<span class="sd">                stoping time.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">obs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">obs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">_args</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">:</span> <span class="kc">True</span>
+
+        <span class="c1"># Log only non-root nodes</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mynode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">loggers</span> <span class="o">=</span> <span class="p">()</span>
+            <span class="c1"># if out is a path, create an overwriting Json Log for output</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">loggers</span> <span class="o">=</span> <span class="p">(</span><span class="n">JsonLog</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">),)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">loggers</span> <span class="o">=</span> <span class="n">_to_iterable</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">loggers</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+            <span class="n">show_progress</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">callbacks</span> <span class="o">=</span> <span class="n">_to_iterable</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+        <span class="n">callback_stop</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">with</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">+</span> <span class="n">T</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="n">show_progress</span><span class="p">)</span> <span class="k">as</span> <span class="n">pbar</span><span class="p">:</span>
+            <span class="n">old_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_value</span>
+            <span class="n">first_step</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">tstops</span><span class="o">=</span><span class="n">tstops</span><span class="p">):</span>
+                <span class="n">log_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimate</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+
+                <span class="c1"># if the cost-function is defined then report it in the progress bar</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loss_stats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">pbar</span><span class="o">.</span><span class="n">set_postfix_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loss_name</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loss_stats</span><span class="p">))</span>
+                    <span class="n">log_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_loss_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loss_stats</span>
+
+                <span class="c1"># Execute callbacks before loggers because they can append to log_data</span>
+                <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="n">callbacks</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">callback</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">log_data</span><span class="p">,</span> <span class="bp">self</span><span class="p">):</span>
+                        <span class="n">callback_stop</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="k">for</span> <span class="n">logger</span> <span class="ow">in</span> <span class="n">loggers</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_value</span><span class="p">,</span> <span class="n">log_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">callbacks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">mpi</span><span class="o">.</span><span class="n">mpi_any</span><span class="p">(</span><span class="n">callback_stop</span><span class="p">):</span>
+                        <span class="k">break</span>
+
+                <span class="c1"># Reset the timing of tqdm after the first step, to ignore compilation time</span>
+                <span class="k">if</span> <span class="n">first_step</span><span class="p">:</span>
+                    <span class="n">first_step</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">pbar</span><span class="o">.</span><span class="n">unpause</span><span class="p">()</span>
+
+                <span class="c1"># Update the progress bar</span>
+                <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_value</span> <span class="o">-</span> <span class="n">old_step</span><span class="p">))</span>
+                <span class="n">old_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_value</span>
+
+            <span class="c1"># Final update so that it shows up filled.</span>
+            <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step_value</span> <span class="o">-</span> <span class="n">old_step</span><span class="p">))</span>
+
+        <span class="c1"># flush at the end of the evolution so that final values are saved to</span>
+        <span class="c1"># file</span>
+        <span class="k">for</span> <span class="n">logger</span> <span class="ow">in</span> <span class="n">loggers</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">flush</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">loggers</span></div>
+
+    <span class="k">def</span> <span class="nf">_log_additional_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+        <span class="n">obs</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_default_step_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Essentially means</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">step_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Current time step.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span><span class="o">.</span><span class="n">dt</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">t</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Current time.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span><span class="o">.</span><span class="n">t</span>
+
+    <span class="nd">@t</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">t</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">t0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The initial time set when the driver was created.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_t0</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(step_count=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">step_count</span><span class="si">}</span><span class="s2">, t=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<div class="viewcode-block" id="TDVP.info"><a class="viewcode-back" href="../../../../docs/_generated/experimental/dynamics/netket.experimental.driver.TDVP.html#netket.experimental.driver.TDVP.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">info</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;generator     &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generator_repr</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;integrator    &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;linear solver &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear_solver</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;state         &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)]</span> <span class="o">+</span> <span class="n">lines</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_odefun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Internal method which dispatches to the actual ODE system function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">dwdt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_qgt_norm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the norm induced by the QGT :math:`S`, i.e, :math:`x^\\dagger S x`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_qgt</span> <span class="o">@</span> <span class="n">x</span>
+        <span class="n">xc_dot_y</span> <span class="o">=</span> <span class="n">nk</span><span class="o">.</span><span class="n">jax</span><span class="o">.</span><span class="n">tree_dot</span><span class="p">(</span><span class="n">nk</span><span class="o">.</span><span class="n">jax</span><span class="o">.</span><span class="n">tree_conj</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">xc_dot_y</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019-2021, The Netket authors - All rights reserved.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
+    </p>
+  </div>
+</footer>
+
+<script type="text/javascript">
+    jQuery(function () {
+        SphinxRtdTheme.Navigation.enable(true);
+      })
+</script>
+
+<!-- Temporary footer
+<div class="footer-wip">
+  <div class="footer-wip-content">
+    This documentation refers to an unreleased version of Netket.
+  </div>
+</div>
+-->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118013987-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-118013987-1');
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "url": "https://www.netket.org",
+  "name": "NetKet",
+  "founder": "Giuseppe Carleo",
+  "foundingDate": "2018-04-24",
+  "foundingLocation" : "New York",
+  "logo": "https://www.netket.org/img/logo_small.jpg",
+  "sameAs": [
+    "https://twitter.com/NetKetOrg",
+    "https://github.com/NetKet/netket"
+  ],
+  "description" : "Netket is an open-source project delivering cutting-edge
+  methods for the study of many-body quantum systems with artificial neural
+  networks and machine learning techniques."
+}
+</script>
+
+  </body>
+</html>

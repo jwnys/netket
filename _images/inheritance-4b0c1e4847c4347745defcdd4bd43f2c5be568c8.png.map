@@ -1,0 +1,4 @@
+<map id="inheritancee9a3077792" name="inheritancee9a3077792">
+<area shape="rect" id="node1" href="#netket.sampler.rules.HamiltonianRule" target="_top" title="Rule proposing moves according to the terms in an operator." alt="" coords="229,5,396,31"/>
+<area shape="rect" id="node2" href="netket.sampler.MetropolisRule.html#netket.sampler.MetropolisRule" target="_top" title="Base class for Transition rules of Metropolis, such as Local, Exchange, Hamiltonian" alt="" coords="5,5,181,31"/>
+</map>

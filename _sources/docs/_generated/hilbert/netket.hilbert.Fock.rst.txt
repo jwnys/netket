@@ -6,8 +6,15 @@
 .. autoclass:: Fock
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.hilbert.Fock
+         :parts: 2
+
+
    
 
    .. automethod:: Fock.__init__

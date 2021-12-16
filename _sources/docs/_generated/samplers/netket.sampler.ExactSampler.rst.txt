@@ -6,8 +6,15 @@
 .. autoclass:: ExactSampler
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.sampler.ExactSampler
+         :parts: 2
+
+
    
       
    .. rst-class:: class-dl-groups
@@ -28,6 +35,6 @@
       .. automethod:: ExactSampler.replace
       .. automethod:: ExactSampler.reset
       .. automethod:: ExactSampler.sample
-      .. automethod:: ExactSampler.sample_next
+      .. automethod:: ExactSampler.samples
 
    

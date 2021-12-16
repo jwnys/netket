@@ -1,0 +1,47 @@
+﻿netket.experimental.sampler.MetropolisSamplerPmap
+=================================================
+
+.. currentmodule:: netket.experimental.sampler
+
+.. autoclass:: MetropolisSamplerPmap
+   :show-inheritance:
+
+   
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.experimental.sampler.MetropolisSamplerPmap
+         :parts: 2
+
+
+   
+
+   .. automethod:: MetropolisSamplerPmap.__init__
+      
+   .. rst-class:: class-dl-groups
+
+   Attributes
+      .. autoattribute:: MetropolisSamplerPmap.is_exact
+      .. autoattribute:: MetropolisSamplerPmap.machine_pow
+      .. autoattribute:: MetropolisSamplerPmap.n_batches
+      .. autoattribute:: MetropolisSamplerPmap.n_chains
+      .. autoattribute:: MetropolisSamplerPmap.n_chains_per_device
+      .. autoattribute:: MetropolisSamplerPmap.n_chains_per_rank
+      .. autoattribute:: MetropolisSamplerPmap.n_sweeps
+      .. autoattribute:: MetropolisSamplerPmap.reset_chains
+      .. autoattribute:: MetropolisSamplerPmap.rule
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Methods
+      .. automethod:: MetropolisSamplerPmap.init_state
+      .. automethod:: MetropolisSamplerPmap.log_pdf
+      .. automethod:: MetropolisSamplerPmap.replace
+      .. automethod:: MetropolisSamplerPmap.reset
+      .. automethod:: MetropolisSamplerPmap.sample
+      .. automethod:: MetropolisSamplerPmap.sample_next
+      .. automethod:: MetropolisSamplerPmap.samples
+
+   

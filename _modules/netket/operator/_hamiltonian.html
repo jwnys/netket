@@ -7,6 +7,7 @@
     <title>netket.operator._hamiltonian &#8212; netket v3.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/jumbo-style.css" />
@@ -26,9 +27,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -110,6 +111,7 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -122,11 +124,11 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">spin</span><span class="p">,</span> <span class="n">boson</span>
 <span class="kn">from</span> <span class="nn">._local_operator</span> <span class="kn">import</span> <span class="n">LocalOperator</span>
 <span class="kn">from</span> <span class="nn">._graph_operator</span> <span class="kn">import</span> <span class="n">GraphOperator</span>
-<span class="kn">from</span> <span class="nn">._abstract_operator</span> <span class="kn">import</span> <span class="n">AbstractOperator</span>
+<span class="kn">from</span> <span class="nn">._discrete_operator</span> <span class="kn">import</span> <span class="n">DiscreteOperator</span>
 <span class="kn">from</span> <span class="nn">._lazy</span> <span class="kn">import</span> <span class="n">Squared</span>
 
 
-<span class="k">class</span> <span class="nc">SpecialHamiltonian</span><span class="p">(</span><span class="n">AbstractOperator</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">SpecialHamiltonian</span><span class="p">(</span><span class="n">DiscreteOperator</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">to_local_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
             <span class="s2">&quot;Must implemented to_local_operator for </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
@@ -200,7 +202,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_local_operator</span><span class="p">()</span> <span class="o">@</span> <span class="n">other</span>
 
 
-<div class="viewcode-block" id="Ising"><a class="viewcode-back" href="../../../docs/_generated/operator/netket.operator.Ising.html#netket.operator.Ising">[docs]</a><span class="k">class</span> <span class="nc">Ising</span><span class="p">(</span><span class="n">SpecialHamiltonian</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">Ising</span><span class="p">(</span><span class="n">SpecialHamiltonian</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Transverse-Field Ising Hamiltonian :math:`-h\sum_i \sigma_i^{(x)} +J\sum_{\langle i,j\rangle} \sigma_i^{(z)}\sigma_j^{(z)}`.</span>
 
@@ -243,7 +245,10 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_h</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_J</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">(</span><span class="n">J</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">()),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">intp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+            <span class="p">[[</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">()],</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">intp</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_dtype</span> <span class="o">=</span> <span class="n">dtype</span></div>
 
@@ -368,23 +373,7 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
             <span class="n">mels</span><span class="p">[</span><span class="n">diag_ind</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
             <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">edges</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-                <span class="n">mels</span><span class="p">[</span><span class="n">diag_ind</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span>
-                    <span class="n">J</span>
-                    <span class="o">*</span> <span class="n">x</span><span class="p">[</span>
-                        <span class="n">i</span><span class="p">,</span>
-                        <span class="n">edges</span><span class="p">[</span>
-                            <span class="n">k</span><span class="p">,</span>
-                            <span class="mi">0</span><span class="p">,</span>
-                        <span class="p">],</span>
-                    <span class="p">]</span>
-                    <span class="o">*</span> <span class="n">x</span><span class="p">[</span>
-                        <span class="n">i</span><span class="p">,</span>
-                        <span class="n">edges</span><span class="p">[</span>
-                            <span class="n">k</span><span class="p">,</span>
-                            <span class="mi">1</span><span class="p">,</span>
-                        <span class="p">],</span>
-                    <span class="p">]</span>
-                <span class="p">)</span>
+                <span class="n">mels</span><span class="p">[</span><span class="n">diag_ind</span><span class="p">]</span> <span class="o">+=</span> <span class="n">J</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">edges</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">edges</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
 
             <span class="n">odiag_ind</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">diag_ind</span>
 
@@ -449,10 +438,10 @@
         <span class="k">return</span> <span class="n">jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">gccf_fun</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Ising(J=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_J</span><span class="si">}</span><span class="s2">, h=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_h</span><span class="si">}</span><span class="s2">; dim=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hilbert</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Ising(J=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_J</span><span class="si">}</span><span class="s2">, h=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_h</span><span class="si">}</span><span class="s2">; dim=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hilbert</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">)&quot;</span>
 
 
-<div class="viewcode-block" id="Heisenberg"><a class="viewcode-back" href="../../../docs/_generated/operator/netket.operator.Heisenberg.html#netket.operator.Heisenberg">[docs]</a><span class="k">class</span> <span class="nc">Heisenberg</span><span class="p">(</span><span class="n">GraphOperator</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">Heisenberg</span><span class="p">(</span><span class="n">GraphOperator</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Heisenberg hamiltonian on a lattice.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -461,8 +450,10 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">hilbert</span><span class="p">:</span> <span class="n">AbstractHilbert</span><span class="p">,</span>
         <span class="n">graph</span><span class="p">:</span> <span class="n">AbstractGraph</span><span class="p">,</span>
-        <span class="n">J</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">J</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
         <span class="n">sign_rule</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">acting_on_subspace</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs an Heisenberg operator given a hilbert space and a graph providing the</span>
@@ -472,11 +463,20 @@
 <span class="sd">            hilbert: Hilbert space the operator acts on.</span>
 <span class="sd">            graph: The graph upon which this hamiltonian is defined.</span>
 <span class="sd">            J: The strength of the coupling. Default is 1.</span>
-<span class="sd">            sign_rule: If enabled, Marshal&#39;s sign rule will be used. On a bipartite</span>
-<span class="sd">                       lattice, this corresponds to a basis change flipping the Sz direction</span>
-<span class="sd">                       at every odd site of the lattice. For non-bipartite lattices, the</span>
-<span class="sd">                       sign rule cannot be applied. Defaults to True if the lattice is</span>
-<span class="sd">                       bipartite, False otherwise.</span>
+<span class="sd">               Can pass a sequence of coupling strengths with coloured graphs:</span>
+<span class="sd">               edges of colour n will have coupling strength J[n]</span>
+<span class="sd">            sign_rule: If True, Marshal&#39;s sign rule will be used. On a bipartite</span>
+<span class="sd">                lattice, this corresponds to a basis change flipping the Sz direction</span>
+<span class="sd">                at every odd site of the lattice. For non-bipartite lattices, the</span>
+<span class="sd">                sign rule cannot be applied. Defaults to True if the lattice is</span>
+<span class="sd">                bipartite, False otherwise.</span>
+<span class="sd">                If a sequence of coupling strengths is passed, defaults to False</span>
+<span class="sd">                and a matching sequence of sign_rule must be specified to override it</span>
+<span class="sd">            acting_on_subspace: Specifies the mapping between nodes of the graph and</span>
+<span class="sd">                Hilbert space sites, so that graph node :code:`i ∈ [0, ..., graph.n_nodes - 1]`,</span>
+<span class="sd">                corresponds to :code:`acting_on_subspace[i] ∈ [0, ..., hilbert.n_sites]`.</span>
+<span class="sd">                Must be a list of length `graph.n_nodes`. Passing a single integer :code:`start`</span>
+<span class="sd">                is equivalent to :code:`[start, ..., start + graph.n_nodes - 1]`.</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">         Constructs a ``Heisenberg`` operator for a 1D system.</span>
@@ -486,10 +486,27 @@
 <span class="sd">            &gt;&gt;&gt; hi = nk.hilbert.Spin(s=0.5, total_sz=0, N=g.n_nodes)</span>
 <span class="sd">            &gt;&gt;&gt; op = nk.operator.Heisenberg(hilbert=hi, graph=g)</span>
 <span class="sd">            &gt;&gt;&gt; print(op)</span>
-<span class="sd">            Heisenberg(J=1, sign_rule=True; dim=20)</span>
+<span class="sd">            Heisenberg(J=1.0, sign_rule=True; dim=20)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">sign_rule</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">sign_rule</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">is_bipartite</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
+            <span class="c1"># check that the number of Js matches the number of colours</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">J</span><span class="p">)</span> <span class="o">==</span> <span class="nb">max</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">edge_colors</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="n">sign_rule</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">sign_rule</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">J</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">sign_rule</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">J</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">J</span><span class="p">)):</span>
+                    <span class="n">subgraph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">filter_color</span><span class="o">=</span><span class="n">i</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">sign_rule</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">subgraph</span><span class="o">.</span><span class="n">is_bipartite</span><span class="p">():</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="s2">&quot;sign_rule=True specified for a non-bipartite lattice&quot;</span>
+                        <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sign_rule</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">sign_rule</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">is_bipartite</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">sign_rule</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">graph</span><span class="o">.</span><span class="n">is_bipartite</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;sign_rule=True specified for a non-bipartite lattice&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_J</span> <span class="o">=</span> <span class="n">J</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sign_rule</span> <span class="o">=</span> <span class="n">sign_rule</span>
@@ -510,17 +527,23 @@
                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
             <span class="p">]</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">sign_rule</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">graph</span><span class="o">.</span><span class="n">is_bipartite</span><span class="p">():</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;sign_rule=True specified for a non-bipartite lattice&quot;</span><span class="p">)</span>
-            <span class="n">heis_term</span> <span class="o">=</span> <span class="n">sz_sz</span> <span class="o">-</span> <span class="n">exchange</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
+            <span class="n">bond_ops</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">J</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">sz_sz</span> <span class="o">-</span> <span class="n">exchange</span> <span class="k">if</span> <span class="n">sign_rule</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">else</span> <span class="n">sz_sz</span> <span class="o">+</span> <span class="n">exchange</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">J</span><span class="p">))</span>
+            <span class="p">]</span>
+            <span class="n">bond_ops_colors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">J</span><span class="p">)))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">heis_term</span> <span class="o">=</span> <span class="n">sz_sz</span> <span class="o">+</span> <span class="n">exchange</span>
+            <span class="n">bond_ops</span> <span class="o">=</span> <span class="p">[</span><span class="n">J</span> <span class="o">*</span> <span class="p">(</span><span class="n">sz_sz</span> <span class="o">-</span> <span class="n">exchange</span> <span class="k">if</span> <span class="n">sign_rule</span> <span class="k">else</span> <span class="n">sz_sz</span> <span class="o">+</span> <span class="n">exchange</span><span class="p">)]</span>
+            <span class="n">bond_ops_colors</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">hilbert</span><span class="p">,</span>
             <span class="n">graph</span><span class="p">,</span>
-            <span class="n">bond_ops</span><span class="o">=</span><span class="p">[</span><span class="n">J</span> <span class="o">*</span> <span class="n">heis_term</span><span class="p">],</span>
+            <span class="n">bond_ops</span><span class="o">=</span><span class="n">bond_ops</span><span class="p">,</span>
+            <span class="n">bond_ops_colors</span><span class="o">=</span><span class="n">bond_ops_colors</span><span class="p">,</span>
+            <span class="n">acting_on_subspace</span><span class="o">=</span><span class="n">acting_on_subspace</span><span class="p">,</span>
         <span class="p">)</span></div>
 
     <span class="nd">@property</span>
@@ -533,10 +556,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sign_rule</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Heisenberg(J=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_J</span><span class="si">}</span><span class="s2">, sign_rule=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_sign_rule</span><span class="si">}</span><span class="s2">; dim=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hilbert</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Heisenberg(J=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_J</span><span class="si">}</span><span class="s2">, sign_rule=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_sign_rule</span><span class="si">}</span><span class="s2">; dim=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hilbert</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">)&quot;</span>
 
 
-<div class="viewcode-block" id="BoseHubbard"><a class="viewcode-back" href="../../../docs/_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard">[docs]</a><span class="k">class</span> <span class="nc">BoseHubbard</span><span class="p">(</span><span class="n">SpecialHamiltonian</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">BoseHubbard</span><span class="p">(</span><span class="n">SpecialHamiltonian</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An extended Bose Hubbard model Hamiltonian operator, containing both</span>
 <span class="sd">    on-site interactions and nearest-neighboring density-density interactions.</span>
@@ -870,6 +893,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_mels</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;</span> <span class="n">total_size</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_max_mels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">total_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_mels</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_max_xprime</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">total_size</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_xprime</span><span class="o">.</span><span class="n">dtype</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_max_xprime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_xprime</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flattened_kernel</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
@@ -911,7 +937,7 @@
                 <span class="n">_max_conn</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">gccf_fun</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">gccf_fun</span><span class="p">)</span>
 </pre></div>
 
     </div>

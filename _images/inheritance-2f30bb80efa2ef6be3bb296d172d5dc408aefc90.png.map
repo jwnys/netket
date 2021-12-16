@@ -1,0 +1,6 @@
+<map id="inheritanceb9d6e37a38" name="inheritanceb9d6e37a38">
+<area shape="rect" id="node4" href="#netket.operator.Ising" target="_top" title="The Transverse&#45;Field Ising Hamiltonian :math:`&#45;hsum_i sigma_i^{(x)} +Jsum_{
+angle i,jangle} sigma_i^{(z)}sigma_j^{(z)}`." alt="" coords="667,5,763,27"/>
+<area shape="rect" id="node2" href="netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator" target="_top" title="This class is the base class for operators defined on a" alt="" coords="212,5,377,27"/>
+<area shape="rect" id="node3" href="netket.operator.AbstractOperator.html#netket.operator.AbstractOperator" target="_top" title="Abstract class for quantum Operators. This class prototypes the methods" alt="" coords="5,5,170,27"/>
+</map>

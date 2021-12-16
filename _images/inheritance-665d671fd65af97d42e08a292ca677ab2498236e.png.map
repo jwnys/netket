@@ -1,0 +1,5 @@
+<map id="inheritancea0bcd285a4" name="inheritancea0bcd285a4">
+<area shape="rect" id="node1" href="netket.hilbert.AbstractHilbert.html#netket.hilbert.AbstractHilbert" target="_top" title="Abstract class for NetKet hilbert objects." alt="" coords="5,5,172,31"/>
+<area shape="rect" id="node2" href="netket.hilbert.ContinuousHilbert.html#netket.hilbert.ContinuousHilbert" target="_top" title="Abstract class for the Hilbert space of particles" alt="" coords="220,5,405,31"/>
+<area shape="rect" id="node3" href="#netket.hilbert.Particle" target="_top" title="Hilbert space derived from AbstractParticle for" alt="" coords="453,5,569,31"/>
+</map>

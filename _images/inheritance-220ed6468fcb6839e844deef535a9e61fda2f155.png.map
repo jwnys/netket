@@ -1,0 +1,5 @@
+<map id="inheritance929a045cdb" name="inheritance929a045cdb">
+<area shape="rect" id="node1" href="netket.sampler.MetropolisSampler.html#netket.sampler.MetropolisSampler" target="_top" title="Metropolis&#45;Hastings sampler for an Hilbert space according to a specific transition rule." alt="" coords="185,5,387,31"/>
+<area shape="rect" id="node3" href="#netket.sampler.MetropolisSamplerNumpy" target="_top" title="Metropolis&#45;Hastings sampler for an Hilbert space according to a specific transition" alt="" coords="435,5,683,31"/>
+<area shape="rect" id="node2" href="netket.sampler.Sampler.html#netket.sampler.Sampler" target="_top" title="Abstract base class for all samplers." alt="" coords="5,5,137,31"/>
+</map>

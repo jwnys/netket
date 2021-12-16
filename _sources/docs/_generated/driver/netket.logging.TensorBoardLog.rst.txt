@@ -6,8 +6,15 @@
 .. autoclass:: TensorBoardLog
    :show-inheritance:
 
-
    
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.logging.TensorBoardLog
+         :parts: 2
+
+
    
       
    

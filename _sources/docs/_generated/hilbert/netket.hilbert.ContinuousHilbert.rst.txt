@@ -1,0 +1,37 @@
+﻿netket.hilbert.ContinuousHilbert
+================================
+
+.. currentmodule:: netket.hilbert
+
+.. autoclass:: ContinuousHilbert
+   :show-inheritance:
+
+   
+
+   .. rst-class:: class-dl-groups
+
+   Inheritance
+      .. inheritance-diagram:: netket.hilbert.ContinuousHilbert
+         :parts: 2
+
+
+   
+
+   .. automethod:: ContinuousHilbert.__init__
+      
+   .. rst-class:: class-dl-groups
+
+   Attributes
+      .. autoattribute:: ContinuousHilbert.extent
+      .. autoattribute:: ContinuousHilbert.is_indexable
+      .. autoattribute:: ContinuousHilbert.pbc
+      .. autoattribute:: ContinuousHilbert.size
+   
+      
+   .. rst-class:: class-dl-groups
+
+   Methods
+      .. automethod:: ContinuousHilbert.ptrace
+      .. automethod:: ContinuousHilbert.random_state
+
+   
