@@ -15,13 +15,13 @@
 import jax
 from jax import numpy as jnp
 
-from netket.hilbert import SpinlessLatticeFermions
+from netket.hilbert import SpinlessLatticeFermions1st
 from netket.utils.dispatch import dispatch
 
 
 @dispatch
 def random_state(
-    hilb: SpinlessLatticeFermions, key, batches: int, *, dtype
+    hilb: SpinlessLatticeFermions1st, key, batches: int, *, dtype
 ):  # noqa: F811
     choices = jnp.arange(hilb.n_orbitals).astype(dtype)
     shape = (hilb.n_fermions,)
@@ -34,7 +34,7 @@ def random_state(
 
 
 @dispatch
-def flip_state_scalar(hilb: SpinlessLatticeFermions, key, state, fermion_index):
+def flip_state_scalar(hilb: SpinlessLatticeFermions1st, key, state, fermion_index):
     # for each orbital, get an index of where we can find it in the state
     old_orbital = state[fermion_index]
     adj = hilb.adj  # orbitals are just the sites
