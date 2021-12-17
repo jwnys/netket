@@ -223,6 +223,8 @@ def test_flip_state_discrete(hi: DiscreteHilbert):
 
     if isinstance(hi, HomogeneousHilbert) and hi.constrained:
         return  # makes little sense in most cases
+    if isinstance(hi, SpinlessLatticeFermions1st):
+        return  # better not to move fermions around here
 
     rng = nk.jax.PRNGSeq(1)
     N_batches = 20

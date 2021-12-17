@@ -35,16 +35,17 @@ def random_state(
 
 @dispatch
 def flip_state_scalar(hilb: SpinlessLatticeFermions1st, key, state, fermion_index):
-    """TODO: need to sort things again at the end!!! But this will break the tests"""
-    # for each orbital, get an index of where we can find it in the state
-    old_orbital = state[fermion_index]
-    adj = hilb.adj  # orbitals are just the sites
-    if adj is not None:  # no connectivity
-        choices = adj[old_orbital]
-    else:
-        choices = jnp.arange(hilb.n_orbitals)
-    new_orbital = jax.random.choice(key, choices)
-    idx = jnp.where(state == new_orbital, size=1, fill_value=-1)[0][0]
-    replace_fn = lambda _: state.at[fermion_index].set(new_orbital)
-    nothing_fn = lambda _: state
-    return jax.lax.cond(idx == -1, replace_fn, nothing_fn, None), old_orbital
+    raise Exception("should not call flip_state_scalar on SpinlessLatticeFermions1st")
+    # """TODO: need to sort things again at the end!!! But this will break the tests"""
+    # # for each orbital, get an index of where we can find it in the state
+    # old_orbital = state[fermion_index]
+    # adj = hilb.adj  # orbitals are just the sites
+    # if adj is not None:  # no connectivity
+    #     choices = adj[old_orbital]
+    # else:
+    #     choices = jnp.arange(hilb.n_orbitals)
+    # new_orbital = jax.random.choice(key, choices)
+    # idx = jnp.where(state == new_orbital, size=1, fill_value=-1)[0][0]
+    # replace_fn = lambda _: state.at[fermion_index].set(new_orbital)
+    # nothing_fn = lambda _: state
+    # return jax.lax.cond(idx == -1, replace_fn, nothing_fn, None), old_orbital
