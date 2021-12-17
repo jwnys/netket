@@ -66,3 +66,30 @@ class SpinlessLatticeFermions2nd(DiscreteHilbert):
     def states(self):
         
         return self.n_orbitals
+    
+
+    def combinations(seq,length):
+    
+        if length == 0:
+            return [[]]
+    
+        comb = []
+        for i in range(len(seq)):        
+            curr = seq[i]
+            rem = seq[i+1:]
+            
+            for j in combinations(rem,length-1):
+                comb.append([curr]+j)
+        return comb
+    
+
+    def configurations(n_orbitals, n_fermions):
+        for idx in combinations(range(n_orbitals), n_fermions):
+            state = np.zeros(n_orbitals)
+            for i in idx:
+                state[i] = 1
+
+            yield state
+
+    def all_states(configs):
+        return np.array(list(configs))
