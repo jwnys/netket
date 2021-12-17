@@ -77,8 +77,10 @@ from . import (
     spin,
     tensor_hilbert,
     particle,
-    lattice_fermions,
+    fermions_1st,
+    fermions_2nd,
 )
+
 from .base import flip_state, random_state
 
 _hide_submodules(__name__)

@@ -26,6 +26,8 @@ from netket.hilbert import (
     Qubit,
     Spin,
     SpinlessLatticeFermions1st,
+    Fermions2nd,
+    LatticeFermions2nd,
 )
 
 import jax
@@ -109,10 +111,16 @@ hilberts["DoubledHilbert[CustomHilbert]"] = DoubledHilbert(
 
 # hilberts["Tensor: Spin x Fock"] = Spin(s=0.5, N=4) * Fock(4, N=2)
 
-hilberts["SpinlessLatticeFermions1st (indexable)"] = SpinlessLatticeFermions1st(
-    3, n_sites=5
+hilberts["SpinlessLatticeFermions1st"] = SpinlessLatticeFermions1st(3, n_sites=5)
+
+hilberts["Fermions2nd"] = Fermions2nd(3)
+hilberts["Fermions2nd (n_fermions)"] = Fermions2nd(3, n_fermions=2)
+hilberts["LatticeFermions2nd"] = LatticeFermions2nd(3)
+hilberts["LatticeFermions2nd (spin)"] = LatticeFermions2nd(3, s=1 / 2)
+hilberts["LatticeFermions2nd (n_fermions)"] = LatticeFermions2nd(3, n_fermions=2)
+hilberts["LatticeFermions2nd (spin, n_fermions_per_spin)"] = LatticeFermions2nd(
+    5, s=1 / 2, n_fermions_per_spin=(2, 3)
 )
-# hilberts["SpinlessLatticeFermions1st (non-indexable)"] = SpinlessLatticeFermions1st(40, n_sites=64)
 
 # Continuous space
 # no pbc
@@ -212,6 +220,10 @@ def test_random_states_particle(hi: Particle):
 
 @pytest.mark.parametrize("hi", discrete_hilbert_params)
 def test_flip_state_discrete(hi: DiscreteHilbert):
+
+    if isinstance(hi, HomogeneousHilbert) and hi.constrained:
+        return  # makes little sense in most cases
+
     rng = nk.jax.PRNGSeq(1)
     N_batches = 20
 
