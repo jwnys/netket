@@ -88,7 +88,9 @@ operators["Pauli Hamiltonian (XX+YZ+IZ)"] = nk.operator.PauliStrings(
 
 hi = nk.hilbert.Fermions2nd(5)
 operators["FermionOperator2nd"] = nk.operator.FermionOperator2nd(
-    hi, terms=(((0, 1), (3, 0)), ((3, 1), (0, 0))), weights=(0.5, 0.6)
+    hi,
+    terms=(((0, 1), (3, 0)), ((3, 1), (0, 0))),
+    weights=(0.5 + 0.3j, 0.5 - 0.3j),  # must add h.c.
 )
 
 op_special = {}
