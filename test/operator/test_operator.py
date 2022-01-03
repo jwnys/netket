@@ -425,8 +425,10 @@ def test_pauli_add_and_multiply():
 def test_openfermion_conversion():
     # skip test if openfermion not installed
     pytest.importorskip("openfermion")
-    from openfermion.ops import QubitOperator
-
+    from openfermion.ops import QubitOperator, FermionOperator
+    
+    
+    #QubitOperator
     of_qubit_operator = 0.5 * QubitOperator("X0 X3") + 0.3 * QubitOperator("Z0")
 
     # no extra info given
@@ -447,6 +449,31 @@ def test_openfermion_conversion():
     ps = nk.operator.PauliStrings.from_openfermion(hilbert, of_qubit_operator)
     assert ps.hilbert == hilbert
     assert ps.hilbert.size == 6
+    
+    
+    #FermionOperator
+    of_fermion_operator = FermionOperator('0^ 3', 0.5 + 0.3j) + FermionOperator('3^ 0', 0.5 - 0.3j)
+    
+    # no extra info given
+    fo2 = nk.operator.FermionOperator2nd.from_openfermion(of_fermion_operator) 
+    assert fo2.hilbert.size == 4
+    
+    
+    # number of orbitals given
+    fo2 = nk.operator.FermionOperator2nd.from_openfermion(of_fermion_operator, n_orbitals=6) 
+    assert isinstance(fo2, nk.operator.FermionOperator2nd)
+    # check default
+    assert isinstance(fo2.hilbert, nk.hilbert.Fermions2nd)
+    assert fo2.hilbert.size == 6
+
+
+     # with hilbert
+    hilbert = nk.hilbert.Fermions2nd(6)
+    fo2 = nk.operator.FermionOperator2nd.from_openfermion(hilbert, of_fermion_operator)
+    assert fo2.hilbert == hilbert
+    assert fo2.hilbert.size == 6
+    
+    
 
 
 @pytest.mark.parametrize(
