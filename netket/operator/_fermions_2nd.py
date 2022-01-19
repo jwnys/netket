@@ -33,7 +33,7 @@ class FermionOperator2nd(DiscreteOperator):
         self._initialized = False
 
     def add_term(self, term, weight=1.0):
-        for orb_idx, dagger in term:
+        for orb_idx, dagger in reversed(term):
             self._orb_idxs.append(orb_idx)
             self._daggers.append(dagger)
             self._weights.append(weight)
