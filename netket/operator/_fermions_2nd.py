@@ -211,14 +211,14 @@ class FermionOperator2nd(DiscreteOperator):
                         if not empty_site:
                             has_xp = False
                         else:
-                            xt[orb_idx] = flip(xt[orb_idx])
                             mel *= (-1) ** np.sum(xt[:orb_idx])  # jordan wigner sign
+                            xt[orb_idx] = flip(xt[orb_idx])
                     else:
                         if empty_site:
                             has_xp = False
                         else:
-                            xt[orb_idx] = flip(xt[orb_idx])
                             mel *= (-1) ** np.sum(xt[:orb_idx])  # jordan wigner sign
+                            xt[orb_idx] = flip(xt[orb_idx])
 
                 # if this is the end of the term, we collect things
                 if term_end:
