@@ -15,17 +15,17 @@ MPI_DEPENDENCIES = ["mpi4py>=3.0.1, <4", "mpi4jax~=0.3.1"]
 EXTRA_DEPENDENCIES = ["tensorboardx>=2.0.0", "openfermion>=1.0.0"]
 BASE_DEPENDENCIES = [
     "numpy~=1.18",
-    "scipy~=1.5",
+    "scipy>=1.5.3, <2",
     "tqdm~=4.60",
     "plum-dispatch~=1.5.1",
-    "numba>=0.52, <0.55",
+    "numba>=0.52, <0.56",
     "igraph~=0.9.8",
-    "jax>=0.2.21, <0.2.27",
+    "jax>=0.2.23, <0.2.28",
     "jaxlib>=0.1.69",
     "flax>=0.3.5, <0.4",
     "orjson~=3.4",
     "optax>=0.0.2, <0.2",
-    "numba4jax>=0.0.1, <0.1",
+    "numba4jax>=0.0.3, <0.1",
 ]
 
 setup(

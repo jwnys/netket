@@ -29,7 +29,14 @@ from netket import nn
 from netket.stats import Stats
 from netket.operator import AbstractOperator
 from netket.sampler import Sampler, SamplerState
-from netket.utils import maybe_wrap_module, deprecated, warn_deprecation, mpi, wrap_afun
+from netket.utils import (
+    maybe_wrap_module,
+    deprecated,
+    warn_deprecation,
+    mpi,
+    wrap_afun,
+    wrap_to_support_scalar,
+)
 from netket.utils.types import PyTree, SeedT, NNInitFunc
 from netket.optimizer import LinearOperator
 from netket.optimizer.qgt import QGTAuto
@@ -179,12 +186,15 @@ class MCState(VariationalState):
             self._init_fun = nkjax.HashablePartial(
                 lambda model, *args, **kwargs: model.init(*args, **kwargs), model
             )
-            self._apply_fun = nkjax.HashablePartial(
-                lambda model, *args, **kwargs: model.apply(*args, **kwargs), model
+            self._apply_fun = wrap_to_support_scalar(
+                nkjax.HashablePartial(
+                    lambda model, pars, x, **kwargs: model.apply(pars, x, **kwargs),
+                    model,
+                )
             )
 
         elif apply_fun is not None:
-            self._apply_fun = apply_fun
+            self._apply_fun = wrap_to_support_scalar(apply_fun)
 
             if init_fun is not None:
                 self._init_fun = init_fun
@@ -203,7 +213,9 @@ class MCState(VariationalState):
 
         # default argument for n_samples/n_samples_per_rank
         if n_samples is None and n_samples_per_rank is None:
-            n_samples = 1000
+            # get the first multiple of sampler.n_chains above 1000 to avoid
+            # printing a warning on construction
+            n_samples = int(np.ceil(1000 / sampler.n_chains) * sampler.n_chains)
         elif n_samples is not None and n_samples_per_rank is not None:
             raise ValueError(
                 "Only one argument between `n_samples` and `n_samples_per_rank`"

@@ -26,12 +26,12 @@ import netket.experimental as nkx
 SEED = 214748364
 
 
-def _setup_system(L, *, dtype=np.float64):
+def _setup_system(L, *, dtype=np.complex128):
     g = nk.graph.Chain(length=L)
     hi = nk.hilbert.Spin(s=0.5, N=g.n_nodes)
 
     ma = nk.models.RBM(alpha=1, dtype=dtype)
-    sa = nk.sampler.ExactSampler(hilbert=hi, n_chains=16)
+    sa = nk.sampler.ExactSampler(hilbert=hi)
 
     vs = nk.vqs.MCState(sa, ma, n_samples=1000, seed=SEED)
 
@@ -84,7 +84,7 @@ def test_one_fixed_step(integrator, propagation_type):
     assert te.t == 0.01
 
 
-def l4_norm(_, x):
+def l4_norm(x):
     """
     Custom L4 error norm.
     """
@@ -229,4 +229,4 @@ def test_repr_and_info():
     assert "TDVP" in info
     assert "generator" in info
     assert "integrator" in info
-    assert "rk23" in info
+    assert "RK23" in info

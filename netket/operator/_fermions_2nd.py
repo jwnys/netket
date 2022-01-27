@@ -31,9 +31,75 @@ class FermionOperator2nd(DiscreteOperator):
         for term, weight in zip(terms, weights):
             self.add_term(term, weight=weight)
         self._initialized = False
+    
+        def order_fun(term, weight): 
+            parity = -1
+            term = list(term)
+            for i in range(1, len(term)):
+                for j in range(i, 0, -1):
+                    right_term = term[j]
+                    left_term = term[j - 1]
+                    # Exchange operators if creation operator is on the right and annihilation on the left
+                    if right_term[1] and not left_term[1]:
+                        term[j - 1] = right_term
+                        term[j] = left_term
+                        weight *= parity
+                        
+                        # If same indices switch order (creation on the left),remember a a^+ = 1 + a^+ a
+                        if right_term[0] == left_term[0]:
+                            new_term = term[:(j - 1)] + term[(j + 1):]
+                            weight *= parity
+                            term = new_term
+                
+                    # If same operator types (creation or anihilation)
+                    elif right_term[1] == left_term[1]:
 
+                        # Evaluate to zero if two creation/anihilation operators acting on the same index
+                        if right_term[0] == left_term[0]:
+                            weight *= 0                    
+
+                        # Put lower index on the right for same operator type (creation or annihilation)
+                        elif right_term[0] > left_term[0]:
+                            term[j - 1] = right_term
+                            term[j] = left_term
+                            weight *= parity
+            return term, weight
+    
+        def normal_ordering(terms,weights):
+            ordered_terms = []
+            ordered_weights = []
+            for term, weight in zip(terms,weights):
+                ordered = order_fun(term,weight)
+                
+                ordered_terms.append(ordered[0])
+                ordered_weights.append(ordered[1])
+            return ordered_terms, ordered_weights
+        
+        
+        def herm_conj(terms, weights):
+            conj_term = []
+            conj_weight = []
+            for term, weight in zip(terms, weights):
+                conj_term.append([(op, 1 - action) for (op,action) in reversed(term)])
+                conj_weight.append(weight.conjugate())
+            return conj_term, conj_weight
+        
+        normal_ordered = normal_ordering(terms,weights)
+        dict_normal = {}
+        for term, weight in zip(normal_ordered[0],normal_ordered[1]):
+            dict_normal[tuple(term)] = weight
+        
+        hc_normal_ordered = herm_conj(normal_ordered[0],normal_ordered[1])
+        dict_hc_normal = {}
+        for term_hc, weight_hc in zip(hc_normal_ordered[0],hc_normal_ordered[1]):
+            dict_hc_normal[tuple(term_hc)] = weight_hc
+        
+        # Check if hermitian
+        self._is_hermitian = dict_normal == dict_hc_normal
+        
+        
     def add_term(self, term, weight=1.0):
-        for orb_idx, dagger in term:
+        for orb_idx, dagger in reversed(term):
             self._orb_idxs.append(orb_idx)
             self._daggers.append(dagger)
             self._weights.append(weight)
@@ -49,7 +115,12 @@ class FermionOperator2nd(DiscreteOperator):
             self._weights = np.array(self._weights, dtype=self.dtype)
             self._term_ends = np.array(self._term_ends, dtype=bool)
             self._initialized = True
-
+            
+    
+    
+    
+    
+    
     @staticmethod
     def from_openfermion(
         hilbert: AbstractHilbert,
@@ -113,7 +184,12 @@ class FermionOperator2nd(DiscreteOperator):
     def max_conn_size(self) -> int:
         """The maximum number of non zero ⟨x|O|x'⟩ for every x."""
         return self._n_terms
-
+    
+    @property
+    def is_hermitian(self) -> bool:
+        """Returns true if this operator is hermitian."""
+        return self._is_hermitian
+    
     def _get_conn_flattened_closure(self):
         self._setup()
         _max_conn_size = self.max_conn_size
@@ -211,11 +287,13 @@ class FermionOperator2nd(DiscreteOperator):
                         if not empty_site:
                             has_xp = False
                         else:
+                            mel *= (-1) ** np.sum(xt[:orb_idx])  # jordan wigner sign
                             xt[orb_idx] = flip(xt[orb_idx])
                     else:
                         if empty_site:
                             has_xp = False
                         else:
+                            mel *= (-1) ** np.sum(xt[:orb_idx])  # jordan wigner sign
                             xt[orb_idx] = flip(xt[orb_idx])
 
                 # if this is the end of the term, we collect things
@@ -230,10 +308,10 @@ class FermionOperator2nd(DiscreteOperator):
 
             if pad:
                 n_c = (b + 1) * max_conn
-
+                
             sections[b] = n_c
-
+    
         if pad:
             return x_prime, mels
-        else:
+        else:            
             return x_prime[:n_c], mels[:n_c]

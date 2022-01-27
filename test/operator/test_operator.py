@@ -22,7 +22,7 @@ hi = nk.hilbert.Fock(n_max=3, n_particles=6, N=g.n_nodes)
 operators["Bose Hubbard"] = nk.operator.BoseHubbard(U=4.0, hilbert=hi, graph=g)
 
 # Graph Hamiltonian
-N = 20
+N = 10
 sigmax = np.asarray([[0, 1], [1, 0]])
 mszsz = np.asarray([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
 edges = [[i, i + 1] for i in range(N - 1)] + [[N - 1, 0]]
@@ -33,13 +33,13 @@ operators["Graph Hamiltonian"] = nk.operator.GraphOperator(
     hi, g, site_ops=[sigmax], bond_ops=[mszsz]
 )
 
-g_sub = nk.graph.Graph(edges=edges[:7])  # edges of first eight sites
+g_sub = nk.graph.Graph(edges=edges[:3])  # edges of first four sites
 operators["Graph Hamiltonian (on subspace)"] = nk.operator.GraphOperator(
     hi,
     g_sub,
     site_ops=[sigmax],
     bond_ops=[mszsz],
-    acting_on_subspace=8,
+    acting_on_subspace=4,
 )
 
 # Graph Hamiltonian with colored edges
@@ -93,13 +93,13 @@ operators["FermionOperator2nd"] = nk.operator.FermionOperator2nd(
     weights=(0.5 + 0.3j, 0.5 - 0.3j),  # must add h.c.
 )
 
+
 hi = nk.hilbert.LatticeFermions2nd(5)
 operators["LatticeFermionOperator2nd"] = nk.operator.FermionOperator2nd(
     hi,
     terms=(((0, 1), (3, 0)), ((3, 1), (0, 0))),
     weights=(0.5 + 0.3j, 0.5 - 0.3j),  # must add h.c.
 )
-
 
 op_special = {}
 for name, op in operators.items():
@@ -157,8 +157,22 @@ def test_is_hermitean(op):
                     break
 
             assert found
+           
+op_ferm = {}
+hi = nk.hilbert.Fermions2nd(3)
+op_ferm["FermionOperator2nd_hermitian"] = nk.operator.FermionOperator2nd(
+    hi,terms=(((0,0),(1,1)),((1,0),(0,1))), weights=(1.+1j,1-1j))
+op_ferm["FermionOperator2nd_not_hermitian"] = nk.operator.FermionOperator2nd(
+    hi,terms=(((0,0),(2,1)),((1,0),(0,1))), weights=(1.+1j,1-1j))
 
+@pytest.mark.parametrize(
+    "op_ferm", [pytest.param(op, id=name) for name, op in op_ferm.items()]
+)
+def test_is_hermitian_fermion2nd(op_ferm):
+	assert (op_ferm.is_hermitian==True)
 
+	
+	
 @pytest.mark.parametrize(
     "op", [pytest.param(op, id=name) for name, op in operators.items()]
 )
@@ -468,11 +482,12 @@ def test_openfermion_conversion():
     
     
     # number of orbitals given
-    fo2 = nk.operator.FermionOperator2nd.from_openfermion(of_fermion_operator, n_orbitals=6) 
-    assert isinstance(fo2, nk.operator.FermionOperator2nd)
+    #fo2 = nk.operator.FermionOperator2nd.from_openfermion(of_fermion_operator, n_orbitals=4) 
+    #print(fo2)
+    #assert isinstance(fo2, nk.operator.FermionOperator2nd)
     # check default
-    assert isinstance(fo2.hilbert, nk.hilbert.Fermions2nd)
-    assert fo2.hilbert.size == 6
+    #assert isinstance(fo2.hilbert, nk.hilbert.Fermions2nd)
+    #assert fo2.hilbert.size == 6
 
 
      # with hilbert

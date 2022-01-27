@@ -4,27 +4,57 @@
 
 # Change Log
 
-## NetKet 3.3 (In development)
+## NetKet 3.4 (⚙️ In development)
 
-[GitHub commits](https://github.com/netket/netket/compare/v3.2...master).
+[GitHub commits](https://github.com/netket/netket/compare/v3.3...master).
+
+### New features
+* Support for Python 3.10 [#952](https://github.com/netket/netket/pull/952).
+
+
+### Breaking Changes
+* The gradient for models with real-parameter is now multiplied by 2. If your model had real parameters you might need to change the learning rate and halve it. [#1069](https://github.com/netket/netket/pull/1069)
+
+### Bug Fixes
+* Allow `LazyOperator@densevector` for operators such as lazy `Adjoint`, `Transpose` and `Squared`. [#1068](https://github.com/netket/netket/pull/1068) 
+* The gradient obtained with `VarState.expect_and_grad` for models with real-parameters was off by a factor of $ 1/2 $ from the correct value. This has now been corrected. As a consequence, the correct gradient for real-parameter models is equal to the old times 2. If your model had real parameters you might need to change the learning rate and halve it. [#1069](https://github.com/netket/netket/pull/1069)
+
+## NetKet 3.3.1 (🐛 Bug Fixes)
+
+[GitHub commits](https://github.com/netket/netket/compare/v3.3...v3.3.1).
+
+* Initialisation of all implementations of `DenseSymm`, `DenseEquivariant`, `GCNN` now defaults to truncated normals with Lecun variance scaling. For layers without masking, there should be no noticeable change in behaviour. For masked layers, the same variance scaling now works correctly. [#1045](https://github.com/netket/netket/pull/1045)
+* Fix bug that prevented gradients of non-hermitian operators to be computed. The feature is still marked as experimental but will now run (we do not guarantee that results are correct). [#1053](https://github.com/netket/netket/pull/1053)
+* Common lattice constructors such as `Honeycomb` now accepts the same keyword arguments as `Lattice`. [#1046](https://github.com/netket/netket/pull/1046)
+* Multiplying a `QGTOnTheFly` representing the real part of the QGT (showing up when the ansatz has real parameters) with a complex vector now throws an error. Previously the result would be wrong, as the imaginary part [was casted away](https://github.com/netket/netket/issues/789#issuecomment-871145119). [#885](https://github.com/netket/netket/pull/885) 
+
+
+## NetKet 3.3 (🎁 20 December 2021)
+
+[GitHub commits](https://github.com/netket/netket/compare/v3.2...v3.3).
 
 ### New features
 * The interface to define expectation and gradient function of arbitrary custom operators is now stable. If you want to define it for a standard operator that can be written as an average of local expectation terms, you can now define a dispatch rule for {ref}`netket.vqs.get_local_kernel_arguments` and {ref}`netket.vqs.get_local_kernel`. The old mechanism is still supported, but we encourage to use the new mechanism as it is more terse. [#954](https://github.com/netket/netket/pull/954)
 * `nk.optimizer.Adam` now supports complex parameters, and you can use `nk.optimizer.split_complex` to make optimizers process complex parameters as if they are pairs of real parameters. [#1009](https://github.com/netket/netket/pull/1009)
 * Chunking of `MCState.expect` and `MCState.expect_and_grad` computations is now supported, which allows to bound the memory cost in exchange of a minor increase in computation time. [#1006](https://github.com/netket/netket/pull/1006) (and discussions in [#918](https://github.com/netket/netket/pull/918) and [#830](https://github.com/netket/netket/pull/830))
-* {ref}`nk.operator.LocalOperator` now accepts sparse matrices as input operators [#919](https://github.com/netket/netket/pull/919)
 * A new variational state that performs exact summation over the whole Hilbert space has been added. It can be constructed with {ref}`nk.vqs.ExactState` and supports the same Jax neural networks as {ref}`nk.vqs.MCState`. [#953](https://github.com/netket/netket/pull/953)
+* `DenseSymm` allows multiple input features. [#1030](https://github.com/netket/netket/pull/1030)
 * [Experimental] A new time-evolution driver  {ref}`nk.experimental.TDVP` using the time-dependent variational principle (TDVP) has been added. It works with time-independent and time-dependent Hamiltonians and Liouvillians. [#1012](https://github.com/netket/netket/pull/1012)
 * [Experimental] A set of JAX-compatible Runge-Kutta ODE integrators has been added for use together with the new TDVP driver. [#1012](https://github.com/netket/netket/pull/1012)
 
 ### Breaking Changes
 * The method `sample_next` in `Sampler` and exact samplers (`ExactSampler` and `ARDirectSampler`) is removed, and it is only defined in `MetropolisSampler`. The module function `nk.sampler.sample_next` also only works with `MetropolisSampler`. For exact samplers, please use the method `sample` instead. [#1016](https://github.com/netket/netket/pull/1016)
 * The default value of `n_chains_per_rank` in `Sampler` and exact samplers is changed to 1, and specifying `n_chains` or `n_chains_per_rank` when constructing them is deprecated. Please change `chain_length` when calling `sample`. For `MetropolisSampler`, the default value is changed from `n_chains = 16` (across all ranks) to `n_chains_per_rank = 16`. [#1017](https://github.com/netket/netket/pull/1017)
+* `GCNN_Parity` allowed biasing both the parity-preserving and the parity-flip equivariant layers. These enter into the network output the same way, so having both is redundant and makes QGTs unstable. The biases of the parity-flip layers are now removed. The previous behaviour can be restored using the deprecated `extra_bias` switch; we only recommend this for loading previously saved parameters. Such parameters can be transformed to work with the new default using `nk.models.update_GCNN_parity`. [#1030](https://github.com/netket/netket/pull/1030)
+* Kernels of `DenseSymm` are now three-dimensional, not two-dimensional. Parameters saved from earlier implementations can be transformed to the new convention using `nk.nn.update_dense_symm`. [#1030](https://github.com/netket/netket/pull/1030)
+
+### Deprecations
 * The method `Sampler.samples` is added to return a generator of samples. The module functions `nk.sampler.sampler_state`, `reset`, `sample`, `samples`, and `sample_next` are deprecated in favor of the corresponding class methods. [#1025](https://github.com/netket/netket/pull/1025)
+* Kwarg `in_features` of `DenseEquivariant` is deprecated; the number of input features are inferred from the input. [#1030](https://github.com/netket/netket/pull/1030)
+* Kwarg `out_features` of `DenseEquivariant` is deprecated in favour of `features`. [#1030](https://github.com/netket/netket/pull/1030)
 
 ### Internal Changes
 * The definitions of `MCState` and `MCMixedState` have been moved to an internal module, `nk.vqs.mc` that is hidden by default. [#954](https://github.com/netket/netket/pull/954)
-* {ref}`nk.operator.LocalOperator` now handles all internal operators as sparse matrices [#919](https://github.com/netket/pull/919)
 * Custom deepcopy for `LocalOperator` to avoid building `LocalOperator` from scratch each time it is copied [#964](https://github.com/netket/pull/964)
 
 ### Bug Fixes
@@ -32,6 +62,7 @@
 * The {ref}`nk.hilbert.random.flip_state` method used by `MetropolisLocal` now throws an error when called on a {ref}`nk.hilbert.ContinuousHilbert` hilbert space instead of entering an endless loop. [#1014](https://github.com/netket/netket/pull/1014)
 * Fixed bug in conversion to qutip for `MCMixedState`, where the resulting shape (hilbert space size) was wrong. [#1020](https://github.com/netket/netket/pull/1020)
 * Setting `MCState.sampler` now recomputes `MCState.chain_length` according to `MCState.n_samples` and the new `sampler.n_chains`. [#1028](https://github.com/netket/netket/pull/1028)
+* `GCNN_Parity` allowed biasing both the parity-preserving and the parity-flip equivariant layers. These enter into the network output the same way, so having both is redundant and makes QGTs unstable. The biases of the parity-flip layers are now removed. [#1030](https://github.com/netket/netket/pull/1030)
 
 
 ## NetKet 3.2 (26 November 2021)

@@ -10,6 +10,8 @@ import numpy as np
 import pytest
 from pytest import approx, raises
 
+import jax
+
 herm_operators = {}
 generic_operators = {}
 
@@ -103,6 +105,24 @@ def test_local_operator_transpose_conjugation():
 
         math_h = oph.transpose().conjugate().to_dense()
         same_matrices(math_h, mat)
+
+
+def test_lazy_operator_matdensevec():
+    sz0 = nk.operator.spin.sigmaz(hi, 0)
+    v_np = np.random.rand(hi.n_states)
+    v_jx = jax.numpy.asarray(v_np)
+
+    sz0_t = sz0.transpose()
+    same_matrices(sz0_t @ v_np, sz0_t.to_dense() @ v_np)
+    same_matrices(sz0_t @ v_jx, sz0_t.to_dense() @ v_jx)
+
+    sz0_h = sz0.transpose().conjugate()
+    same_matrices(sz0_h @ v_np, sz0_h.to_dense() @ v_np)
+    same_matrices(sz0_h @ v_jx, sz0_h.to_dense() @ v_jx)
+
+    sz0_2 = sz0_h @ sz0
+    same_matrices(sz0_2 @ v_np, sz0_2.to_dense() @ v_np)
+    same_matrices(sz0_2 @ v_jx, sz0_2.to_dense() @ v_jx)
 
 
 def test_local_operator_add():
@@ -318,9 +338,7 @@ def test_copy():
         assert op_copy is not op
         for o1, o2 in zip(op._operators, op_copy._operators):
             assert o1 is not o2
-            # Since operators might actually be sparse, accessing the dense data can be achieved by the .A attribute
-            # This also works for initially dense arrays.
-            assert np.all(o1.A == o2.A)
+            assert np.all(o1 == o2)
         same_matrices(op, op_copy)
 
 
@@ -336,6 +354,16 @@ def test_type_promotion():
     complex_mat = nk.operator.spin.sigmay(hi, 0, dtype=complex).to_dense()
     promoted_op = real_op + nk.operator.LocalOperator(hi, complex_mat, acting_on=[0])
     assert promoted_op.dtype == np.complex128
+
+
+def test_empty_after_sum():
+    a = nk.operator.spin.sigmaz(nk.hilbert.Spin(0.5), 0)
+    zero_op = a - a
+    np.testing.assert_allclose(zero_op.to_dense(), 0.0)
+
+    a = nk.operator.spin.sigmay(nk.hilbert.Spin(0.5), 0)
+    zero_op = a - a
+    np.testing.assert_allclose(zero_op.to_dense(), 0.0)
 
 
 def test_is_hermitian():
@@ -366,3 +394,18 @@ def test_qutip_conversion():
 
     assert q_obj.shape == (op.hilbert.n_states, op.hilbert.n_states)
     np.testing.assert_allclose(q_obj.data.todense(), op.to_dense())
+
+
+def test_notsharing():
+    # This test will fail if operators alias some underlying arrays upon copy().
+    hi = nk.hilbert.Spin(0.5, 2)
+    a = nk.operator.spin.sigmax(hi, 0) * nk.operator.spin.sigmax(hi, 1, dtype=complex)
+    b = nk.operator.spin.sigmay(hi, 0) * nk.operator.spin.sigmaz(hi, 1)
+    delta = b - a
+
+    a_orig = a.to_dense()
+    a_copy = a.copy()
+    a_copy += delta
+
+    np.testing.assert_allclose(a_orig, a.to_dense())
+    np.testing.assert_allclose(a_copy.to_dense(), b.to_dense())

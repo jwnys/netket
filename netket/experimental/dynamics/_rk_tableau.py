@@ -37,8 +37,28 @@ def expand_dim(tree: PyTree, sz: int):
 
 @dataclass
 class TableauRKExplicit:
-    name: str
-    """The name of the RK Tableau."""
+    r"""
+    Class representing the Butcher tableau of an explicit Runge-Kutta method [1,2],
+    which, given the ODE dy/dt = F(t, y), updates the solution as
+
+    .. math::
+        y_{t+dt} = y_t + \sum_l b_l k_l
+
+    with the intermediate slopes
+
+    .. math::
+        k_l = F(t + c_l dt, y_t + \sum_{m < l} a_{lm} k_m).
+
+    If :code:`self.is_adaptive`, the tableau also contains the coefficients :math:`b'_l`
+    which can be used to estimate the local truncation error by the formula
+
+    .. math::
+        y_{\mathrm{err}} = \sum_l (b_l - b'_l) k_l.
+
+    [1] https://en.wikipedia.org/w/index.php?title=Runge%E2%80%93Kutta_methods&oldid=1055669759
+    [2] J. Stoer and R. Bulirsch, Introduction to Numerical Analysis, Springer NY (2002).
+    """
+
     order: Tuple[int, int]
     """The order of the tableau"""
     a: jax.numpy.ndarray
@@ -90,7 +110,7 @@ class TableauRKExplicit:
         """Computes the intermediate slopes k_l."""
         times = t + self.c * dt
 
-        # TODO: Use FSALLast
+        # TODO: Use FSAL
 
         k = expand_dim(y_t, self.stages)
         for l in range(self.stages):
@@ -143,22 +163,30 @@ class TableauRKExplicit:
         return y_tp1, y_err
 
 
+@dataclass
+class NamedTableau:
+    name: str
+    data: TableauRKExplicit
+
+    def __repr__(self) -> str:
+        return self.name
+
+
 # fmt: off
 # flake8: noqa: E123, E126, E201, E202, E221, E226, E231, E241, E251
 
 # Fixed Step methods
 bt_feuler = TableauRKExplicit(
-                name = "feuler",
                 order = (1,),
                 a = jnp.zeros((1,1), dtype=default_dtype),
-                b = jnp.ones((1,1), dtype=default_dtype),
+                b = jnp.ones((1,), dtype=default_dtype),
                 c = jnp.zeros((1), dtype=default_dtype),
                 c_error = None,
                 )
+bt_feuler = NamedTableau("Euler", bt_feuler)
 
 
 bt_midpoint = TableauRKExplicit(
-                name = "midpoint",
                 order = (2,),
                 a = jnp.array([[0,   0],
                                [1/2, 0]], dtype=default_dtype),
@@ -166,10 +194,10 @@ bt_midpoint = TableauRKExplicit(
                 c = jnp.array( [0, 1/2], dtype=default_dtype),
                 c_error = None,
                 )
+bt_midpoint = NamedTableau("Midpoint", bt_midpoint)
 
 
 bt_heun = TableauRKExplicit(
-                name = "heun",
                 order = (2,),
                 a = jnp.array([[0,   0],
                                [1,   0]], dtype=default_dtype),
@@ -177,24 +205,25 @@ bt_heun = TableauRKExplicit(
                 c = jnp.array( [0, 1], dtype=default_dtype),
                 c_error = None,
                 )
+bt_heun = NamedTableau("Heun", bt_heun)
+
 
 bt_rk4  = TableauRKExplicit(
-                name = "rk4",
                 order = (4,),
                 a = jnp.array([[0,   0,   0,   0],
                                [1/2, 0,   0,   0],
                                [0,   1/2, 0,   0],
-                               [0,   0,   1,   1]], dtype=default_dtype),
+                               [0,   0,   1,   0]], dtype=default_dtype),
                 b = jnp.array( [1/6,  1/3,  1/3,  1/6], dtype=default_dtype),
                 c = jnp.array( [0, 1/2, 1/2, 1], dtype=default_dtype),
                 c_error = None,
                 )
+bt_rk4 = NamedTableau("RK4", bt_rk4)
 
 
 # Adaptive step:
 # Heun Euler https://en.wikipedia.org/wiki/Runge–Kutta_methods
 bt_rk12  = TableauRKExplicit(
-                name = "rk21",
                 order = (2,1),
                 a = jnp.array([[0,   0],
                                [1,   0]], dtype=default_dtype),
@@ -203,10 +232,11 @@ bt_rk12  = TableauRKExplicit(
                 c = jnp.array( [0, 1], dtype=default_dtype),
                 c_error = None,
                 )
+bt_rk12 = NamedTableau("RK12", bt_rk12)
+
 
 # Bogacki–Shampine coefficients
 bt_rk23  = TableauRKExplicit(
-                name = "rk23",
                 order = (2,3),
                 a = jnp.array([[0,   0,   0,   0],
                                [1/2, 0,   0,   0],
@@ -217,9 +247,10 @@ bt_rk23  = TableauRKExplicit(
                 c = jnp.array( [0, 1/2, 3/4, 1], dtype=default_dtype),
                 c_error = None,
                 )
+bt_rk23 = NamedTableau("RK23", bt_rk23)
+
 
 bt_rk4_fehlberg = TableauRKExplicit(
-                name = "fehlberg",
                 order = (4,5),
                 a = jnp.array([[ 0,          0,          0,           0,            0,      0 ],
                               [  1/4,        0,          0,           0,            0,      0 ],
@@ -232,9 +263,10 @@ bt_rk4_fehlberg = TableauRKExplicit(
                 c = jnp.array( [  0,         1/4,        3/8,         12/13,        1,      1/2], dtype=default_dtype),
                 c_error = None,
                 )
+bt_rk4_fehlberg = NamedTableau("RK45Fehlberg", bt_rk4_fehlberg)
+
 
 bt_rk4_dopri  = TableauRKExplicit(
-                name = "dopri",
                 order = (5,4),
                 a = jnp.array([[ 0,           0,           0,           0,        0,             0,         0 ],
                               [  1/5,         0,           0,           0,        0,             0,         0 ],
@@ -248,4 +280,6 @@ bt_rk4_dopri  = TableauRKExplicit(
                 c = jnp.array( [ 0,           1/5,         3/10,        4/5,      8/9,           1,         1], dtype=default_dtype),
                 c_error = None,
                 )
+bt_rk4_dopri = NamedTableau("RK45", bt_rk4_dopri)
+
 # fmt: on

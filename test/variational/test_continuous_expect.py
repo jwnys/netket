@@ -40,8 +40,10 @@ sab = nk.sampler.MetropolisGaussian(hilb, sigma=1.0, n_chains=16, n_sweeps=1)
 
 model = test()
 model2 = test2()
-vs_continuous = nk.vqs.MCState(sab, model, n_samples=10 ** 6, n_discard=2000)
-vs_continuous2 = nk.vqs.MCState(sab, model2, n_samples=10 ** 7, n_discard=2000)
+vs_continuous = nk.vqs.MCState(sab, model, n_samples=10 ** 6, n_discard_per_chain=2000)
+vs_continuous2 = nk.vqs.MCState(
+    sab, model2, n_samples=10 ** 7, n_discard_per_chain=2000
+)
 
 
 def test_expect():
@@ -56,4 +58,4 @@ def test_expect():
     :math:`<\nabla V> = \nabla_p \int_0^5 dx V(x) |\psi(x)|^2 / \int_0^5 |\psi(x)|^2 = -0.140256 (\psi = \exp(p^2 x))`
     """
     np.testing.assert_allclose(0.1975164, sol.mean, atol=10 ** (-3))
-    np.testing.assert_allclose(-0.140256, 2 * O_grad, atol=10 ** (-3))
+    np.testing.assert_allclose(-0.140256, O_grad, atol=10 ** (-3))
