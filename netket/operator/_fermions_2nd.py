@@ -89,11 +89,14 @@ class FermionOperator2nd(DiscreteOperator):
         for term, weight in zip(normal_ordered[0],normal_ordered[1]):
             dict_normal[tuple(term)] = weight
         
-        hc_normal_ordered = herm_conj(normal_ordered[0],normal_ordered[1])
+        hc = herm_conj(terms,weights)
+        hc_normal_ordered = normal_ordering(hc[0],hc[1])
+        
         dict_hc_normal = {}
         for term_hc, weight_hc in zip(hc_normal_ordered[0],hc_normal_ordered[1]):
             dict_hc_normal[tuple(term_hc)] = weight_hc
-        
+        print('dict_normal', dict_normal)
+        print('dict_normal_hc', dict_hc_normal)
         # Check if hermitian
         self._is_hermitian = dict_normal == dict_hc_normal
         

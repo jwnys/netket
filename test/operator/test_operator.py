@@ -165,6 +165,12 @@ op_ferm["FermionOperator2nd_hermitian"] = nk.operator.FermionOperator2nd(
 op_ferm["FermionOperator2nd_not_hermitian"] = nk.operator.FermionOperator2nd(
     hi,terms=(((0,0),(2,1)),((1,0),(0,1))), weights=(1.+1j,1-1j))
 
+op_ferm["FermionOperator2nd_hermitian_3term"] = nk.operator.FermionOperator2nd(
+    hi,(((0,0),(1,1),(2,1)),((2,0),(1,0),(0,1))), weights=(1.-1j,1+1j))
+op_ferm["FermionOperator2nd_not_hermitian_3term"] = nk.operator.FermionOperator2nd(
+    hi,(((0,0),(1,1),(2,1)),((3,0),(1,0),(0,1))), weights=(1.-1j,2+2j))
+
+    
 @pytest.mark.parametrize(
     "op_ferm", [pytest.param(op, id=name) for name, op in op_ferm.items()]
 )
