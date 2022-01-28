@@ -10,6 +10,7 @@ from netket.operator._discrete_operator import DiscreteOperator
 
 
 class FermionOperator2nd(DiscreteOperator):
+    """Constructs a fermion operator given the single terms (set of creation/annihilation operators) in second quantization formalism."""
     def __init__(
         self,
         hilbert: AbstractHilbert,
@@ -17,6 +18,33 @@ class FermionOperator2nd(DiscreteOperator):
         weights: List[Union[float, complex]] = None,
         dtype: DType = complex,
     ):
+
+        r"""
+            This class can be initialized in the following form: ``FermionOperator2nd(hilbert, terms, weights ...)``.
+            Args:
+                hilbert (required): hilbert of the resulting FermionOperator2nd object
+                terms (list(list(list(int)))): single term operators
+                weights (list(union(float,complex))): corresponding coefficients of the single term operators
+
+            Returns:
+                A FermionOperator2nd object.
+
+
+                        Example:
+                       Constructs a new ``FermionOperator2nd`` operator (0.5-0.5j)*(a_0^dagger a_1) + (0.5+0.5j)*(a_2^dagger a_1)  with the construction scheme.
+
+                       >>> import netket as nk
+                       >>> terms,weights = (((0,1),(1,0)),((2,1),(1,0))), (0.5-0.5j,0.5+0.5j)
+                       >>> hi = nk.hilbert.Fermions2nd(3)
+                       >>> op = nk.operator.FermionOperator2nd(hi, terms, weights)
+                       >>> op
+                       FermionOperator2nd(hilbert=Fermions2nd(n_orbitals=3), n_terms=2)
+                       >>> op.hilbert
+                       Fermions2nd(n_orbitals=3)
+                       >>> op.hilbert.size
+                       3
+
+                    """
         super().__init__(hilbert)
         self._dtype = dtype
         self._orb_idxs = []
@@ -34,15 +62,15 @@ class FermionOperator2nd(DiscreteOperator):
 
 
         # save in a dictionary the normal ordered terms and weights
-        normal_ordered = normal_ordering(terms,weights)
+        normal_ordered = _normal_ordering(terms,weights)
         dict_normal = {}
         for term, weight in zip(normal_ordered[0],normal_ordered[1]):
             dict_normal[tuple(term)] = weight
 
         # take the hermitian conjugate of the terms
-        hc = herm_conj(terms,weights)
+        hc = _herm_conj(terms,weights)
         # normal order the h.c. terms
-        hc_normal_ordered = normal_ordering(hc[0],hc[1])
+        hc_normal_ordered = _normal_ordering(hc[0],hc[1])
 
         # save in a dictionary the normal ordered h.c. terms and weights
         dict_hc_normal = {}
@@ -203,7 +231,6 @@ class FermionOperator2nd(DiscreteOperator):
     def _flattened_kernel(
         x, sections, max_conn, orb_idxs, daggers, weights, term_ends, pad=False
     ):
-        """For now, we do not filter out counting operators"""
         x_prime = np.empty((x.shape[0] * max_conn, x.shape[1]), dtype=x.dtype)
         mels = np.zeros((x.shape[0] * max_conn), dtype=weights.dtype)
 
@@ -274,8 +301,7 @@ class FermionOperator2nd(DiscreteOperator):
 
             
             
-def order_fun(term: List[List[int]], weight: Union[float, complex]=None):
-    print(term, weight)
+def _order_fun(term: List[List[int]], weight: Union[float, complex]=1):
     """Return a normal ordered single term of the fermion operator.
     Normal ordering corresponds to placing the operator acting on the
     highest index on the left and lowest index on the right. In addition,
@@ -314,7 +340,7 @@ def order_fun(term: List[List[int]], weight: Union[float, complex]=None):
                         weight *= parity
     return term, weight
     
-def normal_ordering(terms: List[List[List[int]]], weights: List[Union[float, complex]]=None):
+def _normal_ordering(terms: List[List[List[int]]], weights: List[Union[float, complex]]=1):
     """Returns the normal ordered terms and weights of the fermion operator.
     We use the following normal ordering convention: we order the terms with
     the highest index of the operator on the left and the lowest index on the right. In addition,
@@ -323,13 +349,13 @@ def normal_ordering(terms: List[List[List[int]]], weights: List[Union[float, com
     ordered_weights = []
     # loop over all the terms and weights and order each single term with corresponding weight
     for term, weight in zip(terms,weights):
-        ordered = order_fun(term,weight)
+        ordered = _order_fun(term,weight)
         ordered_terms.append(ordered[0])
         ordered_weights.append(ordered[1])
     return ordered_terms, ordered_weights
 
 
-def herm_conj(terms: List[List[List[int]]], weights: List[Union[float, complex]]=None):
+def _herm_conj(terms: List[List[List[int]]], weights: List[Union[float, complex]]=1):
    """Returns the hermitian conjugate of the terms and weights."""
    conj_term = []
    conj_weight = []
