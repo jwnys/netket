@@ -31,73 +31,25 @@ class FermionOperator2nd(DiscreteOperator):
         for term, weight in zip(terms, weights):
             self.add_term(term, weight=weight)
         self._initialized = False
-    
-        def order_fun(term, weight): 
-            parity = -1
-            term = list(term)
-            for i in range(1, len(term)):
-                for j in range(i, 0, -1):
-                    right_term = term[j]
-                    left_term = term[j - 1]
-                    # Exchange operators if creation operator is on the right and annihilation on the left
-                    if right_term[1] and not left_term[1]:
-                        term[j - 1] = right_term
-                        term[j] = left_term
-                        weight *= parity
-                        
-                        # If same indices switch order (creation on the left),remember a a^+ = 1 + a^+ a
-                        if right_term[0] == left_term[0]:
-                            new_term = term[:(j - 1)] + term[(j + 1):]
-                            weight *= parity
-                            term = new_term
-                
-                    # If same operator types (creation or anihilation)
-                    elif right_term[1] == left_term[1]:
 
-                        # Evaluate to zero if two creation/anihilation operators acting on the same index
-                        if right_term[0] == left_term[0]:
-                            weight *= 0                    
 
-                        # Put lower index on the right for same operator type (creation or annihilation)
-                        elif right_term[0] > left_term[0]:
-                            term[j - 1] = right_term
-                            term[j] = left_term
-                            weight *= parity
-            return term, weight
-    
-        def normal_ordering(terms,weights):
-            ordered_terms = []
-            ordered_weights = []
-            for term, weight in zip(terms,weights):
-                ordered = order_fun(term,weight)
-                
-                ordered_terms.append(ordered[0])
-                ordered_weights.append(ordered[1])
-            return ordered_terms, ordered_weights
-        
-        
-        def herm_conj(terms, weights):
-            conj_term = []
-            conj_weight = []
-            for term, weight in zip(terms, weights):
-                conj_term.append([(op, 1 - action) for (op,action) in reversed(term)])
-                conj_weight.append(weight.conjugate())
-            return conj_term, conj_weight
-        
+        # save in a dictionary the normal ordered terms and weights
         normal_ordered = normal_ordering(terms,weights)
         dict_normal = {}
         for term, weight in zip(normal_ordered[0],normal_ordered[1]):
             dict_normal[tuple(term)] = weight
-        
+
+        # take the hermitian conjugate of the terms
         hc = herm_conj(terms,weights)
+        # normal order the h.c. terms
         hc_normal_ordered = normal_ordering(hc[0],hc[1])
-        
+
+        # save in a dictionary the normal ordered h.c. terms and weights
         dict_hc_normal = {}
         for term_hc, weight_hc in zip(hc_normal_ordered[0],hc_normal_ordered[1]):
             dict_hc_normal[tuple(term_hc)] = weight_hc
-        print('dict_normal', dict_normal)
-        print('dict_normal_hc', dict_hc_normal)
-        # Check if hermitian
+
+        # check if hermitian by comparing the dictionaries
         self._is_hermitian = dict_normal == dict_hc_normal
         
         
@@ -318,3 +270,71 @@ class FermionOperator2nd(DiscreteOperator):
             return x_prime, mels
         else:            
             return x_prime[:n_c], mels[:n_c]
+
+
+            
+            
+def order_fun(term: List[List[int]], weight: Union[float, complex]=None):
+    print(term, weight)
+    """Return a normal ordered single term of the fermion operator.
+    Normal ordering corresponds to placing the operator acting on the
+    highest index on the left and lowest index on the right. In addition,
+    the creation operators are placed on the left and annihilation on the right."""
+
+    parity = -1
+    term = list(term)
+    # the arguments given to this function will be transformed in a normal ordered way
+    # loop through all the operators in the single term from left to right and order them
+    # by swapping the term operators (and transform the weights by multiplying with the parity factors)
+    for i in range(1, len(term)):
+        for j in range(i, 0, -1):
+            right_term = term[j]
+            left_term = term[j - 1]
+            # exchange operators if creation operator is on the right and annihilation on the left
+            if right_term[1] and not left_term[1]:
+                term[j - 1] = right_term
+                term[j] = left_term
+                weight *= parity
+                        
+                # if same indices switch order (creation on the left),remember a a^+ = 1 + a^+ a
+                if right_term[0] == left_term[0]:
+                    new_term = term[:(j - 1)] + term[(j + 1):]
+                    weight *= parity
+                    term = new_term
+
+                # if same operator types (creation or anihilation)
+                elif right_term[1] == left_term[1]:
+                    # evaluate to zero if two creation/anihilation operators acting on the same index
+                    if right_term[0] == left_term[0]:
+                        return None
+                        # put lower index on the right for same operator type (creation or annihilation)
+                    elif right_term[0] > left_term[0]:
+                        term[j - 1] = right_term
+                        term[j] = left_term
+                        weight *= parity
+    return term, weight
+    
+def normal_ordering(terms: List[List[List[int]]], weights: List[Union[float, complex]]=None):
+    """Returns the normal ordered terms and weights of the fermion operator.
+    We use the following normal ordering convention: we order the terms with
+    the highest index of the operator on the left and the lowest index on the right. In addition,
+    creation operators are placed on the left and annihilation operators on the right."""
+    ordered_terms = []
+    ordered_weights = []
+    # loop over all the terms and weights and order each single term with corresponding weight
+    for term, weight in zip(terms,weights):
+        ordered = order_fun(term,weight)
+        ordered_terms.append(ordered[0])
+        ordered_weights.append(ordered[1])
+    return ordered_terms, ordered_weights
+
+
+def herm_conj(terms: List[List[List[int]]], weights: List[Union[float, complex]]=None):
+   """Returns the hermitian conjugate of the terms and weights."""
+   conj_term = []
+   conj_weight = []
+   # loop over all terms and weights and get the hermitian conjugate
+   for term, weight in zip(terms, weights):
+        conj_term.append([(op, 1 - action) for (op,action) in reversed(term)])
+        conj_weight.append(weight.conjugate())
+   return conj_term, conj_weight
