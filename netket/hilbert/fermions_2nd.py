@@ -11,6 +11,13 @@ import numpy as np
 
 
 class Fermions2nd(HomogeneousHilbert):
+    r"""Hilbert space that represents (spinless) fermions in 2nd quantization formalism
+
+            Args:
+                n_orbitals: number of orbitals
+                n_fermions: number of fermions
+                extra_constraint_fn: additional constraints function
+            """
     def __init__(
         self,
         n_orbitals: int,
@@ -50,11 +57,11 @@ class Fermions2nd(HomogeneousHilbert):
         return self._extra_constrained
 
     @property
-    def n_orbitals(self):
+    def n_orbitals(self): # returns the number of orbitals
         return self._n_orbitals
 
     @property
-    def n_fermions(self):
+    def n_fermions(self): # returns the number of fermions
         return self._n_fermions
 
     @property
@@ -68,6 +75,15 @@ class Fermions2nd(HomogeneousHilbert):
 
 
 class LatticeFermions2nd(Fermions2nd):
+    r"""Hilbert space that represents (spinless) fermions on a lattice in 2nd quantization formalism
+
+                Args:
+                    n_sites: number of sites on the lattice
+                    s: set to 0 if spinless system, set to 1 if spinful system
+                    n_fermions: number of fermions
+                    n_fermions_per_spin: number of fermions per spin
+                    graph: a graph from which to extract the number of sites
+                """
     def __init__(
         self,
         n_sites: int,
