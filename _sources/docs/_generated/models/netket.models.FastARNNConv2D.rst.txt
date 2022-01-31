@@ -27,5 +27,6 @@
       .. automethod:: FastARNNConv2D.bias_init
       .. automethod:: FastARNNConv2D.conditionals
       .. automethod:: FastARNNConv2D.kernel_init
+      .. automethod:: FastARNNConv2D.put_variable
 
    

@@ -48,7 +48,7 @@ several CPUs, but you have to start jax with a specific environment variable.
 
 (experimental-variational-api)=
 
-### Variational State Interface
+## Variational State Interface
 
 ```{eval-rst}
 .. currentmodule:: netket
@@ -64,7 +64,7 @@ several CPUs, but you have to start jax with a specific environment variable.
 
 ```
 
-### Time Evolution Driver
+## Time Evolution Driver
 
 ```{eval-rst}
 .. currentmodule:: netket
@@ -90,8 +90,8 @@ driver above.
 
 ```{eval-rst}
 .. autosummary::
-  :toctree: _generated/experimental/dynamics
-  :nosignatures:
+   :toctree: _generated/experimental/dynamics
+   :nosignatures:
 
   netket.experimental.dynamics.Euler
   netket.experimental.dynamics.Heun

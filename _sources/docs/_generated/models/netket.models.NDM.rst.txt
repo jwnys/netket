@@ -28,6 +28,7 @@
       .. automethod:: NDM.activation
       .. automethod:: NDM.bias_init
       .. automethod:: NDM.kernel_init
+      .. automethod:: NDM.put_variable
       .. automethod:: NDM.visible_bias_init
 
    

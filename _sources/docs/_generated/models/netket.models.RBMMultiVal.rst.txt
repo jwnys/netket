@@ -25,6 +25,7 @@
    Methods
       .. automethod:: RBMMultiVal.activation
       .. automethod:: RBMMultiVal.kernel_init
+      .. automethod:: RBMMultiVal.put_variable
       .. automethod:: RBMMultiVal.visible_bias_init
 
    

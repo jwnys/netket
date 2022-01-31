@@ -1,0 +1,20 @@
+<map id="inheritance46cd0fa8ef" name="inheritance46cd0fa8ef">
+<area shape="rect" id="node1" href="_generated/operator/netket.operator.AbstractOperator.html#netket.operator.AbstractOperator" target="_top" title="Abstract class for quantum Operators. This class prototypes the methods" alt="" coords="5,242,121,264"/>
+<area shape="rect" id="node3" href="_generated/operator/netket.operator.DiscreteOperator.html#netket.operator.DiscreteOperator" target="_top" title="This class is the base class for operators defined on a" alt="" coords="172,112,288,134"/>
+<area shape="rect" id="node8" href="_generated/operator/netket.operator.ContinuousOperator.html#netket.operator.ContinuousOperator" target="_top" title="This class is the abstract base class for operators defined on a" alt="" coords="163,349,296,371"/>
+<area shape="rect" id="node2" title="Generic base class for super&#45;operators acting on the tensor product (DoubledHilbert)" alt="" coords="338,15,488,37"/>
+<area shape="rect" id="node14" href="_generated/operator/netket.operator.LocalLiouvillian.html#netket.operator.LocalLiouvillian" target="_top" title="LocalLiouvillian super&#45;operator, acting on the DoubledHilbert (tensor product) space" alt="" coords="530,5,637,27"/>
+<area shape="rect" id="node10" href="_generated/operator/netket.operator.LocalOperator.html#netket.operator.LocalOperator" target="_top" title="A custom local operator. This is a sum of an arbitrary number of operators" alt="" coords="364,112,463,134"/>
+<area shape="rect" id="node15" href="_generated/operator/netket.operator.PauliStrings.html#netket.operator.PauliStrings" target="_top" title="A Hamiltonian consisiting of the sum of products of Pauli operators." alt="" coords="370,155,456,177"/>
+<area shape="rect" id="node4" title="A wrapper lazily representing the adjoint (conjugate&#45;transpose) of the wrapped object." alt="" coords="382,198,445,221"/>
+<area shape="rect" id="node17" title="A wrapper lazily representing the matrix&#45;squared (A^dag A) of the wrapped object A." alt="" coords="380,242,446,264"/>
+<area shape="rect" id="node19" title="A wrapper lazily representing the transpose of the wrapped object." alt="" coords="375,285,451,307"/>
+<area shape="rect" id="node6" href="_generated/operator/netket.operator.BoseHubbard.html#netket.operator.BoseHubbard" target="_top" title="An extended Bose Hubbard model Hamiltonian operator, containing both" alt="" coords="536,48,631,70"/>
+<area shape="rect" id="node12" href="_generated/operator/netket.operator.Ising.html#netket.operator.Ising" target="_top" title="The Transverse&#45;Field Ising Hamiltonian :math:`&#45;hsum_i sigma_i^{(x)} +Jsum_{
+angle i,jangle} sigma_i^{(z)}sigma_j^{(z)}`." alt="" coords="552,91,615,113"/>
+<area shape="rect" id="node13" href="_generated/operator/netket.operator.KineticEnergy.html#netket.operator.KineticEnergy" target="_top" title="This is the kinetic energy operator (hbar = 1). The local value is given by:" alt="" coords="364,328,462,350"/>
+<area shape="rect" id="node16" href="_generated/operator/netket.operator.PotentialEnergy.html#netket.operator.PotentialEnergy" target="_top" title="Returns the local potential energy defined in afun" alt="" coords="358,371,468,393"/>
+<area shape="rect" id="node18" href="_generated/operator/netket.operator.SumOperator.html#netket.operator.SumOperator" target="_top" title="This class implements the action of the _expect_kernel()&#45;method of" alt="" coords="366,414,460,437"/>
+<area shape="rect" id="node9" href="_generated/operator/netket.operator.GraphOperator.html#netket.operator.GraphOperator" target="_top" title="A graph&#45;based quantum operator. In its simplest terms, this is the sum of" alt="" coords="532,134,636,156"/>
+<area shape="rect" id="node11" href="_generated/operator/netket.operator.Heisenberg.html#netket.operator.Heisenberg" target="_top" title="The Heisenberg hamiltonian on a lattice." alt="" coords="679,134,763,156"/>
+</map>

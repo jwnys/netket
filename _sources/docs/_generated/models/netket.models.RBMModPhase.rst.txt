@@ -24,5 +24,6 @@
    Methods
       .. automethod:: RBMModPhase.activation
       .. automethod:: RBMModPhase.kernel_init
+      .. automethod:: RBMModPhase.put_variable
 
    

@@ -26,5 +26,6 @@
       .. automethod:: ARNNDense.bias_init
       .. automethod:: ARNNDense.conditionals
       .. automethod:: ARNNDense.kernel_init
+      .. automethod:: ARNNDense.put_variable
 
    

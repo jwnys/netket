@@ -214,7 +214,7 @@
         <span class="k">return</span> <span class="n">eigvalsh</span><span class="p">(</span><span class="n">dense_op</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="steady_state"><a class="viewcode-back" href="../../docs/_generated/exact/netket.exact.steady_state.html#netket.exact.steady_state">[docs]</a><span class="k">def</span> <span class="nf">steady_state</span><span class="p">(</span><span class="n">lindblad</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;ed&quot;</span><span class="p">,</span> <span class="n">rho0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="steady_state"><a class="viewcode-back" href="../../docs/_generated/exact/netket.exact.steady_state.html#netket.exact.steady_state">[docs]</a><span class="k">def</span> <span class="nf">steady_state</span><span class="p">(</span><span class="n">lindblad</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;ed&quot;</span><span class="p">,</span> <span class="n">rho0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Computes the numerically exact steady-state of a lindblad master equation.</span>
 <span class="sd">    The computation is performed either through the exact diagonalization of the</span>
 <span class="sd">    hermitian :math:`L^\dagger L` matrix, or by means of an iterative solver (bicgstabl)</span>
@@ -247,9 +247,6 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        The steady-state density matrix.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">sparse</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">sparse</span> <span class="o">=</span> <span class="kc">True</span>
-
     <span class="n">M</span> <span class="o">=</span> <span class="n">lindblad</span><span class="o">.</span><span class="n">hilbert</span><span class="o">.</span><span class="n">physical</span><span class="o">.</span><span class="n">n_states</span>
 
     <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;ed&quot;</span><span class="p">:</span>

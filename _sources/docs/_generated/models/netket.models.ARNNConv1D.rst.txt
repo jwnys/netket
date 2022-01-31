@@ -27,5 +27,6 @@
       .. automethod:: ARNNConv1D.bias_init
       .. automethod:: ARNNConv1D.conditionals
       .. automethod:: ARNNConv1D.kernel_init
+      .. automethod:: ARNNConv1D.put_variable
 
    

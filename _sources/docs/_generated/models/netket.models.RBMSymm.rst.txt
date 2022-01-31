@@ -25,6 +25,7 @@
    Methods
       .. automethod:: RBMSymm.activation
       .. automethod:: RBMSymm.kernel_init
+      .. automethod:: RBMSymm.put_variable
       .. automethod:: RBMSymm.visible_bias_init
 
    

@@ -20,5 +20,6 @@
 
    Methods
       .. automethod:: Jastrow.kernel_init
+      .. automethod:: Jastrow.put_variable
 
    

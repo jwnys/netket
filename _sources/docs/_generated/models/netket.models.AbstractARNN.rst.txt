@@ -20,5 +20,6 @@
 
    Methods
       .. automethod:: AbstractARNN.conditionals
+      .. automethod:: AbstractARNN.put_variable
 
    

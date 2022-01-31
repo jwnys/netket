@@ -45,6 +45,7 @@
       .. automethod:: MaskedConv2D.kernel_init
       .. automethod:: MaskedConv2D.make_rng
       .. automethod:: MaskedConv2D.param
+      .. automethod:: MaskedConv2D.put_variable
       .. automethod:: MaskedConv2D.setup
       .. automethod:: MaskedConv2D.sow
       .. automethod:: MaskedConv2D.variable

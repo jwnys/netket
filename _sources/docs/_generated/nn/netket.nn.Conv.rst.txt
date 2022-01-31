@@ -49,6 +49,7 @@
       .. automethod:: Conv.kernel_init
       .. automethod:: Conv.make_rng
       .. automethod:: Conv.param
+      .. automethod:: Conv.put_variable
       .. automethod:: Conv.setup
       .. automethod:: Conv.sow
       .. automethod:: Conv.variable

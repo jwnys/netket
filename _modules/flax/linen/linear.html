@@ -97,7 +97,7 @@
     <div class="body col-md-12 content" role="main">
       
   <h1>Source code for flax.linen.linear</h1><div class="highlight"><pre>
-<span></span><span class="c1"># Copyright 2021 The Flax Authors.</span>
+<span></span><span class="c1"># Copyright 2022 The Flax Authors.</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -149,23 +149,25 @@
 <span class="k">class</span> <span class="nc">DenseGeneral</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;A linear transformation with flexible axes.</span>
 
-<span class="sd">    Attributes:</span>
-<span class="sd">      features: int or tuple with number of output features.</span>
-<span class="sd">      axis: int or tuple with axes to apply the transformation on. For instance,</span>
-<span class="sd">        (-2, -1) will apply the transformation to the last two axes.</span>
-<span class="sd">      batch_dims: tuple with batch axes.</span>
-<span class="sd">      use_bias: whether to add a bias to the output (default: True).</span>
-<span class="sd">      dtype: the dtype of the computation (default: float32).</span>
-<span class="sd">      kernel_init: initializer function for the weight matrix.</span>
-<span class="sd">      bias_init: initializer function for the bias.</span>
-<span class="sd">      precision: numerical precision of the computation see `jax.lax.Precision`</span>
-<span class="sd">        for details.</span>
+<span class="sd">  Attributes:</span>
+<span class="sd">    features: int or tuple with number of output features.</span>
+<span class="sd">    axis: int or tuple with axes to apply the transformation on. For instance,</span>
+<span class="sd">      (-2, -1) will apply the transformation to the last two axes.</span>
+<span class="sd">    batch_dims: tuple with batch axes.</span>
+<span class="sd">    use_bias: whether to add a bias to the output (default: True).</span>
+<span class="sd">    dtype: the dtype of the computation (default: float32).</span>
+<span class="sd">    param_dtype: the dtype passed to parameter initializers (default: float32).</span>
+<span class="sd">    kernel_init: initializer function for the weight matrix.</span>
+<span class="sd">    bias_init: initializer function for the bias.</span>
+<span class="sd">    precision: numerical precision of the computation see `jax.lax.Precision`</span>
+<span class="sd">      for details.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">features</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
   <span class="n">axis</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
   <span class="n">batch_dims</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
   <span class="n">use_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="n">dtype</span><span class="p">:</span> <span class="n">Dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
+  <span class="n">param_dtype</span><span class="p">:</span> <span class="n">Dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
   <span class="n">kernel_init</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">PRNGKey</span><span class="p">,</span> <span class="n">Shape</span><span class="p">,</span> <span class="n">Dtype</span><span class="p">],</span> <span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_kernel_init</span>
   <span class="n">bias_init</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">PRNGKey</span><span class="p">,</span> <span class="n">Shape</span><span class="p">,</span> <span class="n">Dtype</span><span class="p">],</span> <span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="n">zeros</span>
   <span class="n">precision</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
@@ -211,7 +213,8 @@
         <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">ax</span><span class="p">]</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">batch_dims</span> <span class="k">else</span> <span class="mi">1</span>
         <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">axis</span><span class="p">)</span>
     <span class="n">kernel_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">ax</span><span class="p">]</span> <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axis</span><span class="p">])</span> <span class="o">+</span> <span class="n">features</span>
-    <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;kernel&#39;</span><span class="p">,</span> <span class="n">kernel_init_wrap</span><span class="p">,</span> <span class="n">batch_shape</span> <span class="o">+</span> <span class="n">kernel_shape</span><span class="p">)</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;kernel&#39;</span><span class="p">,</span> <span class="n">kernel_init_wrap</span><span class="p">,</span> <span class="n">batch_shape</span> <span class="o">+</span> <span class="n">kernel_shape</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">param_dtype</span><span class="p">)</span>
     <span class="n">kernel</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
     <span class="n">batch_ind</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_batch_dims</span><span class="p">))</span>
@@ -229,7 +232,8 @@
                                 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size_batch_dims</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">bias</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
 
-      <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="n">bias_init_wrap</span><span class="p">,</span> <span class="n">batch_shape</span> <span class="o">+</span> <span class="n">features</span><span class="p">)</span>
+      <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="n">bias_init_wrap</span><span class="p">,</span> <span class="n">batch_shape</span> <span class="o">+</span> <span class="n">features</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">param_dtype</span><span class="p">)</span>
       <span class="c1"># expand bias shape to broadcast bias over batch dims.</span>
       <span class="n">bias</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">bias</span><span class="p">,</span> <span class="n">expanded_batch_shape</span> <span class="o">+</span> <span class="n">features</span><span class="p">)</span>
       <span class="n">bias</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">bias</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
@@ -244,6 +248,7 @@
 <span class="sd">    features: the number of output features.</span>
 <span class="sd">    use_bias: whether to add a bias to the output (default: True).</span>
 <span class="sd">    dtype: the dtype of the computation (default: float32).</span>
+<span class="sd">    param_dtype: the dtype passed to parameter initializers (default: float32).</span>
 <span class="sd">    precision: numerical precision of the computation see `jax.lax.Precision`</span>
 <span class="sd">      for details.</span>
 <span class="sd">    kernel_init: initializer function for the weight matrix.</span>
@@ -251,7 +256,8 @@
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">features</span><span class="p">:</span> <span class="nb">int</span>
   <span class="n">use_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
-  <span class="n">dtype</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
+  <span class="n">dtype</span><span class="p">:</span> <span class="n">Dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
+  <span class="n">param_dtype</span><span class="p">:</span> <span class="n">Dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
   <span class="n">precision</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">kernel_init</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">PRNGKey</span><span class="p">,</span> <span class="n">Shape</span><span class="p">,</span> <span class="n">Dtype</span><span class="p">],</span> <span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_kernel_init</span>
   <span class="n">bias_init</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">PRNGKey</span><span class="p">,</span> <span class="n">Shape</span><span class="p">,</span> <span class="n">Dtype</span><span class="p">],</span> <span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="n">zeros</span>
@@ -269,13 +275,15 @@
     <span class="n">inputs</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
     <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;kernel&#39;</span><span class="p">,</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">kernel_init</span><span class="p">,</span>
-                        <span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">))</span>
+                        <span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">),</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">param_dtype</span><span class="p">)</span>
     <span class="n">kernel</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">dot_general</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span>
                         <span class="p">(((</span><span class="n">inputs</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)),</span> <span class="p">((),</span> <span class="p">())),</span>
                         <span class="n">precision</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">:</span>
-      <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias_init</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,))</span>
+      <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias_init</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,),</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">param_dtype</span><span class="p">)</span>
       <span class="n">bias</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">bias</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
       <span class="n">y</span> <span class="o">+=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">bias</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span>
     <span class="k">return</span> <span class="n">y</span>
@@ -300,9 +308,10 @@
 <span class="sd">      be a sequence of integers.</span>
 <span class="sd">    strides: an integer or a sequence of `n` integers, representing the</span>
 <span class="sd">      inter-window strides (default: 1).</span>
-<span class="sd">    padding: either the string `&#39;SAME&#39;`, the string `&#39;VALID&#39;`, or a sequence</span>
-<span class="sd">      of `n` `(low, high)` integer pairs that give the padding to apply before</span>
-<span class="sd">      and after each spatial dimension.</span>
+<span class="sd">    padding: either the string `&#39;SAME&#39;`, the string `&#39;VALID&#39;`, the string</span>
+<span class="sd">      `&#39;CIRCULAR&#39;` (periodic boundary conditions), or a sequence of `n` `(low,</span>
+<span class="sd">      high)` integer pairs that give the padding to apply before and after each</span>
+<span class="sd">      spatial dimension.</span>
 <span class="sd">    input_dilation: an integer or a sequence of `n` integers, giving the</span>
 <span class="sd">      dilation factor to apply in each spatial dimension of `inputs` (default: 1).</span>
 <span class="sd">      Convolution with input dilation `d` is equivalent to transposed</span>
@@ -315,6 +324,7 @@
 <span class="sd">      features into groups.</span>
 <span class="sd">    use_bias: whether to add a bias to the output (default: True).</span>
 <span class="sd">    dtype: the dtype of the computation (default: float32).</span>
+<span class="sd">    param_dtype: the dtype passed to parameter initializers (default: float32).</span>
 <span class="sd">    precision: numerical precision of the computation see `jax.lax.Precision`</span>
 <span class="sd">      for details.</span>
 <span class="sd">    kernel_init: initializer for the convolutional kernel.</span>
@@ -329,6 +339,7 @@
   <span class="n">feature_group_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
   <span class="n">use_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="n">dtype</span><span class="p">:</span> <span class="n">Dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
+  <span class="n">param_dtype</span><span class="p">:</span> <span class="n">Dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
   <span class="n">precision</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">kernel_init</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">PRNGKey</span><span class="p">,</span> <span class="n">Shape</span><span class="p">,</span> <span class="n">Dtype</span><span class="p">],</span> <span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_kernel_init</span>
   <span class="n">bias_init</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">PRNGKey</span><span class="p">,</span> <span class="n">Shape</span><span class="p">,</span> <span class="n">Dtype</span><span class="p">],</span> <span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="n">zeros</span>
@@ -336,9 +347,13 @@
   <span class="nd">@compact</span>
   <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Applies a convolution to the inputs.</span>
-
+<span class="sd"> </span>
 <span class="sd">    Args:</span>
 <span class="sd">      inputs: input data with dimensions (batch, spatial_dims..., features).</span>
+<span class="sd">        This is the channels-last convention, i.e. NHWC for a 2d convolution</span>
+<span class="sd">        and NDHWC for a 3D convolution. Note: this is different from the input</span>
+<span class="sd">        convention used by `lax.conv_general_dilated`, which puts the spatial</span>
+<span class="sd">        dimensions last.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">      The convolved data.</span>
@@ -374,15 +389,23 @@
     <span class="k">assert</span> <span class="n">in_features</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_group_count</span> <span class="o">==</span> <span class="mi">0</span>
     <span class="n">kernel_shape</span> <span class="o">=</span> <span class="n">kernel_size</span> <span class="o">+</span> <span class="p">(</span>
         <span class="n">in_features</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_group_count</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">)</span>
-    <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;kernel&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_init</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">)</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;kernel&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_init</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">param_dtype</span><span class="p">)</span>
     <span class="n">kernel</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">==</span> <span class="s1">&#39;CIRCULAR&#39;</span><span class="p">:</span>
+      <span class="n">kernel_size_dilated</span> <span class="o">=</span> <span class="p">[(</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">d</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">,</span> <span class="n">kernel_dilation</span><span class="p">)]</span>
+      <span class="n">pads</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[((</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">k</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">kernel_size_dilated</span><span class="p">]</span> <span class="o">+</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+      <span class="n">inputs</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">pads</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wrap&#39;</span><span class="p">)</span>
+      <span class="n">padding_lax</span> <span class="o">=</span> <span class="s1">&#39;VALID&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">padding_lax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
 
     <span class="n">dimension_numbers</span> <span class="o">=</span> <span class="n">_conv_dimension_numbers</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">conv_general_dilated</span><span class="p">(</span>
         <span class="n">inputs</span><span class="p">,</span>
         <span class="n">kernel</span><span class="p">,</span>
         <span class="n">strides</span><span class="p">,</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
+        <span class="n">padding_lax</span><span class="p">,</span>
         <span class="n">lhs_dilation</span><span class="o">=</span><span class="n">input_dilation</span><span class="p">,</span>
         <span class="n">rhs_dilation</span><span class="o">=</span><span class="n">kernel_dilation</span><span class="p">,</span>
         <span class="n">dimension_numbers</span><span class="o">=</span><span class="n">dimension_numbers</span><span class="p">,</span>
@@ -392,7 +415,7 @@
     <span class="k">if</span> <span class="n">is_single_input</span><span class="p">:</span>
       <span class="n">y</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">:</span>
-      <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias_init</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,))</span>
+      <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias_init</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,),</span> <span class="bp">self</span><span class="o">.</span><span class="n">param_dtype</span><span class="p">)</span>
       <span class="n">bias</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">bias</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
       <span class="n">y</span> <span class="o">+=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">bias</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span>
     <span class="k">return</span> <span class="n">y</span>
@@ -406,17 +429,18 @@
 <span class="sd">    kernel_size: shape of the convolutional kernel. For 1D convolution,</span>
 <span class="sd">      the kernel size can be passed as an integer. For all other cases, it must</span>
 <span class="sd">      be a sequence of integers.</span>
-<span class="sd">    strides: a sequence of `n` integers, representing the inter-window</span>
-<span class="sd">      strides.</span>
-<span class="sd">    padding: either the string `&#39;SAME&#39;`, the string `&#39;VALID&#39;`, or a sequence</span>
-<span class="sd">      of `n` `(low, high)` integer pairs that give the padding to apply before</span>
-<span class="sd">      and after each spatial dimension.</span>
+<span class="sd">    strides: a sequence of `n` integers, representing the inter-window strides.</span>
+<span class="sd">    padding: either the string `&#39;SAME&#39;`, the string `&#39;VALID&#39;`, the string</span>
+<span class="sd">      `&#39;CIRCULAR&#39;` (periodic boundary conditions), or a sequence of `n` `(low,</span>
+<span class="sd">      high)` integer pairs that give the padding to apply before and after each</span>
+<span class="sd">      spatial dimension.</span>
 <span class="sd">    kernel_dilation: `None`, or a sequence of `n` integers, giving the</span>
 <span class="sd">      dilation factor to apply in each spatial dimension of the convolution</span>
 <span class="sd">      kernel. Convolution with kernel dilation is also known as &#39;atrous</span>
 <span class="sd">      convolution&#39;.</span>
 <span class="sd">    use_bias: whether to add a bias to the output (default: True).</span>
 <span class="sd">    dtype: the dtype of the computation (default: float32).</span>
+<span class="sd">    param_dtype: the dtype passed to parameter initializers (default: float32).</span>
 <span class="sd">    precision: numerical precision of the computation see `jax.lax.Precision`</span>
 <span class="sd">      for details.</span>
 <span class="sd">    kernel_init: initializer for the convolutional kernel.</span>
@@ -429,6 +453,7 @@
   <span class="n">kernel_dilation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">use_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="n">dtype</span><span class="p">:</span> <span class="n">Dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
+  <span class="n">param_dtype</span><span class="p">:</span> <span class="n">Dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
   <span class="n">precision</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">kernel_init</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">PRNGKey</span><span class="p">,</span> <span class="n">Shape</span><span class="p">,</span> <span class="n">Dtype</span><span class="p">],</span> <span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_kernel_init</span>
   <span class="n">bias_init</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">PRNGKey</span><span class="p">,</span> <span class="n">Shape</span><span class="p">,</span> <span class="n">Dtype</span><span class="p">],</span> <span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="n">zeros</span>
@@ -440,6 +465,10 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">      inputs: input data with dimensions (batch, spatial_dims..., features).</span>
+<span class="sd">        This is the channels-last convention, i.e. NHWC for a 2d convolution</span>
+<span class="sd">        and NDHWC for a 3D convolution. Note: this is different from the input</span>
+<span class="sd">        convention used by `lax.conv_general_dilated`, which puts the spatial</span>
+<span class="sd">        dimensions last.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">      The convolved data.</span>
@@ -460,20 +489,56 @@
 
     <span class="n">in_features</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">kernel_shape</span> <span class="o">=</span> <span class="n">kernel_size</span> <span class="o">+</span> <span class="p">(</span><span class="n">in_features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">)</span>
-    <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;kernel&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_init</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">)</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;kernel&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_init</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">param_dtype</span><span class="p">)</span>
     <span class="n">kernel</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">==</span> <span class="s1">&#39;CIRCULAR&#39;</span><span class="p">:</span>
+      <span class="n">padding_lax</span> <span class="o">=</span> <span class="s1">&#39;VALID&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">padding_lax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
 
     <span class="n">y</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">conv_transpose</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span>
                            <span class="n">kernel</span><span class="p">,</span>
                            <span class="n">strides</span><span class="p">,</span>
-                           <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
+                           <span class="n">padding_lax</span><span class="p">,</span>
                            <span class="n">rhs_dilation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_dilation</span><span class="p">,</span>
                            <span class="n">precision</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">==</span> <span class="s2">&quot;CIRCULAR&quot;</span><span class="p">:</span>
+      <span class="c1"># For circular padding, we need to identify the size of the final output</span>
+      <span class="c1"># (&quot;period&quot;) along each spatial dimension, pad each dimension to an</span>
+      <span class="c1"># integer number of periods, and wrap the array periodically around each</span>
+      <span class="c1"># dimension. Padding should be done in such a way that the start of the</span>
+      <span class="c1"># original input data inside the padded array is located at integer</span>
+      <span class="c1"># number of periods - otherwise the result would be circularly shifted.</span>
+
+      <span class="c1"># Compute period along each spatial dimension - it&#39;s input size scaled</span>
+      <span class="c1"># by the stride.</span>
+      <span class="n">scaled_x_dims</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">x_dim</span> <span class="o">*</span> <span class="n">stride</span> <span class="k">for</span> <span class="n">x_dim</span><span class="p">,</span> <span class="n">stride</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">strides</span><span class="p">)</span>
+      <span class="p">]</span>
+      <span class="c1"># Compute difference between the current size of y and the final output</span>
+      <span class="c1"># size, and complement this difference to 2 * period - that gives how</span>
+      <span class="c1"># much we need to pad.</span>
+      <span class="n">size_diffs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="o">-</span><span class="p">(</span><span class="n">y_dim</span> <span class="o">-</span> <span class="n">x_dim</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x_dim</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">y_dim</span><span class="p">,</span> <span class="n">x_dim</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">scaled_x_dims</span><span class="p">)</span>
+      <span class="p">]</span>
+      <span class="c1"># Divide the padding equaly between left and right. The choice to put</span>
+      <span class="c1"># &quot;+1&quot; on the left (and not on the right) represents a convention for</span>
+      <span class="c1"># aligning even-sized kernels.</span>
+      <span class="n">total_pad</span> <span class="o">=</span> <span class="p">[((</span><span class="n">size_diff</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size_diff</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">size_diff</span> <span class="ow">in</span> <span class="n">size_diffs</span><span class="p">]</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">+</span> <span class="n">total_pad</span> <span class="o">+</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+      <span class="c1"># Wrap the result periodically around each spatial dimension,</span>
+      <span class="c1"># one by one.</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">scaled_x_dims</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:])</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">is_single_input</span><span class="p">:</span>
       <span class="n">y</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">:</span>
-      <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias_init</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,))</span>
+      <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias_init</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,),</span> <span class="bp">self</span><span class="o">.</span><span class="n">param_dtype</span><span class="p">)</span>
       <span class="n">bias</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">bias</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
       <span class="n">y</span> <span class="o">+=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">bias</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span>
     <span class="k">return</span> <span class="n">y</span>
@@ -491,11 +556,13 @@
 <span class="sd">    num_embeddings: number of embeddings.</span>
 <span class="sd">    features: number of feature dimensions for each embedding.</span>
 <span class="sd">    dtype: the dtype of the embedding vectors (default: float32).</span>
+<span class="sd">    param_dtype: the dtype passed to parameter initializers (default: float32).</span>
 <span class="sd">    embedding_init: embedding initializer.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">num_embeddings</span><span class="p">:</span> <span class="nb">int</span>
   <span class="n">features</span><span class="p">:</span> <span class="nb">int</span>
   <span class="n">dtype</span><span class="p">:</span> <span class="n">Dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
+  <span class="n">param_dtype</span><span class="p">:</span> <span class="n">Dtype</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span>
   <span class="n">embedding_init</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">PRNGKey</span><span class="p">,</span> <span class="n">Shape</span><span class="p">,</span> <span class="n">Dtype</span><span class="p">],</span> <span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_embed_init</span>
 
   <span class="n">embedding</span><span class="p">:</span> <span class="n">Array</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -504,7 +571,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s1">&#39;embedding&#39;</span><span class="p">,</span>
                                 <span class="bp">self</span><span class="o">.</span><span class="n">embedding_init</span><span class="p">,</span>
                                 <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_embeddings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">),</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span></div>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">param_dtype</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Embed.__call__"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Embed.html#netket.nn.Embed.__call__">[docs]</a>  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Embeds the inputs along the last dimension.</span>
@@ -519,7 +586,8 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">jnp</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
       <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Input type must be an integer or unsigned integer.&#39;</span><span class="p">)</span>
     <span class="c1"># Use take because fancy indexing numpy arrays with JAX indices does not work correctly.</span>
-    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+    <span class="n">embedding</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">embedding</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Embed.attend"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Embed.html#netket.nn.Embed.attend">[docs]</a>  <span class="k">def</span> <span class="nf">attend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Attend over the embedding using a query array.</span>
@@ -533,7 +601,9 @@
 <span class="sd">      Commonly used for weight-sharing between embeddings and logit transform</span>
 <span class="sd">      in NLP models.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="o">.</span><span class="n">T</span><span class="p">)</span></div></div>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">embedding</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">embedding</span><span class="o">.</span><span class="n">T</span><span class="p">)</span></div></div>
 </pre></div>
 
     </div>

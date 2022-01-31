@@ -328,6 +328,9 @@
 
     <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_in</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x_in</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">nknn</span><span class="o">.</span><span class="n">DenseSymm</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Dense&quot;</span><span class="p">,</span>
             <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;matrix&quot;</span><span class="p">,</span>
@@ -338,7 +341,7 @@
             <span class="n">kernel_init</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_init</span><span class="p">,</span>
             <span class="n">bias_init</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_bias_init</span><span class="p">,</span>
             <span class="n">precision</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
-        <span class="p">)(</span><span class="n">x_in</span><span class="p">)</span>
+        <span class="p">)(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_symm</span><span class="p">)</span>

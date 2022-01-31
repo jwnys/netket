@@ -97,7 +97,7 @@
     <div class="body col-md-12 content" role="main">
       
   <h1>Source code for flax.linen.module</h1><div class="highlight"><pre>
-<span></span><span class="c1"># Copyright 2021 The Flax Authors.</span>
+<span></span><span class="c1"># Copyright 2022 The Flax Authors.</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -114,6 +114,7 @@
 <span class="sd">&quot;&quot;&quot;Flax Modules.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
 <span class="kn">import</span> <span class="nn">dataclasses</span>
+<span class="kn">import</span> <span class="nn">enum</span>
 <span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -153,6 +154,12 @@
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
 <span class="n">K</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
 <span class="n">_CallableT</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;_CallableT&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Callable</span><span class="p">)</span>
+
+
+<span class="c1"># Used for abstractly testing module behavior.</span>
+<span class="n">TestScope</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;TestScope&#39;</span><span class="p">,</span>
+                  <span class="p">(</span><span class="n">Scope</span><span class="p">,),</span>
+                  <span class="p">{</span><span class="s1">&#39;make_rng&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)})</span>
 
 
 <span class="c1"># pylint: disable=protected-access,attribute-defined-outside-init</span>
@@ -232,19 +239,34 @@
 <span class="n">_use_named_call</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">flax_profile</span>
 
 <span class="k">def</span> <span class="nf">enable_named_call</span><span class="p">():</span>
-  <span class="sd">&quot;&quot;&quot;Enables named call wrapping for labelling profile traces.&quot;&quot;&quot;</span>
+  <span class="sd">&quot;&quot;&quot;Enables named call wrapping for labelling profile traces.</span>
+
+<span class="sd">  When named call wrapping is enabled all JAX ops executed in a Module</span>
+<span class="sd">  will be wrapped with ``jax.named_call``. The ``Module`` class name will</span>
+<span class="sd">  show up around the operations belonging to that Module in the</span>
+<span class="sd">  Tensorboard profiling UI, simplifying the profiling process.</span>
+
+<span class="sd">  Note that ``jax.named_call`` only works for</span>
+<span class="sd">  compiled functions (e.g.: using jax.jit or jax.pmap).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
   <span class="k">global</span> <span class="n">_use_named_call</span>
   <span class="n">_use_named_call</span> <span class="o">=</span> <span class="kc">True</span>
 
 <span class="k">def</span> <span class="nf">disable_named_call</span><span class="p">():</span>
-  <span class="sd">&quot;&quot;&quot;Disables named call wrapping.&quot;&quot;&quot;</span>
+  <span class="sd">&quot;&quot;&quot;Disables named call wrapping.</span>
+
+<span class="sd">  See ``enable_named_call``</span>
+<span class="sd">  &quot;&quot;&quot;</span>
   <span class="k">global</span> <span class="n">_use_named_call</span>
   <span class="n">_use_named_call</span> <span class="o">=</span> <span class="kc">False</span>
 
 
 <span class="nd">@contextmanager</span>
 <span class="k">def</span> <span class="nf">override_named_call</span><span class="p">(</span><span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;Returns a context manager that enables/disables named call wrapping.&quot;&quot;&quot;</span>
+  <span class="sd">&quot;&quot;&quot;Returns a context manager that enables/disables named call wrapping.</span>
+
+<span class="sd">  See ``enable_named_call``</span>
+<span class="sd">  &quot;&quot;&quot;</span>
   <span class="k">global</span> <span class="n">_use_named_call</span>
   <span class="n">use_named_call_prev</span> <span class="o">=</span> <span class="n">_use_named_call</span>
   <span class="n">_use_named_call</span> <span class="o">=</span> <span class="n">enable</span>
@@ -459,6 +481,13 @@
 
   <span class="k">return</span> <span class="n">method_or_fn</span>
 
+<span class="k">class</span> <span class="nc">SetupState</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">):</span>
+  <span class="c1"># setup() has not been called.</span>
+  <span class="n">NEW</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="c1"># setup() has been called outside a transform boundary.</span>
+  <span class="n">TRANSFORMED</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="c1"># setup() has been called.</span>
+  <span class="n">DONE</span> <span class="o">=</span> <span class="mi">2</span>
 
 <span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">_ModuleInternalState</span><span class="p">:</span>
@@ -470,7 +499,7 @@
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">in_compact_method</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="n">in_setup</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-  <span class="n">setup_called</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">setup_called</span><span class="p">:</span> <span class="n">SetupState</span> <span class="o">=</span> <span class="n">SetupState</span><span class="o">.</span><span class="n">NEW</span>
   <span class="n">is_initialized</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="n">autoname_cursor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
   <span class="n">children</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;Module&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
@@ -487,10 +516,11 @@
 
   <span class="k">def</span> <span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Exports transform-preserved state across transform boundary.&quot;&quot;&quot;</span>
+    <span class="n">setup_state</span> <span class="o">=</span> <span class="n">SetupState</span><span class="o">.</span><span class="n">TRANSFORMED</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_called</span> <span class="k">else</span> <span class="n">SetupState</span><span class="o">.</span><span class="n">NEW</span>
     <span class="n">cloned</span> <span class="o">=</span> <span class="n">_ModuleInternalState</span><span class="p">(</span>
       <span class="n">in_compact_method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">in_compact_method</span><span class="p">,</span>
       <span class="n">in_setup</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">in_setup</span><span class="p">,</span>
-      <span class="n">setup_called</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># setup_called is object local, not shared.</span>
+      <span class="n">setup_called</span><span class="o">=</span><span class="n">setup_state</span><span class="p">,</span>
       <span class="n">is_initialized</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">,</span>
       <span class="n">autoname_cursor</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">autoname_cursor</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">cloned</span>
@@ -800,7 +830,11 @@
         <span class="n">parent_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">NameInUseError</span><span class="p">(</span><span class="s1">&#39;submodule&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">parent_class</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
-      <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;scope&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+      <span class="c1"># Allow scope aliasing under transforms for submodules defined in setup.</span>
+      <span class="n">reuse_scopes</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">in_setup</span> <span class="ow">and</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">setup_called</span> <span class="o">==</span> <span class="n">SetupState</span><span class="o">.</span><span class="n">TRANSFORMED</span><span class="p">)</span>
+      <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span>
+          <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;scope&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">reuse</span><span class="o">=</span><span class="n">reuse_scopes</span><span class="p">))</span>
 
     <span class="c1"># Top-level invocation with a functional Scope.</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">Scope</span><span class="p">):</span>
@@ -877,7 +911,9 @@
 
   <span class="k">def</span> <span class="nf">_try_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shallow</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Tries to setup module if scope is available and setup has not been called yet.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">setup_called</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">in_setup</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scope</span>
+        <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">in_setup</span>
+        <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">setup_called</span> <span class="o">!=</span> <span class="n">SetupState</span><span class="o">.</span><span class="n">DONE</span><span class="p">):</span>
       <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">in_setup</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="c1"># a shallow setup will only register attribute submodules but it does not call the user&#39;s setup</span>
@@ -887,9 +923,21 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_register_submodules</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">shallow</span><span class="p">:</span>
           <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+        <span class="c1"># We run static checks abstractly once for setup before any transforms</span>
+        <span class="c1"># to detect name collisions and other python errors.</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">setup_called</span> <span class="o">==</span> <span class="n">SetupState</span><span class="o">.</span><span class="n">NEW</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">_validate_setup</span><span class="p">()</span>
       <span class="k">finally</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">in_setup</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">setup_called</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">setup_called</span> <span class="o">=</span> <span class="n">SetupState</span><span class="o">.</span><span class="n">DONE</span>
+
+  <span class="k">def</span> <span class="nf">_validate_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Abstractly evaluates setup only to run static checks.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">run_setup_only</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+      <span class="n">wrapped_id</span> <span class="o">=</span> <span class="n">wrap_method_once</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span>
+      <span class="k">with</span> <span class="n">TestScope</span><span class="p">({},</span> <span class="n">rngs</span><span class="o">=</span><span class="p">{},</span> <span class="n">mutable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">temporary</span><span class="p">()</span> <span class="k">as</span> <span class="n">root</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">wrapped_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">root</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">eval_shape</span><span class="p">(</span><span class="n">run_setup_only</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
   <span class="k">def</span> <span class="nf">_name_taken</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module</span><span class="p">:</span> <span class="s1">&#39;Module&#39;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_all_names_on_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1078,14 +1126,15 @@
 
 
 <span class="sd">    Args:</span>
-<span class="sd">       variables: A dictionary containing variables keyed by variable</span>
+<span class="sd">      variables: A dictionary containing variables keyed by variable</span>
 <span class="sd">        collections. See :mod:`flax.core.variables` for more details</span>
 <span class="sd">        about variables.</span>
 <span class="sd">      rngs: a dict of PRNGKeys to initialize the PRNG sequences.</span>
 <span class="sd">      mutable: Can be bool, str, or list. Specifies which collections should be</span>
-<span class="sd">               treated as mutable: ``bool``: all/no collections are mutable.</span>
-<span class="sd">               ``str``: The name of a single mutable collection. ``list``: A</span>
-<span class="sd">               list of names of mutable collections.</span>
+<span class="sd">        treated as mutable:</span>
+<span class="sd">          ``bool``: all/no collections are mutable.</span>
+<span class="sd">          ``str``: The name of a single mutable collection.</span>
+<span class="sd">          ``list``: A list of names of mutable collections.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">      A copy of this instance with bound variables and RNGs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1203,7 +1252,7 @@
 <span class="sd">    provided arguments, and avoids computing the forward pass with actual</span>
 <span class="sd">    values. Example::</span>
 
-<span class="sd">      jit_init = jax.jit(SomeModule.init)</span>
+<span class="sd">      jit_init = jax.jit(SomeModule(...).init)</span>
 <span class="sd">      jit_init(rng, jnp.ones(input_shape, jnp.float32))</span>
 
 <span class="sd">    Args:</span>
@@ -1246,6 +1295,18 @@
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t access variables on unbound modules&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Module.put_variable"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.put_variable">[docs]</a>  <span class="k">def</span> <span class="nf">put_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the value of a Variable.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      col: the variable collection.</span>
+<span class="sd">      name: the name of the variable.</span>
+<span class="sd">      value: the new value of the variable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t access variables on unbound modules&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">put_variable</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Module.sow"><a class="viewcode-back" href="../../../docs/_generated/nn/netket.nn.Module.html#netket.nn.Module.sow">[docs]</a>  <span class="k">def</span> <span class="nf">sow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
           <span class="n">reduce_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">],</span> <span class="n">K</span><span class="p">]</span> <span class="o">=</span> <span class="n">tuple_reduce</span><span class="p">,</span>

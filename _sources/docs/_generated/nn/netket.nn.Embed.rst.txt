@@ -42,6 +42,7 @@
       .. automethod:: Embed.is_mutable_collection
       .. automethod:: Embed.make_rng
       .. automethod:: Embed.param
+      .. automethod:: Embed.put_variable
       .. automethod:: Embed.setup
       .. automethod:: Embed.sow
       .. automethod:: Embed.variable

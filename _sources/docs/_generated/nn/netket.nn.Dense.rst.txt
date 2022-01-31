@@ -44,6 +44,7 @@
       .. automethod:: Dense.kernel_init
       .. automethod:: Dense.make_rng
       .. automethod:: Dense.param
+      .. automethod:: Dense.put_variable
       .. automethod:: Dense.setup
       .. automethod:: Dense.sow
       .. automethod:: Dense.variable

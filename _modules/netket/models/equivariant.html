@@ -119,10 +119,10 @@
 <span class="kn">import</span> <span class="nn">jax</span>
 <span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">jnp</span>
 <span class="kn">from</span> <span class="nn">flax</span> <span class="kn">import</span> <span class="n">linen</span> <span class="k">as</span> <span class="n">nn</span>
-<span class="kn">from</span> <span class="nn">jax.nn.initializers</span> <span class="kn">import</span> <span class="n">zeros</span>
+<span class="kn">from</span> <span class="nn">jax.nn.initializers</span> <span class="kn">import</span> <span class="n">zeros</span><span class="p">,</span> <span class="n">lecun_normal</span>
 <span class="kn">from</span> <span class="nn">jax.scipy.special</span> <span class="kn">import</span> <span class="n">logsumexp</span>
 
-<span class="kn">from</span> <span class="nn">netket.utils</span> <span class="kn">import</span> <span class="n">HashableArray</span>
+<span class="kn">from</span> <span class="nn">netket.utils</span> <span class="kn">import</span> <span class="n">HashableArray</span><span class="p">,</span> <span class="n">warn_deprecation</span>
 <span class="kn">from</span> <span class="nn">netket.utils.types</span> <span class="kn">import</span> <span class="n">NNInitFunc</span>
 <span class="kn">from</span> <span class="nn">netket.utils.group</span> <span class="kn">import</span> <span class="n">PermutationGroup</span>
 <span class="kn">from</span> <span class="nn">netket.graph</span> <span class="kn">import</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">Lattice</span>
@@ -134,15 +134,13 @@
     <span class="n">DenseEquivariantIrrep</span><span class="p">,</span>
 <span class="p">)</span>
 
+<span class="c1"># Same as netket.nn.symmetric_linear.default_equivariant_initializer</span>
+<span class="c1"># All GCNN layers have kernels of shape [out_features, in_features, n_symm]</span>
+<span class="n">default_gcnn_initializer</span> <span class="o">=</span> <span class="n">lecun_normal</span><span class="p">(</span><span class="n">in_axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
 
 <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span>
-
-
-<span class="k">def</span> <span class="nf">unit_normal_scaling</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
-        <span class="n">jnp</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
-    <span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">GCNN_FFT</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
@@ -181,10 +179,10 @@
     <span class="sd">&quot;&quot;&quot;if True uses a bias in all layers.&quot;&quot;&quot;</span>
     <span class="n">precision</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="sd">&quot;&quot;&quot;numerical precision of the computation see `jax.lax.Precision`for details.&quot;&quot;&quot;</span>
-    <span class="n">kernel_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">unit_normal_scaling</span>
-    <span class="sd">&quot;&quot;&quot;Initializer for the Dense layer matrix.&quot;&quot;&quot;</span>
+    <span class="n">kernel_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">default_gcnn_initializer</span>
+    <span class="sd">&quot;&quot;&quot;Initializer for the kernels of all layers.&quot;&quot;&quot;</span>
     <span class="n">bias_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">zeros</span>
-    <span class="sd">&quot;&quot;&quot;Initializer for the hidden bias.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Initializer for the biases of all layers.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
@@ -205,8 +203,7 @@
             <span class="n">DenseEquivariantFFT</span><span class="p">(</span>
                 <span class="n">product_table</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">product_table</span><span class="p">,</span>
                 <span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
-                <span class="n">in_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span><span class="p">],</span>
-                <span class="n">out_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                <span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
                 <span class="n">use_bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">,</span>
                 <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
                 <span class="n">precision</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
@@ -218,6 +215,8 @@
 
     <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># add a feature dimension</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense_symm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
@@ -242,7 +241,7 @@
 <span class="sd">    the group is implemented with matrix multiplication</span>
 
 <span class="sd">    Layers act on a feature maps of shape [batch_size, in_features, n_symm] and</span>
-<span class="sd">    eeturns a feature map of shape [batch_size, out_features, n_symm].</span>
+<span class="sd">    eeturns a feature map of shape [batch_size, features, n_symm].</span>
 <span class="sd">    The input and the output are related by</span>
 
 <span class="sd">    .. math ::</span>
@@ -288,10 +287,10 @@
     <span class="sd">&quot;&quot;&quot;if True uses a bias in all layers.&quot;&quot;&quot;</span>
     <span class="n">precision</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="sd">&quot;&quot;&quot;numerical precision of the computation see `jax.lax.Precision`for details.&quot;&quot;&quot;</span>
-    <span class="n">kernel_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">unit_normal_scaling</span>
-    <span class="sd">&quot;&quot;&quot;Initializer for the Dense layer matrix.&quot;&quot;&quot;</span>
+    <span class="n">kernel_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">default_gcnn_initializer</span>
+    <span class="sd">&quot;&quot;&quot;Initializer for the kernels of all layers.&quot;&quot;&quot;</span>
     <span class="n">bias_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">zeros</span>
-    <span class="sd">&quot;&quot;&quot;Initializer for the hidden bias.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Initializer for the biases of all layers.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
@@ -310,8 +309,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">equivariant_layers</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">DenseEquivariantIrrep</span><span class="p">(</span>
                 <span class="n">irreps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">irreps</span><span class="p">,</span>
-                <span class="n">in_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span><span class="p">],</span>
-                <span class="n">out_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                <span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
                 <span class="n">use_bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">,</span>
                 <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
                 <span class="n">precision</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
@@ -323,6 +321,8 @@
 
     <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># add a feature dimension</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense_symm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
@@ -378,14 +378,28 @@
     <span class="sd">&quot;&quot;&quot;If true forces all basis states to have the same amplitude by setting Re[psi] = 0&quot;&quot;&quot;</span>
     <span class="n">use_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="sd">&quot;&quot;&quot;if True uses a bias in all layers.&quot;&quot;&quot;</span>
+    <span class="n">extra_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="sd">&quot;&quot;&quot;Deprecated. If True, uses bias in parity-flip layers too. Required for using</span>
+<span class="sd">    parameters saved before PR#1030, but hinders performance.</span>
+<span class="sd">    See also `nk.models.update_GCNN_parity`.&quot;&quot;&quot;</span>
     <span class="n">precision</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="sd">&quot;&quot;&quot;numerical precision of the computation see `jax.lax.Precision`for details.&quot;&quot;&quot;</span>
-    <span class="n">kernel_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">unit_normal_scaling</span>
-    <span class="sd">&quot;&quot;&quot;Initializer for the Dense layer matrix.&quot;&quot;&quot;</span>
+    <span class="n">kernel_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">default_gcnn_initializer</span>
+    <span class="sd">&quot;&quot;&quot;Initializer for the kernels of all layers.&quot;&quot;&quot;</span>
     <span class="n">bias_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">zeros</span>
-    <span class="sd">&quot;&quot;&quot;Initializer for the hidden bias.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Initializer for the biases of all layers.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># TODO: evenutally remove this warning</span>
+        <span class="c1"># supports a deprecated attribute</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra_bias</span><span class="p">:</span>
+            <span class="n">warn_deprecation</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="s2">&quot;`extra_bias` is detrimental for performance and is deprecated. &quot;</span>
+                    <span class="s2">&quot;Please switch to the default `extra_bias=False`. Previously saved &quot;</span>
+                    <span class="s2">&quot;parameters can be migrated using `nk.models.update_GCNN_parity`.&quot;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">n_symm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">symmetries</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -404,8 +418,7 @@
             <span class="n">DenseEquivariantFFT</span><span class="p">(</span>
                 <span class="n">product_table</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">product_table</span><span class="p">,</span>
                 <span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
-                <span class="n">in_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span><span class="p">],</span>
-                <span class="n">out_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                <span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
                 <span class="n">use_bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">,</span>
                 <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
                 <span class="n">precision</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
@@ -419,9 +432,9 @@
             <span class="n">DenseEquivariantFFT</span><span class="p">(</span>
                 <span class="n">product_table</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">product_table</span><span class="p">,</span>
                 <span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
-                <span class="n">in_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span><span class="p">],</span>
-                <span class="n">out_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
-                <span class="n">use_bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">,</span>
+                <span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                <span class="c1"># this would bias the same outputs as self.equivariant</span>
+                <span class="n">use_bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">extra_bias</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">,</span>
                 <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
                 <span class="n">precision</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
                 <span class="n">kernel_init</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_init</span><span class="p">,</span>
@@ -432,6 +445,8 @@
 
     <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># add a feature dimension</span>
 
         <span class="n">x_flip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense_symm</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense_symm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -483,7 +498,7 @@
 <span class="sd">    the group is implemented with matrix multiplication</span>
 
 <span class="sd">    Layers act on a feature maps of shape [batch_size, in_features, n_symm] and</span>
-<span class="sd">    eeturns a feature map of shape [batch_size, out_features, n_symm].</span>
+<span class="sd">    eeturns a feature map of shape [batch_size, features, n_symm].</span>
 <span class="sd">    The input and the output are related by</span>
 
 <span class="sd">    .. math ::</span>
@@ -532,14 +547,28 @@
     <span class="sd">&quot;&quot;&quot;If true forces all basis states to have the same amplitude by setting Re[psi] = 0&quot;&quot;&quot;</span>
     <span class="n">use_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="sd">&quot;&quot;&quot;if True uses a bias in all layers.&quot;&quot;&quot;</span>
+    <span class="n">extra_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="sd">&quot;&quot;&quot;Deprecated. If True, uses bias in parity-flip layers too. Required for using</span>
+<span class="sd">    parameters saved before PR#1030, but hinders performance.</span>
+<span class="sd">    See also `nk.models.update_GCNN_parity`.&quot;&quot;&quot;</span>
     <span class="n">precision</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="sd">&quot;&quot;&quot;numerical precision of the computation see `jax.lax.Precision`for details.&quot;&quot;&quot;</span>
-    <span class="n">kernel_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">unit_normal_scaling</span>
-    <span class="sd">&quot;&quot;&quot;Initializer for the Dense layer matrix.&quot;&quot;&quot;</span>
+    <span class="n">kernel_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">default_gcnn_initializer</span>
+    <span class="sd">&quot;&quot;&quot;Initializer for the kernels of all layers.&quot;&quot;&quot;</span>
     <span class="n">bias_init</span><span class="p">:</span> <span class="n">NNInitFunc</span> <span class="o">=</span> <span class="n">zeros</span>
-    <span class="sd">&quot;&quot;&quot;Initializer for the hidden bias.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Initializer for the biases of all layers.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># TODO: evenutally remove this warning</span>
+        <span class="c1"># supports a deprecated attribute</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra_bias</span><span class="p">:</span>
+            <span class="n">warn_deprecation</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="s2">&quot;`extra_bias` is detrimental for performance and is deprecated. &quot;</span>
+                    <span class="s2">&quot;Please switch to the default `extra_bias=False`. Previously saved &quot;</span>
+                    <span class="s2">&quot;parameters can be migrated using `nk.models.update_GCNN_parity`.&quot;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">n_symm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">symmetries</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -556,8 +585,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">equivariant_layers</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">DenseEquivariantIrrep</span><span class="p">(</span>
                 <span class="n">irreps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">irreps</span><span class="p">,</span>
-                <span class="n">in_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span><span class="p">],</span>
-                <span class="n">out_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                <span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
                 <span class="n">use_bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">,</span>
                 <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
                 <span class="n">precision</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
@@ -570,9 +598,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">equivariant_layers_flip</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">DenseEquivariantIrrep</span><span class="p">(</span>
                 <span class="n">irreps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">irreps</span><span class="p">,</span>
-                <span class="n">in_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span><span class="p">],</span>
-                <span class="n">out_features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
-                <span class="n">use_bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">,</span>
+                <span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">layer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                <span class="c1"># this would bias the same outputs as self.equivariant</span>
+                <span class="n">use_bias</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">extra_bias</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">,</span>
                 <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
                 <span class="n">precision</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
                 <span class="n">kernel_init</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_init</span><span class="p">,</span>
@@ -583,6 +611,8 @@
 
     <span class="nd">@nn</span><span class="o">.</span><span class="n">compact</span>
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># add a feature dimension</span>
 
         <span class="n">x_flip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense_symm</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense_symm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -678,14 +708,17 @@
 <span class="sd">        parity: Optional argument with value +/-1 that specifies the eigenvalue</span>
 <span class="sd">            with respect to parity (only use on two level systems).</span>
 <span class="sd">        dtype: The dtype of the weights.</span>
-<span class="sd">        activation: The nonlinear activation function between hidden layers.</span>
+<span class="sd">        activation: The nonlinear activation function between hidden layers. Defaults to</span>
+<span class="sd">            :ref:`nk.nn.activation.reim_selu`.</span>
 <span class="sd">        output_activation: The nonlinear activation before the output.</span>
 <span class="sd">        equal_amplitudes: If True forces all basis states to have equal amplitude</span>
 <span class="sd">            by setting Re[psi] = 0.</span>
 <span class="sd">        use_bias: If True uses a bias in all layers.</span>
 <span class="sd">        precision: Numerical precision of the computation see `jax.lax.Precision`for details.</span>
-<span class="sd">        kernel_init: Initializer for the Dense layer matrix.</span>
-<span class="sd">        bias_init: Initializer for the hidden bias.</span>
+<span class="sd">        kernel_init: Initializer for the kernels of all layers. Defaults to</span>
+<span class="sd">            `lecun_normal(in_axis=1, out_axis=0)` which guarantees the correct variance of the</span>
+<span class="sd">            output.</span>
+<span class="sd">        bias_init: Initializer for the biases of all layers.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">symmetries</span><span class="p">,</span> <span class="n">Lattice</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>

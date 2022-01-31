@@ -38,6 +38,7 @@
       .. automethod:: Module.is_mutable_collection
       .. automethod:: Module.make_rng
       .. automethod:: Module.param
+      .. automethod:: Module.put_variable
       .. automethod:: Module.setup
       .. automethod:: Module.sow
       .. automethod:: Module.variable

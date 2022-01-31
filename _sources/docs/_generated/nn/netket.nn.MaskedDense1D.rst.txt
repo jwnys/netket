@@ -44,6 +44,7 @@
       .. automethod:: MaskedDense1D.kernel_init
       .. automethod:: MaskedDense1D.make_rng
       .. automethod:: MaskedDense1D.param
+      .. automethod:: MaskedDense1D.put_variable
       .. automethod:: MaskedDense1D.setup
       .. automethod:: MaskedDense1D.sow
       .. automethod:: MaskedDense1D.variable
