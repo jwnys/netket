@@ -15,3 +15,4 @@
 from .base import FermionOperator2ndBase
 from .numba import FermionOperator2nd
 from .jax import FermionOperator2ndJax
+from .fermi_hubbard import FermiHubbardJax
